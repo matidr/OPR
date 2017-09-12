@@ -1,0 +1,20 @@
+c:\users\alumnofi\documents\visual studio 2015\Projects\Sockets\Sockets\bin\Debug\Sockets.exe.config
+c:\users\alumnofi\documents\visual studio 2015\Projects\Sockets\Sockets\bin\Debug\Sockets.exe
+c:\users\alumnofi\documents\visual studio 2015\Projects\Sockets\Sockets\bin\Debug\Sockets.pdb
+c:\users\alumnofi\documents\visual studio 2015\Projects\Sockets\Sockets\obj\Debug\Sockets.exe
+c:\users\alumnofi\documents\visual studio 2015\Projects\Sockets\Sockets\obj\Debug\Sockets.pdb
+C:\Users\Lenovo\Desktop\Sockets\Sockets\bin\Debug\Sockets.exe.config
+C:\Users\Lenovo\Desktop\Sockets\Sockets\bin\Debug\Sockets.exe
+C:\Users\Lenovo\Desktop\Sockets\Sockets\bin\Debug\Sockets.pdb
+C:\Users\Lenovo\Desktop\Sockets\Sockets\obj\Debug\Server.csprojResolveAssemblyReference.cache
+C:\Users\Lenovo\Desktop\Sockets\Sockets\obj\Debug\Server.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\Desktop\Sockets\Sockets\obj\Debug\Sockets.exe
+C:\Users\Lenovo\Desktop\Sockets\Sockets\obj\Debug\Sockets.pdb
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\bin\Debug\Sockets.exe.config
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\bin\Debug\Sockets.exe
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\bin\Debug\Sockets.pdb
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\obj\Debug\Server.csprojResolveAssemblyReference.cache
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\obj\Debug\Sockets.exe
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\obj\Debug\Sockets.pdb
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\bin\Debug\ClassLibrary.dll
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\bin\Debug\ClassLibrary.pdb

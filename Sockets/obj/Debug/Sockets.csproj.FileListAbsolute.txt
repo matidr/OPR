@@ -1,0 +1,6 @@
+c:\users\alumnofi\documents\visual studio 2015\Projects\Sockets\Sockets\bin\Debug\Sockets.exe.config
+c:\users\alumnofi\documents\visual studio 2015\Projects\Sockets\Sockets\bin\Debug\Sockets.exe
+c:\users\alumnofi\documents\visual studio 2015\Projects\Sockets\Sockets\bin\Debug\Sockets.pdb
+c:\users\alumnofi\documents\visual studio 2015\Projects\Sockets\Sockets\obj\Debug\Sockets.csprojResolveAssemblyReference.cache
+c:\users\alumnofi\documents\visual studio 2015\Projects\Sockets\Sockets\obj\Debug\Sockets.exe
+c:\users\alumnofi\documents\visual studio 2015\Projects\Sockets\Sockets\obj\Debug\Sockets.pdb

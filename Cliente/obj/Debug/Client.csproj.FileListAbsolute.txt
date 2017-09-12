@@ -1,0 +1,19 @@
+c:\Users\alumnoFI\documents\visual studio 2015\Projects\Sockets\Cliente\bin\Debug\Cliente.exe.config
+c:\Users\alumnoFI\documents\visual studio 2015\Projects\Sockets\Cliente\bin\Debug\Cliente.exe
+c:\Users\alumnoFI\documents\visual studio 2015\Projects\Sockets\Cliente\bin\Debug\Cliente.pdb
+c:\Users\alumnoFI\documents\visual studio 2015\Projects\Sockets\Cliente\obj\Debug\Cliente.exe
+c:\Users\alumnoFI\documents\visual studio 2015\Projects\Sockets\Cliente\obj\Debug\Cliente.pdb
+C:\Users\Lenovo\Desktop\Sockets\Cliente\bin\Debug\Cliente.exe.config
+C:\Users\Lenovo\Desktop\Sockets\Cliente\bin\Debug\Cliente.exe
+C:\Users\Lenovo\Desktop\Sockets\Cliente\bin\Debug\Cliente.pdb
+C:\Users\Lenovo\Desktop\Sockets\Cliente\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\Users\Lenovo\Desktop\Sockets\Cliente\obj\Debug\Cliente.exe
+C:\Users\Lenovo\Desktop\Sockets\Cliente\obj\Debug\Cliente.pdb
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\bin\Debug\Cliente.exe.config
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\bin\Debug\Cliente.exe
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\bin\Debug\Cliente.pdb
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\obj\Debug\Cliente.exe
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\obj\Debug\Cliente.pdb
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\bin\Debug\ClassLibrary.dll
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\bin\Debug\ClassLibrary.pdb
+C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\obj\Debug\Client.csprojResolveAssemblyReference.cache
