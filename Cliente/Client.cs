@@ -37,6 +37,7 @@ namespace Cliente
             Console.WriteLine("Connecting to server...");
             // Me conecto al endPoint del servidor
             clientSocket.Connect(serverIpEndPoint);
+            Console.WriteLine("Enter username:");
             var textToSend = Console.ReadLine();
             ClassLibrary.ClassLibrary classLibrary = new ClassLibrary.ClassLibrary();
             classLibrary.sendData(clientSocket, textToSend);

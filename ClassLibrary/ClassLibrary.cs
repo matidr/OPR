@@ -36,7 +36,7 @@ namespace ClassLibrary
             }
         }
 
-        public void receiveData(Socket clientSocket)
+        public string receiveData(Socket clientSocket)
         {
             var dataReceived = new byte[FIXED_SIZE];
             int received = 0;
@@ -52,7 +52,7 @@ namespace ClassLibrary
             {
                 received += clientSocket.Receive(dataReceived2, received, dataReceived2.Length - received, SocketFlags.None);
             }
-            Console.WriteLine("El cliente envio: " + System.Text.Encoding.ASCII.GetString(dataReceived2));
+            return System.Text.Encoding.ASCII.GetString(dataReceived2);
         }
     }
 }

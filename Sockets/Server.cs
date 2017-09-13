@@ -47,7 +47,9 @@ namespace Sockets
             ClassLibrary.ClassLibrary classLibrary = new ClassLibrary.ClassLibrary();
             while (serverIsOn)
             {
-                classLibrary.receiveData(clientSocket);
+                var text = classLibrary.receiveData(clientSocket);
+                Console.WriteLine("El cliente envio:" + text);
+
             }
 
             clientSocket.Close();

@@ -2,3 +2,8 @@ C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\ClassLibrary\bin\
 C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\ClassLibrary\bin\Debug\ClassLibrary.pdb
 C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\ClassLibrary\obj\Debug\ClassLibrary.dll
 C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\ClassLibrary\obj\Debug\ClassLibrary.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\bin\Debug\ClassLibrary.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\bin\Debug\ClassLibrary.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\obj\Debug\ClassLibrary.csprojResolveAssemblyReference.cache
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\obj\Debug\ClassLibrary.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\obj\Debug\ClassLibrary.pdb
