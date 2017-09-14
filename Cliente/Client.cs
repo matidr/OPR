@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
-using ClassLibrary;
+using Protocol;
 
 namespace Cliente
 {
@@ -39,7 +39,7 @@ namespace Cliente
             clientSocket.Connect(serverIpEndPoint);
             Console.WriteLine("Enter username:");
             var textToSend = Console.ReadLine();
-            ClassLibrary.ClassLibrary classLibrary = new ClassLibrary.ClassLibrary();
+            Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
             classLibrary.sendData(clientSocket, textToSend);
             
 

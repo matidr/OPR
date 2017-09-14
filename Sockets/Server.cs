@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Domain;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using ClassLibrary;
+
 
 namespace Sockets
 {
@@ -14,7 +12,9 @@ namespace Sockets
     {
         private static Socket serverSocket;
         private static bool serverIsOn = false;
+        private static List<User> onlineUsers;
 
+        public static List<User> OnlineUsers { get => onlineUsers; set => onlineUsers = value; }
 
         static void Main(string[] args)
         {
@@ -28,6 +28,7 @@ namespace Sockets
         }
         private static void StartServer()
         {
+            OnlineUsers = new List<User>();
             // EndPoint(IP, Port)
             var serverIpEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000);
 
@@ -44,16 +45,14 @@ namespace Sockets
         private static void HandleClient(Socket clientSocket)
         {
             Console.WriteLine("Start waiting for clients");
-            ClassLibrary.ClassLibrary classLibrary = new ClassLibrary.ClassLibrary();
+            Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
             while (serverIsOn)
             {
                 var text = classLibrary.receiveData(clientSocket);
                 Console.WriteLine("El cliente envio:" + text);
 
             }
-
             clientSocket.Close();
-            
         }
 
         //private static void acceptConnections() { 
