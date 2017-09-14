@@ -15,5 +15,7 @@ namespace Domain
         public string Username { get => username; set => username = value; }
         public string Password { get => password; set => password = value; }
         internal List<User> Friends { get => friends; set => friends = value; }
+
+        //we need to redefine equals to be able to use contains from the user list. Equals should equal the username
     }
 }
