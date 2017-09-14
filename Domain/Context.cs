@@ -9,10 +9,11 @@ namespace Domain
     public class Context
     {
         private List<User> existingUsers;
+        private List<User> connectedUsers;
 
         public List<User> ExistingUsers { get => existingUsers; set => existingUsers = value; }
 
-        public bool userExist(string user)
+        public bool UserExist(string user)
         {
             foreach (User u in existingUsers)
             {
@@ -26,7 +27,12 @@ namespace Domain
             return false;
         }
 
-        public bool correctPassword(string user, string password)
+        public bool UserAlreadyConnected(string userID)
+        {
+            return connectedUsers.Contains(new User(userID));
+        }
+
+        public bool CorrectPassword(string user, string password)
         {
             foreach (User u in existingUsers)
             {
