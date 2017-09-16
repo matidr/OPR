@@ -12,6 +12,7 @@ namespace Domain
         private List<User> connectedUsers;
 
         public List<User> ExistingUsers { get => existingUsers; set => existingUsers = value; }
+        public List<User> ConnectedUsers { get => connectedUsers; set => connectedUsers = value; }
 
         public bool UserExist(string userId)
         {
@@ -20,7 +21,7 @@ namespace Domain
 
         public bool UserAlreadyConnected(string userID)
         {
-            return connectedUsers.Contains(new User(userID));
+            return ConnectedUsers.Contains(new User(userID));
         }
 
         public bool CorrectPassword(string user, string password)
@@ -36,12 +37,12 @@ namespace Domain
 
         public void ConnectUser(User user)
         {
-            connectedUsers.Add(user);
+            ConnectedUsers.Add(user);
         }
 
         public void DisconnectUser(User user)
         {
-            connectedUsers.Remove(user);
+            ConnectedUsers.Remove(user);
         }
 
         //agregar usuario
