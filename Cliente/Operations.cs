@@ -29,6 +29,7 @@ namespace Sockets
 
         public void MainMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary)
         {
+            Console.WriteLine("");
             Console.WriteLine("Menu Principal");
             Console.WriteLine("------------------------------");
             Console.WriteLine("1. Ver contactos conectados");
@@ -41,6 +42,53 @@ namespace Sockets
             Console.WriteLine("Elija una opcion y aprete enter: ");
             string menuOption = Console.ReadLine();
             classLibrary.sendData(clientSocket, menuOption);
+            switch (menuOption)
+            {
+                case "1":
+                    string friends = classLibrary.receiveData(clientSocket);
+                    while (!friends.Equals("FINISH"))
+                    {
+                        Console.WriteLine(friends);
+                        friends = classLibrary.receiveData(clientSocket);
+                    }
+                    Console.WriteLine("------------------------------" + "\n");
+                    MainMenu(clientSocket, classLibrary);
+                    break;
+
+                case "2":
+                    string requests = classLibrary.receiveData(clientSocket);
+                    while (!requests.Equals("FINISH"))
+                    {
+                        Console.WriteLine(requests);
+                        requests = classLibrary.receiveData(clientSocket);
+                    }
+                    Console.WriteLine("------------------------------" + "\n");
+                    MainMenu(clientSocket, classLibrary);
+                    break;
+
+                case "3":
+                    break;
+
+                case "4":
+                    break;
+
+                case "5":
+                    string messages = classLibrary.receiveData(clientSocket);
+                    while (!messages.Equals("FINISH"))
+                    {
+                        Console.WriteLine(messages);
+                        requests = classLibrary.receiveData(clientSocket);
+                    }
+                    Console.WriteLine("------------------------------" + "\n");
+                    MainMenu(clientSocket, classLibrary);
+                    break;
+
+                default:
+                    Console.WriteLine("Por favor seleccione una opcion del menú" + "\n");
+                    MainMenu(clientSocket, classLibrary);
+                    break;
+            }
+
         }
 
 
@@ -58,7 +106,6 @@ namespace Sockets
                 classLibrary.sendData(clientSocket, password);
                 requestPassword(clientSocket, classLibrary, userID, password);
             }
-
         }
 
         private string requestUsername(Socket clientSocket, Protocol.ClassLibrary classLibrary, string userID)

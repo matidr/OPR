@@ -36,3 +36,5 @@ C:\github\obliredes\Cliente\obj\Debug\Cliente.exe
 C:\github\obliredes\Cliente\obj\Debug\Cliente.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\bin\Debug\Domain.dll
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\bin\Debug\Domain.pdb
+C:\github\obliredes\Cliente\bin\Debug\Domain.dll
+C:\github\obliredes\Cliente\bin\Debug\Domain.pdb

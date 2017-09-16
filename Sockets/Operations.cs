@@ -36,7 +36,7 @@ namespace Sockets
             classLibrary.sendData(clientSocket, "OK. Bienvenido");
         }
 
-        public List<User> GetConnectedFrieds(User theUser)
+        public List<User> GetConnectedFriends(User theUser)
         {
             List<User> connectedFriends = new List<User>();
             foreach (User u in theUser.Friends)
@@ -74,21 +74,35 @@ namespace Sockets
             switch (menuOption)
             {
                 case "1":
-                    List<User> connectedFriends = GetConnectedFrieds(theUser);
+                    List<User> connectedFriends = GetConnectedFriends(theUser);
                     if (connectedFriends.Count > 0)
+                    {
                         PrintFriends(clientSocket, classLibrary, connectedFriends);
+                        classLibrary.sendData(clientSocket, "FINISH");
+                        MainMenu(clientSocket, classLibrary, theUser);
+                    }
                     else
-                        classLibrary.sendData(clientSocket, "No tienes amigos conectados por el momento");
+                    {
+                        classLibrary.sendData(clientSocket, "No tienes amigos conectados en este momento");
+                        classLibrary.sendData(clientSocket, "FINISH");
+                        MainMenu(clientSocket, classLibrary, theUser);
+                    }
                     break;
                 case "2":
                     List<User> friendshipRequests = theUser.PendingFriendshipRequest;
                     if (friendshipRequests.Count > 0)
                     {
                         PrintFriends(clientSocket, classLibrary, friendshipRequests);
+                        classLibrary.sendData(clientSocket, "FINISH");
+                        MainMenu(clientSocket, classLibrary, theUser);
                         //hay que hacer un sub-menú para que acepte las solicitudes o rechace
                     }
                     else
+                    {
                         classLibrary.sendData(clientSocket, "No tienes solicitudes pendientes de amistad");
+                        classLibrary.sendData(clientSocket, "FINISH");
+                        MainMenu(clientSocket, classLibrary, theUser);
+                    }
                     break;
                 case "3":
                     //3. Enviar solicitud de amistad
@@ -99,9 +113,17 @@ namespace Sockets
                 case "5":
                     List<Message> unreadMessages = theUser.UnreadMessages;
                     if (unreadMessages.Count > 0)
+                    {
                         PrintMessages(clientSocket, classLibrary, unreadMessages);
+                        classLibrary.sendData(clientSocket, "FINISH");
+                        MainMenu(clientSocket, classLibrary, theUser);
+                    }
                     else
+                    {
                         classLibrary.sendData(clientSocket, "No tienes mensajes nuevos");
+                        classLibrary.sendData(clientSocket, "FINISH");
+                        MainMenu(clientSocket, classLibrary, theUser);
+                    }
                     break;
                 case "6":
                     DisconnectClient(clientSocket, classLibrary, theUser);

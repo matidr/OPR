@@ -8,4 +8,3 @@ C:\github\obliredes\Domain\bin\Debug\Domain.pdb
 C:\github\obliredes\Domain\obj\Debug\Domain.csproj.CoreCompileInputs.cache
 C:\github\obliredes\Domain\obj\Debug\Domain.dll
 C:\github\obliredes\Domain\obj\Debug\Domain.pdb
-C:\github\obliredes\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
