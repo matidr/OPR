@@ -34,7 +34,6 @@ namespace Sockets
             myContext.AddNewUser(user);
             myContext.ConnectUser(user);
             classLibrary.sendData(clientSocket, "OK. Bienvenido");
-            myContext.DisconnectUser(user);
         }
 
         public List<User> GetConnectedFrieds(User theUser)
@@ -122,11 +121,10 @@ namespace Sockets
         private void requestPassword(Socket clientSocket, Protocol.ClassLibrary classLibrary, string userID, string password)
         {
 
-            if (!myContext.CorrectPassword(userID, password))
+            if (myContext.CorrectPassword(userID, password))
             {
                 myContext.ConnectUser(new User(userID, password));
                 classLibrary.sendData(clientSocket, "OK. Bienvenido");
-                myContext.DisconnectUser(new User(userID, password));
             }
             else
             {

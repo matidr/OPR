@@ -48,7 +48,7 @@ namespace Cliente
             var username = Console.ReadLine();
             Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
             operations.Login(clientSocket, classLibrary, username);
-            //operations.MainMenu(clientSocket, classLibrary);
+            operations.MainMenu(clientSocket, classLibrary);
             clientSocket.Close();
         }
     }

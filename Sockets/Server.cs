@@ -49,7 +49,6 @@ namespace Sockets
             Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
             while (serverIsOn)
             {
-                classLibrary.sendData(clientSocket, "Conected");
                 var userID = classLibrary.receiveData(clientSocket);
                 if (myContext.UserExist(userID))
                 {
@@ -58,7 +57,7 @@ namespace Sockets
                 {
                     operations.Register(clientSocket, classLibrary, userID);
                 }
-                //operations.MainMenu(clientSocket, classLibrary, new User(userID));
+                operations.MainMenu(clientSocket, classLibrary, new User(userID));
             }
             clientSocket.Close();
         }
