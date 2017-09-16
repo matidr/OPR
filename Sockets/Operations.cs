@@ -18,11 +18,12 @@ namespace Sockets
         {
             myContext = context;
         }
-        public void Login(Socket clientSocket, Protocol.ClassLibrary classLibrary, string userID)
+        public string Login(Socket clientSocket, Protocol.ClassLibrary classLibrary, string userID)
         {
             string username = requestUsername(clientSocket, classLibrary, userID);
             var password = classLibrary.receiveData(clientSocket);
             requestPassword(clientSocket, classLibrary, username, password);
+            return userID;
         }
 
         public void Register(Socket clientSocket, Protocol.ClassLibrary classLibrary, string userID)
@@ -33,6 +34,7 @@ namespace Sockets
             myContext.AddNewUser(user);
             myContext.ConnectUser(user);
             classLibrary.sendData(clientSocket, "OK. Bienvenido");
+            myContext.DisconnectUser(user);
         }
 
         public List<User> GetConnectedFrieds(User theUser)
@@ -124,6 +126,7 @@ namespace Sockets
             {
                 myContext.ConnectUser(new User(userID, password));
                 classLibrary.sendData(clientSocket, "OK. Bienvenido");
+                myContext.DisconnectUser(new User(userID, password));
             }
             else
             {
@@ -138,7 +141,7 @@ namespace Sockets
         {
             if (!myContext.UserAlreadyConnected(userID))
             {
-                classLibrary.sendData(clientSocket, "Ok, Ingrese su contraseña");
+                classLibrary.sendData(clientSocket, "OK. Ingrese su contraseña");
                 return userID;
             }
             else

@@ -11,6 +11,12 @@ namespace Domain
         private List<User> existingUsers;
         private List<User> connectedUsers;
 
+
+        public Context()
+        {
+            existingUsers = new List<User>();
+            connectedUsers = new List<User>();
+        }
         public List<User> ExistingUsers { get => existingUsers; set => existingUsers = value; }
         public List<User> ConnectedUsers { get => connectedUsers; set => connectedUsers = value; }
 
@@ -42,7 +48,7 @@ namespace Domain
 
         public void DisconnectUser(User user)
         {
-            ConnectedUsers.Remove(user);
+            ConnectedUsers.RemoveAll(u => u.Username.Equals(user.Username));
         }
 
         //agregar usuario

@@ -12,10 +12,8 @@ namespace Sockets
     {
         private static Socket serverSocket;
         private static bool serverIsOn = false;
-        private static List<User> onlineUsers;
-        private static Context myContext; 
-
-        public static List<User> OnlineUsers { get => onlineUsers; set => onlineUsers = value; }
+        private static Context myContext;
+        private static Operations operations;
 
         static void Main(string[] args)
         {
@@ -31,7 +29,7 @@ namespace Sockets
         private static void StartServer()
         {
             myContext = new Context();
-            OnlineUsers = new List<User>();
+            operations = new Operations(myContext);
             // EndPoint(IP, Port)
             var serverIpEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000);
 
@@ -55,11 +53,12 @@ namespace Sockets
                 var userID = classLibrary.receiveData(clientSocket);
                 if (myContext.UserExist(userID))
                 {
-                    Login(clientSocket, classLibrary, userID);
+                    userID = operations.Login(clientSocket, classLibrary, userID);
                 } else
                 {
-                    Register(clientSocket, classLibrary, userID);
+                    operations.Register(clientSocket, classLibrary, userID);
                 }
+                //operations.MainMenu(clientSocket, classLibrary, new User(userID));
             }
             clientSocket.Close();
         }

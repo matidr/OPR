@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using Protocol;
+using Domain;
+using Sockets;
 
 namespace Cliente
 {
     public class Client
     {
+        private static Context myContext;
+        private static Operations operations;
         static void Main(string[] args)
         {
             //ALERT: cuando mandemos integer, no conviertamos en string y mandemos en string, mandemos c/ tipo de dato con el tipo que realmente es. Hay librerias q convierten c/tipo
@@ -21,6 +25,9 @@ namespace Cliente
 
         private static void ConnectToServer()
         {
+            myContext = new Context();
+            operations = new Operations(myContext);
+
             // endpoint del servidor al que me voy a conectar
             var serverIpEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000);
 
@@ -38,11 +45,10 @@ namespace Cliente
             // Me conecto al endPoint del servidor
             clientSocket.Connect(serverIpEndPoint);
             Console.WriteLine("Enter username:");
-            var textToSend = Console.ReadLine();
+            var username = Console.ReadLine();
             Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
-            classLibrary.sendData(clientSocket, textToSend);
-            
-
+            operations.Login(clientSocket, classLibrary, username);
+            //operations.MainMenu(clientSocket, classLibrary);
             clientSocket.Close();
         }
     }

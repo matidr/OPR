@@ -22,6 +22,7 @@ namespace Sockets
         {
             classLibrary.sendData(clientSocket, username);
             username = requestUsername(clientSocket, classLibrary, username);
+            Console.WriteLine("Ingrese su contrasena: ");
             var password = Console.ReadLine();
             classLibrary.sendData(clientSocket, password);
             requestPassword(clientSocket, classLibrary, username, password);
@@ -50,6 +51,7 @@ namespace Sockets
             if (response.Contains("OK"))
             {
                 Console.WriteLine("Bienvenido" + "\n");
+                Console.ReadLine();
             }
             else if(response.Contains("ERROR"))
             {
