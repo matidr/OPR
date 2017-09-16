@@ -13,18 +13,9 @@ namespace Domain
 
         public List<User> ExistingUsers { get => existingUsers; set => existingUsers = value; }
 
-        public bool UserExist(string user)
+        public bool UserExist(string userId)
         {
-            foreach (User u in existingUsers)
-            {
-                if (u.Username == user)
-                {
-                    return true;
-                }
-                else
-                    return false;
-            }
-            return false;
+            return existingUsers.Contains(new User(userId));
         }
 
         public bool UserAlreadyConnected(string userID)
@@ -34,16 +25,23 @@ namespace Domain
 
         public bool CorrectPassword(string user, string password)
         {
-            foreach (User u in existingUsers)
-            {
-                if (u.Username == user && u.Password == password)
-                {
-                    return true;
-                }
-                else
-                    return false;
-            }
-            return false;
+            User result = existingUsers.Find(x => x.Username == user);
+            return result.Password.Equals(password);
+        }
+
+        public void AddNewUser(User user)
+        {
+            existingUsers.Add(user);
+        }
+
+        public void ConnectUser(User user)
+        {
+            connectedUsers.Add(user);
+        }
+
+        public void DisconnectUser(User user)
+        {
+            connectedUsers.Remove(user);
         }
 
         //agregar usuario

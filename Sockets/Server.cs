@@ -52,79 +52,18 @@ namespace Sockets
             while (serverIsOn)
             {
                 classLibrary.sendData(clientSocket, "Conected");
-
-                login();
-                //validar que no haya uno igual ya conectado y responder
-                login(clientSocket, classLibrary);
-                
-                if (myContext.userExist(userID))
+                var userID = classLibrary.receiveData(clientSocket);
+                if (myContext.UserExist(userID))
                 {
-                    if(!myContext.correctPassword(userID, password))
-                        Console.WriteLine("Contraseña incorrecta");
-
+                    Login(clientSocket, classLibrary, userID);
+                } else
+                {
+                    Register(clientSocket, classLibrary, userID);
                 }
-                Console.WriteLine("El cliente envio:" + userID);
-
             }
             clientSocket.Close();
         }
 
-        private static void login(Socket clientSocket, Protocol.ClassLibrary classLibrary)
-        {
-            string username = requestUsername(clientSocket, classLibrary);
-            var password = classLibrary.receiveData(clientSocket);
-            requestPassword(clientSocket, classLibrary, userID, password);
-        }
-
-
-        private static void requestPassword(Socket clientSocket, Protocol.ClassLibrary classLibrary)
-        {
-            var userID = classLibrary.receiveData(clientSocket);
-
-            if (!myContext.userAlreadyConnected(userID))
-            {
-                classLibrary.sendData(clientSocket, "Ok, Ingrese su contraseña");
-            }
-            else
-            {
-                classLibrary.sendData(clientSocket, "ERROR: Usuario ya conectado, pruebe con otro usuario");
-                requestUsername(clientSocket, classLibrary);
-            }
-
-        }
-
-        private static string requestUsername(Socket clientSocket, Protocol.ClassLibrary classLibrary)
-        {
-            var userID = classLibrary.receiveData(clientSocket);
-
-            if (!myContext.userAlreadyConnected(userID))
-            {
-                classLibrary.sendData(clientSocket, "Ok, Ingrese su contraseña");
-                return userID; 
-            }
-            else
-            {
-                classLibrary.sendData(clientSocket, "ERROR: Usuario ya conectado, pruebe con otro usuario");
-                requestUsername(clientSocket, classLibrary);
-            }
-
-        }
-
-       
-
-
-
-        //private static void acceptConnections() { 
-        //    // Cuando llegan pedidos en paralelo, permite hasta 100 clientes al mismo tiempo(cuantos puedo guardar en la cola de futuras conexiones).
-        //    serverSocket.Listen(100);
-
-        //    Console.WriteLine("Start waiting for clients");
-        //    // Espera a que se conecte un cliente, una vez que el cliente se conecta pasa a la siguiente linea
-        //    serverSocket.Accept();
-        //    Console.WriteLine("Client connected");
-        //    Console.ReadLine();
-        //}
-
-
+        
     }
 }
