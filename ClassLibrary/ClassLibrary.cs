@@ -11,6 +11,13 @@ namespace Protocol
     {
         private static int FIXED_SIZE = 4;
 
+        public const string PROTOCOL_SEPARATOR = "&";
+        public const string LIST_SEPARATOR = ";";
+        public const string END_OF_MESSAGE = "FINISH";
+        public const string CASE_1 = "CASE 1 ";
+        public const string LOGIN = "LOGIN";
+        public const string MENU_OPTION = "MENUOPTION";
+
         public int getFixedSize()
         {
             return FIXED_SIZE;

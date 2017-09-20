@@ -6,25 +6,21 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using Domain;
+using Protocol;
 
 namespace Sockets
 {
     public class Operations
     {
         private Context myContext;
-
+        private List<User> connectedFriends;
+        private User currentUser;
+        
 
         public Operations(Context context)
         {
             myContext = context;
-        }
-        public void Login(Socket clientSocket, Protocol.ClassLibrary classLibrary, string username)
-        {
-            classLibrary.sendData(clientSocket, username);
-            username = requestUsername(clientSocket, classLibrary, username);
-            var password = Console.ReadLine();
-            classLibrary.sendData(clientSocket, password);
-            requestPassword(clientSocket, classLibrary, username, password);
+            connectedFriends = new List<User>();
         }
 
         public void MainMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary)
@@ -41,17 +37,24 @@ namespace Sockets
             Console.WriteLine("------------------------------");
             Console.WriteLine("Elija una opcion y aprete enter: ");
             string menuOption = Console.ReadLine();
-            classLibrary.sendData(clientSocket, menuOption);
+            classLibrary.sendData(clientSocket, ClassLibrary.MENU_OPTION + ClassLibrary.PROTOCOL_SEPARATOR + menuOption + ClassLibrary.LIST_SEPARATOR + currentUser.Username);
             switch (menuOption)
             {
                 case "1":
-                    string friends = classLibrary.receiveData(clientSocket);
-                    while (!friends.Equals("FINISH"))
+                    int i = 1;
+                    Console.WriteLine("Your connected friends are: ");
+                    if(connectedFriends.Count!=0)
                     {
-                        Console.WriteLine(friends);
-                        friends = classLibrary.receiveData(clientSocket);
+                        foreach (User u in connectedFriends)
+                        {
+                            Console.WriteLine(i + ") " + u.Username);
+                        }
+                        Console.WriteLine("------------------------------" + "\n");
+                    } else
+                    {
+                        Console.WriteLine("No tienes amigos conectados en este momento");
                     }
-                    Console.WriteLine("------------------------------" + "\n");
+                    
                     MainMenu(clientSocket, classLibrary);
                     break;
 
@@ -91,39 +94,53 @@ namespace Sockets
 
         }
 
-
-        private void requestPassword(Socket clientSocket, Protocol.ClassLibrary classLibrary, string userID, string password)
+        public void validateLogin(Socket clientSocket, Protocol.ClassLibrary classLibrary, string response)
         {
-            string response = classLibrary.receiveData(clientSocket);
             if (response.Contains("OK"))
             {
-                Console.WriteLine("Bienvenido" + "\n");
-            }
-            else if(response.Contains("ERROR"))
-            {
-                Console.WriteLine("Contrasena incorrecta. Ingresela nuevamente: ");
-                password = Console.ReadLine();
-                classLibrary.sendData(clientSocket, password);
-                requestPassword(clientSocket, classLibrary, userID, password);
-            }
-        }
-
-        private string requestUsername(Socket clientSocket, Protocol.ClassLibrary classLibrary, string userID)
-        {
-            string response = classLibrary.receiveData(clientSocket);
-            if (response.Contains("OK"))
-            {
-                Console.WriteLine("Ingrese su contrasena: ");
-                return userID;
+                Console.WriteLine("BIENVENIDO " + currentUser.Username);
+                MainMenu(clientSocket, classLibrary);
             }
             else if (response.Contains("ERROR"))
             {
-                Console.WriteLine("Ha habido un error con su username. Ingreselo nuevamente: ");
-                userID = Console.ReadLine();
-                classLibrary.sendData(clientSocket, userID);
-                return requestUsername(clientSocket, classLibrary, userID);
+                Console.WriteLine(response);
+                Console.WriteLine("Vuelva a ingresar los datos: ");
+                requestLogin(clientSocket, classLibrary);
             }
-            return "";
+        }
+
+        public void requestLogin(Socket clientSocket, Protocol.ClassLibrary classLibrary)
+        {
+            Console.WriteLine("Enter username:");
+            var username = Console.ReadLine();
+            currentUser = new User(username);
+            Console.WriteLine("Enter password");
+            var password = Console.ReadLine();
+            string loginInfo = username + ClassLibrary.LIST_SEPARATOR + password;
+            classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + loginInfo);
+        }
+
+        public User getCurrentUser()
+        {
+            return currentUser;
+        }
+
+        public bool isUserLoggedIn()
+        {
+            return currentUser != null;
+        }
+
+
+        public void Case1(string text)
+        {
+            lock (connectedFriends)
+            {
+                string[] conFriendsArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
+                for (int i=0; i<conFriendsArray.Length; i++)
+                {
+                    connectedFriends.Add(new User(conFriendsArray[i]));
+                }
+            }
         }
     }
 }

@@ -6,40 +6,25 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using Domain;
+using Protocol;
 
 namespace Sockets
 {
     public class Operations
     {
         private Context myContext;
-
+        
 
         public Operations(Context context)
         {
             myContext = context;
         }
-        public string Login(Socket clientSocket, Protocol.ClassLibrary classLibrary, string userID)
-        {
-            string username = requestUsername(clientSocket, classLibrary, userID);
-            var password = classLibrary.receiveData(clientSocket);
-            requestPassword(clientSocket, classLibrary, username, password);
-            return userID;
-        }
-
-        public void Register(Socket clientSocket, Protocol.ClassLibrary classLibrary, string userID)
-        {
-            classLibrary.sendData(clientSocket, "OK. Ingrese su contrasena");
-            string password = classLibrary.receiveData(clientSocket);
-            User user = new User(userID, password);
-            myContext.AddNewUser(user);
-            myContext.ConnectUser(user);
-            classLibrary.sendData(clientSocket, "OK. Bienvenido");
-        }
 
         public List<User> GetConnectedFriends(User theUser)
         {
+            User user = myContext.ExistingUsers.Find(x => x.Username.Equals(theUser.Username));
             List<User> connectedFriends = new List<User>();
-            foreach (User u in theUser.Friends)
+            foreach (User u in user.Friends)
             {
                 if (myContext.ConnectedUsers.Contains(u))
                 {
@@ -51,13 +36,12 @@ namespace Sockets
 
         public void PrintFriends(Socket clientSocket, Protocol.ClassLibrary classLibrary, List<User> friends)
         {
-            int i = 0;
-            classLibrary.sendData(clientSocket, "Your connected friends are: ");
+            string returnData = "";
             foreach (User u in friends)
             {
-                i++;
-                classLibrary.sendData(clientSocket, i + ") " + u.Username);
+                returnData = returnData + u.Username + ClassLibrary.LIST_SEPARATOR;
             }
+            classLibrary.sendData(clientSocket, ClassLibrary.CASE_1 + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
         }
 
         public void PrintMessages(Socket clientSocket, Protocol.ClassLibrary classLibrary, List<Message> messages)
@@ -68,9 +52,8 @@ namespace Sockets
             }
         }
 
-        public void MainMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary, User theUser)
+        public void MainMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary, User theUser, string menuOption)
         {
-            var menuOption = classLibrary.receiveData(clientSocket);
             switch (menuOption)
             {
                 case "1":
@@ -78,14 +61,6 @@ namespace Sockets
                     if (connectedFriends.Count > 0)
                     {
                         PrintFriends(clientSocket, classLibrary, connectedFriends);
-                        classLibrary.sendData(clientSocket, "FINISH");
-                        MainMenu(clientSocket, classLibrary, theUser);
-                    }
-                    else
-                    {
-                        classLibrary.sendData(clientSocket, "No tienes amigos conectados en este momento");
-                        classLibrary.sendData(clientSocket, "FINISH");
-                        MainMenu(clientSocket, classLibrary, theUser);
                     }
                     break;
                 case "2":
@@ -94,14 +69,12 @@ namespace Sockets
                     {
                         PrintFriends(clientSocket, classLibrary, friendshipRequests);
                         classLibrary.sendData(clientSocket, "FINISH");
-                        MainMenu(clientSocket, classLibrary, theUser);
                         //hay que hacer un sub-menú para que acepte las solicitudes o rechace
                     }
                     else
                     {
                         classLibrary.sendData(clientSocket, "No tienes solicitudes pendientes de amistad");
                         classLibrary.sendData(clientSocket, "FINISH");
-                        MainMenu(clientSocket, classLibrary, theUser);
                     }
                     break;
                 case "3":
@@ -116,13 +89,11 @@ namespace Sockets
                     {
                         PrintMessages(clientSocket, classLibrary, unreadMessages);
                         classLibrary.sendData(clientSocket, "FINISH");
-                        MainMenu(clientSocket, classLibrary, theUser);
                     }
                     else
                     {
                         classLibrary.sendData(clientSocket, "No tienes mensajes nuevos");
                         classLibrary.sendData(clientSocket, "FINISH");
-                        MainMenu(clientSocket, classLibrary, theUser);
                     }
                     break;
                 case "6":
@@ -130,7 +101,6 @@ namespace Sockets
                     break;
                 default:
                     classLibrary.sendData(clientSocket, "ERROR. Opcion incorrecta");
-                    MainMenu(clientSocket, classLibrary, theUser);
                     break;
             }
         }
@@ -140,35 +110,44 @@ namespace Sockets
             clientSocket.Disconnect(false);
             myContext.DisconnectUser(theUser);
         }
-        private void requestPassword(Socket clientSocket, Protocol.ClassLibrary classLibrary, string userID, string password)
-        {
 
-            if (myContext.CorrectPassword(userID, password))
+        public void login(Socket clientSocket, Protocol.ClassLibrary classLibrary, string loginInfo)
+        {
+            string[] loginInfoArray = loginInfo.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
+            string userID = loginInfoArray[0];
+            string password = loginInfoArray[1];
+
+            if (!myContext.UserExist(userID))
             {
-                myContext.ConnectUser(new User(userID, password));
-                classLibrary.sendData(clientSocket, "OK. Bienvenido");
+                // REGISTER
+
+                User user = new User(userID, password);
+                user.AddFriend(new User("Denu"));
+                user.AddFriend(new User("Leslie"));
+                myContext.AddNewUser(user);
+                myContext.ConnectUser(user);
+                classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "OK. Bienvenido");
             }
             else
             {
-                classLibrary.sendData(clientSocket, "ERROR: Contrasena incorrecta");
-                password = classLibrary.receiveData(clientSocket);
-                requestPassword(clientSocket, classLibrary, userID, password);
-            }
+                // LOGIN
 
-        }
-
-        private string requestUsername(Socket clientSocket, Protocol.ClassLibrary classLibrary, string userID)
-        {
-            if (!myContext.UserAlreadyConnected(userID))
-            {
-                classLibrary.sendData(clientSocket, "OK. Ingrese su contraseña");
-                return userID;
-            }
-            else
-            {
-                classLibrary.sendData(clientSocket, "ERROR: Usuario ya conectado, pruebe con otro usuario");
-                userID = classLibrary.receiveData(clientSocket);
-                return requestUsername(clientSocket, classLibrary, userID);
+                if (!myContext.UserAlreadyConnected(userID))
+                {
+                    if (myContext.CorrectPassword(userID, password))
+                    {
+                        myContext.ConnectUser(new User(userID, password));
+                        classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "OK. Bienvenido");
+                    }
+                    else
+                    {
+                        classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "ERROR: Contrasena incorrecta");
+                    }
+                }
+                else
+                {
+                    classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "ERROR: Usuario ya conectado");
+                }
             }
         }
     }

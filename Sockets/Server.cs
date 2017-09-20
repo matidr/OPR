@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Protocol;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -45,19 +46,41 @@ namespace Sockets
         }
         private static void HandleClient(Socket clientSocket)
         {
+            Thread myThread = new Thread(() => HandleBackgroundActivity(clientSocket));
+            myThread.Start();
+
             Console.WriteLine("Start waiting for clients");
             Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
             while (serverIsOn)
             {
-                var userID = classLibrary.receiveData(clientSocket);
-                if (myContext.UserExist(userID))
+              
+            }
+            clientSocket.Close();
+        }
+
+        private static void HandleBackgroundActivity(Socket clientSocket)
+        {
+            Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
+            while (serverIsOn)
+            {
+                var data = classLibrary.receiveData(clientSocket);
+                string[] arrayData = data.Split(ClassLibrary.PROTOCOL_SEPARATOR.ToCharArray());
+                string command = arrayData[0];
+                string text = arrayData[1];
+
+                switch (command)
                 {
-                    userID = operations.Login(clientSocket, classLibrary, userID);
-                } else
-                {
-                    operations.Register(clientSocket, classLibrary, userID);
+                    case ClassLibrary.LOGIN:
+                        operations.login(clientSocket, classLibrary, text);
+                        break;
+
+                    case ClassLibrary.MENU_OPTION:
+                        string[] menuOptionInfo = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                        string menuOption = menuOptionInfo[0];
+                        string username = menuOptionInfo[1];
+                        operations.MainMenu(clientSocket, classLibrary, new User(username), menuOption);
+                        break;
                 }
-                operations.MainMenu(clientSocket, classLibrary, new User(userID));
             }
             clientSocket.Close();
         }

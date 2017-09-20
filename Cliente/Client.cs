@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using Protocol;
 using Domain;
 using Sockets;
+using System.Threading;
 
 namespace Cliente
 {
@@ -15,6 +16,7 @@ namespace Cliente
     {
         private static Context myContext;
         private static Operations operations;
+        private static bool clientIsConnected = false;
         static void Main(string[] args)
         {
             //ALERT: cuando mandemos integer, no conviertamos en string y mandemos en string, mandemos c/ tipo de dato con el tipo que realmente es. Hay librerias q convierten c/tipo
@@ -25,6 +27,7 @@ namespace Cliente
 
         private static void ConnectToServer()
         {
+
             myContext = new Context();
             operations = new Operations(myContext);
 
@@ -44,12 +47,42 @@ namespace Cliente
             Console.WriteLine("Connecting to server...");
             // Me conecto al endPoint del servidor
             clientSocket.Connect(serverIpEndPoint);
-            Console.WriteLine("Enter username:");
-            var username = Console.ReadLine();
+
+            clientIsConnected = true;
+
+            Thread myThread = new Thread(() => ReceiveData(clientSocket));
+            myThread.Start();
+
             Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
-            operations.Login(clientSocket, classLibrary, username);
-            operations.MainMenu(clientSocket, classLibrary);
+            operations.requestLogin(clientSocket, classLibrary);
+
+            while (clientIsConnected) { 
+           
+            }
             clientSocket.Close();
+        }
+
+        private static void ReceiveData(Socket serverSocket)
+        {
+            Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
+            while (clientIsConnected)
+            {
+                var data = classLibrary.receiveData(serverSocket);
+                string[] arrayData = data.Split(ClassLibrary.PROTOCOL_SEPARATOR.ToArray());
+                string command = arrayData[0];
+                string text = arrayData[1];
+
+                switch (command)
+                {
+                    case ClassLibrary.LOGIN:
+                        operations.validateLogin(serverSocket, classLibrary, text);
+                        break;
+
+                    case ClassLibrary.CASE_1:
+                        operations.Case1(text);
+                        break;
+                }
+            }
         }
     }
 }

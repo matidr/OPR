@@ -16,6 +16,8 @@ namespace Domain
         {
             existingUsers = new List<User>();
             connectedUsers = new List<User>();
+            connectedUsers.Add(new User("Denu"));
+            connectedUsers.Add(new User("Leslie"));
         }
         public List<User> ExistingUsers { get => existingUsers; set => existingUsers = value; }
         public List<User> ConnectedUsers { get => connectedUsers; set => connectedUsers = value; }
