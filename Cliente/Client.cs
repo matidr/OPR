@@ -47,7 +47,6 @@ namespace Cliente
             Console.WriteLine("Connecting to server...");
             // Me conecto al endPoint del servidor
             clientSocket.Connect(serverIpEndPoint);
-
             clientIsConnected = true;
 
             Thread myThread = new Thread(() => ReceiveData(clientSocket));
@@ -55,7 +54,7 @@ namespace Cliente
 
             Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
             operations.requestLogin(clientSocket, classLibrary);
-
+            operations.MainMenu(clientSocket, classLibrary);
             while (clientIsConnected) { 
            
             }

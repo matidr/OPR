@@ -48,6 +48,7 @@ namespace Sockets
                         foreach (User u in connectedFriends)
                         {
                             Console.WriteLine(i + ") " + u.Username);
+                            i++;
                         }
                         Console.WriteLine("------------------------------" + "\n");
                     } else
@@ -99,7 +100,6 @@ namespace Sockets
             if (response.Contains("OK"))
             {
                 Console.WriteLine("BIENVENIDO " + currentUser.Username);
-                MainMenu(clientSocket, classLibrary);
             }
             else if (response.Contains("ERROR"))
             {
@@ -136,9 +136,12 @@ namespace Sockets
             lock (connectedFriends)
             {
                 string[] conFriendsArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
-                for (int i=0; i<conFriendsArray.Length; i++)
+                for (int i=0; i<conFriendsArray.Length - 1; i++)
                 {
-                    connectedFriends.Add(new User(conFriendsArray[i]));
+                    User user = new User(conFriendsArray[i]);
+                    if (!connectedFriends.Contains(user)) { 
+                    connectedFriends.Add(user);
+                    }
                 }
             }
         }
