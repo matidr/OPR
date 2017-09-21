@@ -41,6 +41,12 @@ namespace Sockets
             switch (menuOption)
             {
                 case "1":
+
+                    while (!ClassLibrary.CASE1_FLAG)
+                    {
+
+                    }
+
                     int i = 1;
                     Console.WriteLine("Your connected friends are: ");
                     if(connectedFriends.Count!=0)
@@ -100,6 +106,7 @@ namespace Sockets
             if (response.Contains("OK"))
             {
                 Console.WriteLine("BIENVENIDO " + currentUser.Username);
+                ClassLibrary.LOGIN_FLAG = true;
             }
             else if (response.Contains("ERROR"))
             {
@@ -143,6 +150,7 @@ namespace Sockets
                     connectedFriends.Add(user);
                     }
                 }
+                ClassLibrary.CASE1_FLAG = true;
             }
         }
     }

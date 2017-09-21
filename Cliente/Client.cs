@@ -54,6 +54,10 @@ namespace Cliente
 
             Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
             operations.requestLogin(clientSocket, classLibrary);
+            while (!ClassLibrary.LOGIN_FLAG)
+            {
+
+            }
             operations.MainMenu(clientSocket, classLibrary);
             while (clientIsConnected) { 
            
