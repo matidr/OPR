@@ -19,6 +19,7 @@ namespace Domain
         {
             friends = new List<User>();
             PendingFriendshipRequest = new List<User>();
+            unreadMessages = new List<Message>();
         }
 
         public User(string userId)
@@ -26,6 +27,7 @@ namespace Domain
             username = userId;
             friends = new List<User>();
             PendingFriendshipRequest = new List<User>();
+            unreadMessages = new List<Message>();
         }
 
         public User(string username, string password)
@@ -34,6 +36,7 @@ namespace Domain
             this.password = password;
             friends = new List<User>();
             PendingFriendshipRequest = new List<User>();
+            unreadMessages = new List<Message>();
         }
 
         public void FriendShipRequest(User theRequester)

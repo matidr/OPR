@@ -34,22 +34,25 @@ namespace Sockets
             return connectedFriends;
         }
 
-        public void PrintFriends(Socket clientSocket, Protocol.ClassLibrary classLibrary, List<User> friends)
+        public void PrintFriends(Socket clientSocket, Protocol.ClassLibrary classLibrary, List<User> friends, String theCase)
         {
             string returnData = "";
             foreach (User u in friends)
             {
                 returnData = returnData + u.Username + ClassLibrary.LIST_SEPARATOR;
             }
-            classLibrary.sendData(clientSocket, ClassLibrary.CASE_1 + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
+            classLibrary.sendData(clientSocket, theCase + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
         }
 
-        public void PrintMessages(Socket clientSocket, Protocol.ClassLibrary classLibrary, List<Message> messages)
+        public void PrintMessages(Socket clientSocket, Protocol.ClassLibrary classLibrary, List<Message> messages, String theCase)
         {
+            string returnData = "";
             foreach (Message m in messages)
             {
-                classLibrary.sendData(clientSocket, "[" + m.TheUser + "] " + m.TheMessage);
+                returnData = returnData + "[" + m.TheUser.Username + "] " + m.TheMessage + ClassLibrary.LIST_SEPARATOR;
+                
             }
+            classLibrary.sendData(clientSocket, theCase + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
         }
 
         public void MainMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary, User theUser, string menuOption)
@@ -60,41 +63,39 @@ namespace Sockets
                     List<User> connectedFriends = GetConnectedFriends(theUser);
                     if (connectedFriends.Count > 0)
                     {
-                        PrintFriends(clientSocket, classLibrary, connectedFriends);
+                        PrintFriends(clientSocket, classLibrary, connectedFriends, ClassLibrary.CASE_1);
                     }
+                    //validar cuando no hay datos, mandar algo.
                     break;
+
                 case "2":
                     List<User> friendshipRequests = theUser.PendingFriendshipRequest;
                     if (friendshipRequests.Count > 0)
                     {
-                        PrintFriends(clientSocket, classLibrary, friendshipRequests);
+                        PrintFriends(clientSocket, classLibrary, friendshipRequests, ClassLibrary.CASE_2);
                         //hay que hacer un sub-menú para que acepte las solicitudes o rechace
                     }
-                    else
-                    {
-                        classLibrary.sendData(clientSocket, "No tienes solicitudes pendientes de amistad");
-                        classLibrary.sendData(clientSocket, "FINISH");
-                    }
+                    //validar cuando no hay datos, mandar algo.
                     break;
+
                 case "3":
                     //3. Enviar solicitud de amistad
                     break;
+
                 case "4":
                     //4. Enviar mensaje a un amigo
                     break;
+
                 case "5":
+
                     List<Message> unreadMessages = theUser.UnreadMessages;
                     if (unreadMessages.Count > 0)
                     {
-                        PrintMessages(clientSocket, classLibrary, unreadMessages);
-                        classLibrary.sendData(clientSocket, "FINISH");
+                        PrintMessages(clientSocket, classLibrary, unreadMessages, ClassLibrary.CASE_5);
                     }
-                    else
-                    {
-                        classLibrary.sendData(clientSocket, "No tienes mensajes nuevos");
-                        classLibrary.sendData(clientSocket, "FINISH");
-                    }
+                    //validar cuando no hay datos, mandar algo.
                     break;
+
                 case "6":
                     classLibrary.sendData(clientSocket, ClassLibrary.DISCONNECT + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.DISCONNECT);
                     DisconnectClient(clientSocket, classLibrary, theUser);
@@ -124,8 +125,12 @@ namespace Sockets
                 User user = new User(userID, password);
                 user.AddFriend(new User("Denu"));
                 user.AddFriend(new User("Leslie"));
+                user.FriendShipRequest(new User("Matias"));
+                user.FriendShipRequest(new User("Pedro"));
                 myContext.AddNewUser(user);
                 myContext.ConnectUser(user);
+                user.UnreadMessages.Add(new Message("leslie", "este es un msj sin leer", myContext));
+                user.UnreadMessages.Add(new Message("leslie", "este es un otro msj sin leer", myContext));
                 classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "OK. Bienvenido");
             }
             else

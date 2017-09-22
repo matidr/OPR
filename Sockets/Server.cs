@@ -78,7 +78,8 @@ namespace Sockets
                         string[] menuOptionInfo = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
                         string menuOption = menuOptionInfo[0];
                         string username = menuOptionInfo[1];
-                        operations.MainMenu(clientSocket, classLibrary, new User(username), menuOption);
+                        User theUser = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
+                        operations.MainMenu(clientSocket, classLibrary, theUser, menuOption);
                         break;
                 }
             }

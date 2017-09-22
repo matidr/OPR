@@ -14,6 +14,8 @@ namespace Sockets
     {
         private Context myContext;
         private List<User> connectedFriends;
+        private List<User> friendRequest;
+        private List<Message> newMessages;
         private User currentUser;
         
 
@@ -21,6 +23,8 @@ namespace Sockets
         {
             myContext = context;
             connectedFriends = new List<User>();
+            friendRequest = new List<User>();
+            newMessages = new List<Message>();
         }
 
         public void MainMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary)
@@ -41,14 +45,9 @@ namespace Sockets
             switch (menuOption)
             {
                 case "1":
-
-                    while (!ClassLibrary.CASE1_FLAG)
-                    {
-
-                    }
-
+                    while (!ClassLibrary.CASE1_FLAG) {}
                     int i = 1;
-                    Console.WriteLine("Your connected friends are: ");
+                    Console.WriteLine("Tus amigos conectados son: ");
                     if(connectedFriends.Count!=0)
                     {
                         foreach (User u in connectedFriends)
@@ -61,16 +60,26 @@ namespace Sockets
                     {
                         Console.WriteLine("No tienes amigos conectados en este momento");
                     }
-                    
+                    Console.WriteLine("------------------------------" + "\n");
                     MainMenu(clientSocket, classLibrary);
                     break;
 
                 case "2":
-                    string requests = classLibrary.receiveData(clientSocket);
-                    while (!requests.Equals("FINISH"))
+                    while (!ClassLibrary.CASE2_FLAG) { } 
+                    int j = 1;
+                    Console.WriteLine("Tus solicitudes de amistad pendientes son: ");
+                    if (friendRequest.Count != 0)
                     {
-                        Console.WriteLine(requests);
-                        requests = classLibrary.receiveData(clientSocket);
+                        foreach (User u in friendRequest)
+                        {
+                            Console.WriteLine(j + ") " + u.Username);
+                            j++;
+                        }
+                        Console.WriteLine("------------------------------" + "\n");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No tienes solicitudes de amistad pendientes");
                     }
                     Console.WriteLine("------------------------------" + "\n");
                     MainMenu(clientSocket, classLibrary);
@@ -83,15 +92,26 @@ namespace Sockets
                     break;
 
                 case "5":
-                    string messages = classLibrary.receiveData(clientSocket);
-                    while (!messages.Equals("FINISH"))
+                    while (!ClassLibrary.CASE5_FLAG) { }
+                    int k = 1;
+                    Console.WriteLine("Mensajes sin leer: ");
+                    if (newMessages.Count != 0)
                     {
-                        Console.WriteLine(messages);
-                        requests = classLibrary.receiveData(clientSocket);
+                        foreach (Message m in newMessages)
+                        {
+                            Console.WriteLine(k + ") " + m.Display);
+                            k++;
+                        }
+                        Console.WriteLine("------------------------------" + "\n");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No tienes mensajes sin leer");
                     }
                     Console.WriteLine("------------------------------" + "\n");
                     MainMenu(clientSocket, classLibrary);
                     break;
+
                 case "6":
                     
                     break;
@@ -154,6 +174,40 @@ namespace Sockets
                     }
                 }
                 ClassLibrary.CASE1_FLAG = true;
+            }
+        }
+
+        public void Case2(string text)
+        {
+            lock (friendRequest)
+            {
+                string[] conFriendsArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
+                for (int i = 0; i < conFriendsArray.Length - 1; i++)
+                {
+                    User user = new User(conFriendsArray[i]);
+                    if (!friendRequest.Contains(user))
+                    {
+                        friendRequest.Add(user);
+                    }
+                }
+                ClassLibrary.CASE2_FLAG = true;
+            }
+        }
+
+        public void Case5(string text)
+        {
+            lock (newMessages)
+            {
+                string[] conMessagesArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
+                for (int i = 0; i < conMessagesArray.Length - 1; i++)
+                {
+                    Message msg = new Message(conMessagesArray[i]);
+                    if (!newMessages.Contains(msg))
+                    {
+                        newMessages.Add(msg);
+                    }
+                }
+                ClassLibrary.CASE5_FLAG = true;
             }
         }
     }
