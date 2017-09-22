@@ -18,6 +18,7 @@ namespace Protocol
         public const string CASE_1 = "CASE 1 ";
         public const string LOGIN = "LOGIN";
         public const string MENU_OPTION = "MENUOPTION";
+        public const string DISCONNECT = "DISCONNECT";
 
         //FLAGS
         public static bool LOGIN_FLAG = false;

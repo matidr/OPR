@@ -84,6 +84,10 @@ namespace Cliente
                     case ClassLibrary.CASE_1:
                         operations.Case1(text);
                         break;
+
+                    case ClassLibrary.DISCONNECT:
+                        clientIsConnected = false;
+                        break;
                 }
             }
         }

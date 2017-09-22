@@ -92,6 +92,9 @@ namespace Sockets
                     Console.WriteLine("------------------------------" + "\n");
                     MainMenu(clientSocket, classLibrary);
                     break;
+                case "6":
+                    
+                    break;
 
                 default:
                     Console.WriteLine("Por favor seleccione una opcion del menú" + "\n");

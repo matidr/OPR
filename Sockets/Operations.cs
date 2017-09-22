@@ -68,7 +68,6 @@ namespace Sockets
                     if (friendshipRequests.Count > 0)
                     {
                         PrintFriends(clientSocket, classLibrary, friendshipRequests);
-                        classLibrary.sendData(clientSocket, "FINISH");
                         //hay que hacer un sub-menú para que acepte las solicitudes o rechace
                     }
                     else
@@ -97,6 +96,7 @@ namespace Sockets
                     }
                     break;
                 case "6":
+                    classLibrary.sendData(clientSocket, ClassLibrary.DISCONNECT + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.DISCONNECT);
                     DisconnectClient(clientSocket, classLibrary, theUser);
                     break;
                 default:
