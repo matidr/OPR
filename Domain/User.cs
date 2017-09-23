@@ -44,6 +44,25 @@ namespace Domain
             PendingFriendshipRequest.Add(theRequester);
         }
 
+        public void AcceptFriendRequest(User friendRequest)
+        {
+            lock (friendRequest)//pendingFriendhipRequest TODO
+            {
+                this.pendingFriendshipRequest.Remove(friendRequest);
+            }
+            lock (Friends)
+            {
+                this.Friends.Add(friendRequest);
+            }
+        }
+
+        public void CancelFriendRequest(User friendRequest)
+        {
+            lock (friendRequest)
+            {
+                this.pendingFriendshipRequest.Remove(friendRequest);
+            }
+        }
         public void AddFriend(User friend)
         {
             friends.Add(friend);

@@ -10,7 +10,7 @@ using Protocol;
 
 namespace Sockets
 {
-    public class Operations
+    public class ClientOperations
     {
         private Context myContext;
         private List<User> connectedFriends;
@@ -19,7 +19,7 @@ namespace Sockets
         private User currentUser;
         
 
-        public Operations(Context context)
+        public ClientOperations(Context context)
         {
             myContext = context;
             connectedFriends = new List<User>();
@@ -60,6 +60,7 @@ namespace Sockets
                     {
                         Console.WriteLine("No tienes amigos conectados en este momento");
                     }
+                    ClassLibrary.CASE1_FLAG = false;
                     Console.WriteLine("------------------------------" + "\n");
                     MainMenu(clientSocket, classLibrary);
                     break;
@@ -76,12 +77,15 @@ namespace Sockets
                             j++;
                         }
                         Console.WriteLine("------------------------------" + "\n");
+                        FriendRequestSubMenu(clientSocket, classLibrary);
                     }
                     else
                     {
                         Console.WriteLine("No tienes solicitudes de amistad pendientes");
                     }
+                    ClassLibrary.CASE2_FLAG = false;
                     Console.WriteLine("------------------------------" + "\n");
+                    while (!ClassLibrary.CASE2A_FLAG) { }
                     MainMenu(clientSocket, classLibrary);
                     break;
 
@@ -109,6 +113,7 @@ namespace Sockets
                         Console.WriteLine("No tienes mensajes sin leer");
                     }
                     Console.WriteLine("------------------------------" + "\n");
+                    ClassLibrary.CASE5_FLAG = false;
                     MainMenu(clientSocket, classLibrary);
                     break;
 
@@ -122,6 +127,26 @@ namespace Sockets
                     break;
             }
 
+        }
+
+        public void FriendRequestSubMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary)
+        {
+            Console.WriteLine("Digite el nombre de usuario de la solicitud de amistad que desea gestionar");
+            Console.WriteLine("------------------------------");
+            string friendRequestUsername = Console.ReadLine();
+            Console.WriteLine("------------------------------");
+            Console.WriteLine("Para aceptar digite 1 y para cancelar 0");
+            Console.WriteLine("------------------------------");
+            string accept = Console.ReadLine();
+            if (friendRequest.Contains(new User(friendRequestUsername)) && (accept == "1" || accept == "0"))
+            {
+                string returnData = "";
+                
+                returnData = currentUser.Username + ClassLibrary.LIST_SEPARATOR + friendRequestUsername + ClassLibrary.LIST_SEPARATOR + accept;
+                classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
+            }
+            //while (!ClassLibrary.CASE2A_FLAG) { }
+            MainMenu(clientSocket, classLibrary);
         }
 
         public void validateLogin(Socket clientSocket, Protocol.ClassLibrary classLibrary, string response)
@@ -194,6 +219,7 @@ namespace Sockets
             }
         }
 
+        
         public void Case5(string text)
         {
             lock (newMessages)

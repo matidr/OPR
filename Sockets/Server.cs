@@ -14,7 +14,7 @@ namespace Sockets
         private static Socket serverSocket;
         private static bool serverIsOn = false;
         private static Context myContext;
-        private static Operations operations;
+        private static ServerOperations operations;
 
         static void Main(string[] args)
         {
@@ -30,7 +30,7 @@ namespace Sockets
         private static void StartServer()
         {
             myContext = new Context();
-            operations = new Operations(myContext);
+            operations = new ServerOperations(myContext);
             // EndPoint(IP, Port)
             var serverIpEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000);
 
@@ -80,6 +80,15 @@ namespace Sockets
                         string username = menuOptionInfo[1];
                         User theUser = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
                         operations.MainMenu(clientSocket, classLibrary, theUser, menuOption);
+                        break;
+                    case ClassLibrary.SECONDARY_MENU:
+                        string[] info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                        string loggedInUsername = info[0];
+                        string friendRequestUsername = info[1];
+                        string accept = info[2];
+                        User loggedInUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedInUsername));
+                        User userToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendRequestUsername));
+                        operations.SecondaryMenu(clientSocket, classLibrary, loggedInUser, userToAccept, accept);
                         break;
                 }
             }

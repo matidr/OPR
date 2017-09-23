@@ -10,12 +10,12 @@ using Protocol;
 
 namespace Sockets
 {
-    public class Operations
+    public class ServerOperations
     {
         private Context myContext;
         
 
-        public Operations(Context context)
+        public ServerOperations(Context context)
         {
             myContext = context;
         }
@@ -100,10 +100,27 @@ namespace Sockets
                     classLibrary.sendData(clientSocket, ClassLibrary.DISCONNECT + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.DISCONNECT);
                     DisconnectClient(clientSocket, classLibrary, theUser);
                     break;
+
                 default:
                     classLibrary.sendData(clientSocket, "ERROR. Opcion incorrecta");
                     break;
             }
+        }
+        public void SecondaryMenu (Socket clientSocket, Protocol.ClassLibrary classLibrary, User loggedInUser, User userToAccept, string accept)
+        {
+            if (accept == "1")
+            {
+                loggedInUser.AcceptFriendRequest(userToAccept);
+            }
+            else
+            {
+                if (accept == "0")
+                {
+                    loggedInUser.CancelFriendRequest(userToAccept);
+                }
+
+            }
+
         }
 
         private void DisconnectClient(Socket clientSocket, Protocol.ClassLibrary classLibrary, User theUser)
@@ -129,6 +146,8 @@ namespace Sockets
                 user.FriendShipRequest(new User("Pedro"));
                 myContext.AddNewUser(user);
                 myContext.ConnectUser(user);
+                myContext.AddNewUser(new User("Matias"));
+                myContext.AddNewUser(new User("Pedro"));
                 user.UnreadMessages.Add(new Message("leslie", "este es un msj sin leer", myContext));
                 user.UnreadMessages.Add(new Message("leslie", "este es un otro msj sin leer", myContext));
                 classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "OK. Bienvenido");

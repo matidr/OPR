@@ -15,21 +15,18 @@ namespace Cliente
     public class Client
     {
         private static Context myContext;
-        private static Operations operations;
+        private static ClientOperations operations;
         private static bool clientIsConnected = false;
         static void Main(string[] args)
         {
             //ALERT: cuando mandemos integer, no conviertamos en string y mandemos en string, mandemos c/ tipo de dato con el tipo que realmente es. Hay librerias q convierten c/tipo
-            
             ConnectToServer();
-
         }
 
         private static void ConnectToServer()
         {
-
             myContext = new Context();
-            operations = new Operations(myContext);
+            operations = new ClientOperations(myContext);
 
             // endpoint del servidor al que me voy a conectar
             var serverIpEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000);
