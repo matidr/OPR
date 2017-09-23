@@ -81,9 +81,10 @@ namespace Sockets
                 case "3":
                     //3. Enviar solicitud de amistad
                     break;
-
+            
                 case "4":
                     //4. Enviar mensaje a un amigo
+                    
                     break;
 
                 case "5":
@@ -129,8 +130,9 @@ namespace Sockets
                 user.FriendShipRequest(new User("Pedro"));
                 myContext.AddNewUser(user);
                 myContext.ConnectUser(user);
-                user.UnreadMessages.Add(new Message("leslie", "este es un msj sin leer", myContext));
-                user.UnreadMessages.Add(new Message("leslie", "este es un otro msj sin leer", myContext));
+                myContext.AddUserSocket(user.Username, clientSocket);
+                user.UnreadMessages.Add(new Message("matias.dirusso", "este es un msj sin leer", myContext));
+                user.UnreadMessages.Add(new Message("matias.dirusso", "este es un otro msj sin leer", myContext));
                 classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "OK. Bienvenido");
             }
             else
@@ -142,7 +144,20 @@ namespace Sockets
                     if (myContext.CorrectPassword(userID, password))
                     {
                         myContext.ConnectUser(new User(userID, password));
-                        classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "OK. Bienvenido");
+                        myContext.AddUserSocket(userID, clientSocket);
+                        User user = myContext.ExistingUsers.Find(x => x.Username.Equals(userID));
+                        if (user.UnreadMessages.Count > 0)
+                        {
+                            string unreadMessages = "";
+                            foreach (Message m in user.UnreadMessages)
+                            {
+                                unreadMessages = unreadMessages + m.TheUser.Username + ": " + m.TheMessage + ClassLibrary.LIST_SEPARATOR;
+                            }
+                            classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "MSJS" + ClassLibrary.LIST_SEPARATOR + unreadMessages);
+                        } else
+                        {
+                            classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "OK. Bienvenido");
+                        }
                     }
                     else
                     {
@@ -154,6 +169,26 @@ namespace Sockets
                     classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "ERROR: Usuario ya conectado");
                 }
             }
+        }
+
+        public void Case4(Socket clientSocket, Protocol.ClassLibrary classLibrary,string fromUsername, string toUsername, string message)
+        {
+            if (myContext.UserAlreadyConnected(toUsername))
+            {
+                Socket toSocket = myContext.UsersSockets[toUsername];
+                classLibrary.sendData(toSocket, ClassLibrary.NEW_MESSAGE + ClassLibrary.PROTOCOL_SEPARATOR + fromUsername + ClassLibrary.LIST_SEPARATOR + message);
+                classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + "OK");
+            }else
+            {
+                User user = myContext.ExistingUsers.Find(x => x.Username.Equals(toUsername));
+                user.UnreadMessages.Add(new Message(fromUsername, message, myContext));
+            }
+        }
+
+        public void ClearUnreadMessages(Socket clientSocket, ClassLibrary classLibrary, string username)
+        {
+            User user = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
+            user.UnreadMessages.Clear();
         }
     }
 }

@@ -17,7 +17,10 @@ namespace Protocol
         public const string END_OF_MESSAGE = "FINISH";
         public const string CASE_1 = "CASE 1 ";
         public const string CASE_2 = "CASE 2 ";
+        public const string CASE_4 = "CASE 4 ";
         public const string CASE_5 = "CASE 5 ";
+        public const string NEW_MESSAGE = "NewMessage ";
+        public const string CLEAR_UNREAD_MESSAGES = "ClearUnreadMessages";
         public const string LOGIN = "LOGIN";
         public const string MENU_OPTION = "MENUOPTION";
         public const string DISCONNECT = "DISCONNECT";
