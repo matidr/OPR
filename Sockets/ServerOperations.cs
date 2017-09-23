@@ -109,19 +109,17 @@ namespace Sockets
         }
         public void SecondaryMenu (Socket clientSocket, Protocol.ClassLibrary classLibrary, User loggedInUser, User userToAccept, string accept)
         {
-            if (accept == "1")
+            if (accept.Equals("1"))
             {
                 loggedInUser.AcceptFriendRequest(userToAccept);
             }
             else
             {
-                if (accept == "0")
+                if (accept.Equals("0"))
                 {
                     loggedInUser.CancelFriendRequest(userToAccept);
                 }
-
             }
-
         }
 
         private void DisconnectClient(Socket clientSocket, Protocol.ClassLibrary classLibrary, User theUser)
