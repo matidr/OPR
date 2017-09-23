@@ -86,6 +86,14 @@ namespace Cliente
                         operations.Case2(text);
                         break;
 
+                    case ClassLibrary.CASE_4:
+                        operations.Case4(text);
+                        break;
+
+                    case ClassLibrary.NEW_MESSAGE:
+                        operations.NewMessage(text);
+                        break;
+
                     case ClassLibrary.CASE_5:
                         operations.Case5(text);
                         break;

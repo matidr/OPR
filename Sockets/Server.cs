@@ -90,6 +90,18 @@ namespace Sockets
                         User userToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendRequestUsername));
                         operations.SecondaryMenu(clientSocket, classLibrary, loggedInUser, userToAccept, accept);
                         break;
+                    case ClassLibrary.CASE_4:
+                        string[] case4Info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                        string fromUsername = case4Info[0];
+                        string toUsername = case4Info[1];
+                        string message = case4Info[2];
+
+                        operations.Case4(clientSocket, classLibrary, fromUsername, toUsername, message);
+                        break;
+
+                    case ClassLibrary.CLEAR_UNREAD_MESSAGES:
+                        operations.ClearUnreadMessages(clientSocket, classLibrary, text);
+                        break;
                 }
             }
             clientSocket.Close();

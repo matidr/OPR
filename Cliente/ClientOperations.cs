@@ -93,6 +93,11 @@ namespace Sockets
                     break;
 
                 case "4":
+                    Console.WriteLine("Ingrese el nombre de usuario al que quiere mandarle msj: ");
+                    string toUsername = Console.ReadLine();
+                    Console.WriteLine("Ingrese el mensaje a enviar: ");
+                    string message = Console.ReadLine();
+                    classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + currentUser.Username + ClassLibrary.LIST_SEPARATOR + toUsername + ClassLibrary.LIST_SEPARATOR + message);
                     break;
 
                 case "5":
@@ -162,6 +167,17 @@ namespace Sockets
                 Console.WriteLine("Vuelva a ingresar los datos: ");
                 requestLogin(clientSocket, classLibrary);
             }
+            else if (response.Contains("MSJS"))
+            {
+                Console.WriteLine("Bienvenido. Tiene los siguientes mensajes sin leer: ");
+               string[] unreadMessagesArray = response.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
+                for(int i =1; i < unreadMessagesArray.Length - 1; i++)
+                {
+                    Console.WriteLine(unreadMessagesArray[i]);
+                }
+                classLibrary.sendData(clientSocket, ClassLibrary.CLEAR_UNREAD_MESSAGES + ClassLibrary.PROTOCOL_SEPARATOR + currentUser.Username);
+                ClassLibrary.LOGIN_FLAG = true;
+            }
         }
 
         public void requestLogin(Socket clientSocket, Protocol.ClassLibrary classLibrary)
@@ -219,7 +235,22 @@ namespace Sockets
             }
         }
 
-        
+        public void Case4(string text)
+        {
+            if (text.Contains("OK")) { 
+            Console.WriteLine("Mensaje enviado");
+            }
+        }
+
+        public void NewMessage(string text)
+        {
+            string[] conMessagesArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
+            string fromUser = conMessagesArray[0];
+            string message = conMessagesArray[1];
+            Console.WriteLine("Nuevo mensaje de " + fromUser + ": ");
+            Console.WriteLine(message);
+        }
+
         public void Case5(string text)
         {
             lock (newMessages)
