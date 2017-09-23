@@ -151,7 +151,6 @@ namespace Sockets
                 classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
             }
             //while (!ClassLibrary.CASE2A_FLAG) { }
-            MainMenu(clientSocket, classLibrary);
         }
 
         public void validateLogin(Socket clientSocket, Protocol.ClassLibrary classLibrary, string response)
@@ -222,6 +221,7 @@ namespace Sockets
         {
             lock (friendRequest)
             {
+                friendRequest.Clear();
                 string[] conFriendsArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
                 for (int i = 0; i < conFriendsArray.Length - 1; i++)
                 {

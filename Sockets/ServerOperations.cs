@@ -120,6 +120,7 @@ namespace Sockets
                     loggedInUser.CancelFriendRequest(userToAccept);
                 }
             }
+            classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + "OK");
         }
 
         private void DisconnectClient(Socket clientSocket, Protocol.ClassLibrary classLibrary, User theUser)
@@ -195,7 +196,7 @@ namespace Sockets
                 Socket toSocket = myContext.UsersSockets[toUsername];
                 classLibrary.sendData(toSocket, ClassLibrary.NEW_MESSAGE + ClassLibrary.PROTOCOL_SEPARATOR + fromUsername + ClassLibrary.LIST_SEPARATOR + message);
                 classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + "OK");
-            }else
+            } else
             {
                 User user = myContext.ExistingUsers.Find(x => x.Username.Equals(toUsername));
                 user.UnreadMessages.Add(new Message(fromUsername, message, myContext));

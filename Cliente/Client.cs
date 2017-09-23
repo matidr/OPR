@@ -98,6 +98,11 @@ namespace Cliente
                         operations.Case5(text);
                         break;
 
+                    case ClassLibrary.SECONDARY_MENU:
+                        if (text.Contains("OK")) { 
+                        ClassLibrary.CASE2A_FLAG = true;
+                        }
+                        break;
 
                     case ClassLibrary.DISCONNECT:
                         clientIsConnected = false;
