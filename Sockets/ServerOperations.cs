@@ -65,7 +65,11 @@ namespace Sockets
                     {
                         PrintFriends(clientSocket, classLibrary, connectedFriends, ClassLibrary.CASE_1);
                     }
-                    //validar cuando no hay datos, mandar algo.
+                    else
+                    {
+                        //classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + "NULL");
+                    }
+                    //TODO - mandar al cliente un msj cndo no hay usuarios, para que el cliente vacíe su lista
                     break;
 
                 case "2":
@@ -73,9 +77,11 @@ namespace Sockets
                     if (friendshipRequests.Count > 0)
                     {
                         PrintFriends(clientSocket, classLibrary, friendshipRequests, ClassLibrary.CASE_2);
-                        //hay que hacer un sub-menú para que acepte las solicitudes o rechace
                     }
-                    //validar cuando no hay datos, mandar algo.
+                    else
+                    {
+                        classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + "NULL");
+                    }
                     break;
 
                 case "3":

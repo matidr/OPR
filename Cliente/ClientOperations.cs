@@ -17,7 +17,7 @@ namespace Sockets
         private List<User> friendRequest;
         private List<Message> newMessages;
         private User currentUser;
-        
+
 
         public ClientOperations(Context context)
         {
@@ -45,10 +45,10 @@ namespace Sockets
             switch (menuOption)
             {
                 case "1":
-                    while (!ClassLibrary.CASE1_FLAG) {}
+                    while (!ClassLibrary.CASE1_FLAG) { }
                     int i = 1;
                     Console.WriteLine("Tus amigos conectados son: ");
-                    if(connectedFriends.Count!=0)
+                    if (connectedFriends.Count != 0)
                     {
                         foreach (User u in connectedFriends)
                         {
@@ -56,7 +56,8 @@ namespace Sockets
                             i++;
                         }
                         Console.WriteLine("------------------------------" + "\n");
-                    } else
+                    }
+                    else
                     {
                         Console.WriteLine("No tienes amigos conectados en este momento");
                     }
@@ -66,11 +67,12 @@ namespace Sockets
                     break;
 
                 case "2":
-                    while (!ClassLibrary.CASE2_FLAG) { } 
-                    int j = 1;
-                    Console.WriteLine("Tus solicitudes de amistad pendientes son: ");
-                    if (friendRequest.Count != 0)
+                    while (!ClassLibrary.CASE2_FLAG) { }
+                    ClassLibrary.CASE2_FLAG = false;
+                    if (friendRequest.Count > 0)
                     {
+                        int j = 1;
+                        Console.WriteLine("Tus solicitudes de amistad pendientes son: ");
                         foreach (User u in friendRequest)
                         {
                             Console.WriteLine(j + ") " + u.Username);
@@ -83,7 +85,6 @@ namespace Sockets
                     {
                         Console.WriteLine("No tienes solicitudes de amistad pendientes");
                     }
-                    ClassLibrary.CASE2_FLAG = false;
                     Console.WriteLine("------------------------------" + "\n");
                     while (!ClassLibrary.CASE2A_FLAG) { }
                     MainMenu(clientSocket, classLibrary);
@@ -124,7 +125,7 @@ namespace Sockets
                     break;
 
                 case "6":
-                    
+
                     break;
 
                 default:
@@ -138,21 +139,45 @@ namespace Sockets
         public void FriendRequestSubMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary)
         {
             Console.WriteLine("Digite el nombre de usuario de la solicitud de amistad que desea gestionar");
+            Console.WriteLine("o la opción 2 para volver al menú principal");
             Console.WriteLine("------------------------------");
             string friendRequestUsername = Console.ReadLine();
-            Console.WriteLine("------------------------------");
-            Console.WriteLine("Para aceptar digite 1 y para cancelar 0");
-            Console.WriteLine("------------------------------");
-            string accept = Console.ReadLine();
-            if (friendRequest.Contains(new User(friendRequestUsername)) && (accept == "1" || accept == "0"))
+            if (friendRequest.Contains(new User(friendRequestUsername)))
             {
-                string returnData = "";
-                
-                returnData = currentUser.Username + ClassLibrary.LIST_SEPARATOR + friendRequestUsername + ClassLibrary.LIST_SEPARATOR + accept;
-                classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
+                Console.WriteLine("------------------------------");
+                Console.WriteLine("Para aceptar digite 1 y para rechazar 0 y para volver al menú principal 2");
+                Console.WriteLine("------------------------------");
+                string accept = Console.ReadLine();
+                switch (accept)
+                {
+                    case "1": case "0":
+                        string returnData = "";
+                        returnData = currentUser.Username + ClassLibrary.LIST_SEPARATOR + friendRequestUsername + ClassLibrary.LIST_SEPARATOR + accept;
+                        classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
+                        break;
+                    case "2":
+                        break;
+                    default:
+                        Console.WriteLine("Opción invalida, por favor intente nuevamente");
+                        Console.WriteLine("------------------------------");
+                        FriendRequestSubMenu(clientSocket, classLibrary);
+                        break;
+                }
             }
-            //while (!ClassLibrary.CASE2A_FLAG) { }
+            else
+            {
+                if (!friendRequestUsername.Equals("2"))
+                {
+                    Console.WriteLine("Usuario inválido, por favor intente nuevamente");
+                    Console.WriteLine("------------------------------");
+                    FriendRequestSubMenu(clientSocket, classLibrary);
+                }
+                else
+                {
+                    ClassLibrary.CASE2A_FLAG = true;
+                }
 
+            }
         }
 
         public void validateLogin(Socket clientSocket, Protocol.ClassLibrary classLibrary, string response)
@@ -171,8 +196,8 @@ namespace Sockets
             else if (response.Contains("MSJS"))
             {
                 Console.WriteLine("Bienvenido. Tiene los siguientes mensajes sin leer: ");
-               string[] unreadMessagesArray = response.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
-                for(int i =1; i < unreadMessagesArray.Length - 1; i++)
+                string[] unreadMessagesArray = response.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
+                for (int i = 1; i < unreadMessagesArray.Length - 1; i++)
                 {
                     Console.WriteLine(unreadMessagesArray[i]);
                 }
@@ -208,11 +233,12 @@ namespace Sockets
             lock (connectedFriends)
             {
                 string[] conFriendsArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
-                for (int i=0; i<conFriendsArray.Length - 1; i++)
+                for (int i = 0; i < conFriendsArray.Length - 1; i++)
                 {
                     User user = new User(conFriendsArray[i]);
-                    if (!connectedFriends.Contains(user)) { 
-                    connectedFriends.Add(user);
+                    if (!connectedFriends.Contains(user))
+                    {
+                        connectedFriends.Add(user);
                     }
                 }
                 ClassLibrary.CASE1_FLAG = true;
@@ -221,26 +247,36 @@ namespace Sockets
 
         public void Case2(string text)
         {
-            lock (friendRequest)
+            if (!text.Equals(""))
             {
-                friendRequest.Clear();
-                string[] conFriendsArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
-                for (int i = 0; i < conFriendsArray.Length - 1; i++)
+                lock (friendRequest)
                 {
-                    User user = new User(conFriendsArray[i]);
-                    if (!friendRequest.Contains(user))
+                    friendRequest.Clear();
+                    string[] conFriendsArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
+                    for (int i = 0; i < conFriendsArray.Length - 1; i++)
                     {
-                        friendRequest.Add(user);
+                        User user = new User(conFriendsArray[i]);
+                        if (!friendRequest.Contains(user))
+                        {
+                            friendRequest.Add(user);
+                        }
                     }
                 }
                 ClassLibrary.CASE2_FLAG = true;
             }
         }
 
+        public void EmptyList()
+        {
+            friendRequest.Clear();
+            ClassLibrary.CASE2_FLAG = true;
+        }
+
         public void Case4(string text)
         {
-            if (text.Contains("OK")) { 
-            Console.WriteLine("Mensaje enviado");
+            if (text.Contains("OK"))
+            {
+                Console.WriteLine("Mensaje enviado");
             }
         }
 

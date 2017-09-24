@@ -100,9 +100,15 @@ namespace Cliente
                         break;
 
                     case ClassLibrary.SECONDARY_MENU:
-                        if (text.Contains("OK")) { 
-                        ClassLibrary.CASE2A_FLAG = true;
+                        if (text.Contains("OK"))
+                        {
+                            ClassLibrary.CASE2A_FLAG = true;
                         }
+                        else if (text.Contains("NULL"))
+                        {
+                            operations.EmptyList();
+                        }
+
                         break;
 
                     case ClassLibrary.DISCONNECT:
