@@ -98,6 +98,7 @@ namespace Sockets
                     Console.WriteLine("Ingrese el mensaje a enviar: ");
                     string message = Console.ReadLine();
                     classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + currentUser.Username + ClassLibrary.LIST_SEPARATOR + toUsername + ClassLibrary.LIST_SEPARATOR + message);
+                    MainMenu(clientSocket, classLibrary);
                     break;
 
                 case "5":
@@ -151,6 +152,7 @@ namespace Sockets
                 classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
             }
             //while (!ClassLibrary.CASE2A_FLAG) { }
+
         }
 
         public void validateLogin(Socket clientSocket, Protocol.ClassLibrary classLibrary, string response)
@@ -247,8 +249,10 @@ namespace Sockets
             string[] conMessagesArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
             string fromUser = conMessagesArray[0];
             string message = conMessagesArray[1];
+            Console.WriteLine("------------------------------" + "\n");
             Console.WriteLine("Nuevo mensaje de " + fromUser + ": ");
             Console.WriteLine(message);
+            Console.WriteLine("------------------------------" + "\n");
         }
 
         public void Case5(string text)

@@ -56,6 +56,7 @@ namespace Cliente
 
             }
             operations.MainMenu(clientSocket, classLibrary);
+            
             while (clientIsConnected) { 
            
             }
