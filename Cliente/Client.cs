@@ -87,6 +87,10 @@ namespace Cliente
                         operations.Case2(text);
                         break;
 
+                    case ClassLibrary.CASE_3:
+                        operations.Case3(text);
+                        break;
+
                     case ClassLibrary.CASE_4:
                         operations.Case4(text);
                         break;
@@ -107,6 +111,7 @@ namespace Cliente
                         else if (text.Contains("NULL"))
                         {
                             operations.EmptyList();
+                            ClassLibrary.CASE2A_FLAG = true;
                         }
 
                         break;

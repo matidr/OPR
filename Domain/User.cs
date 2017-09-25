@@ -26,7 +26,7 @@ namespace Domain
         {
             username = userId;
             friends = new List<User>();
-            PendingFriendshipRequest = new List<User>();
+            pendingFriendshipRequest = new List<User>();
             unreadMessages = new List<Message>();
         }
 
@@ -35,24 +35,25 @@ namespace Domain
             this.username = username;
             this.password = password;
             friends = new List<User>();
-            PendingFriendshipRequest = new List<User>();
+            pendingFriendshipRequest = new List<User>();
             unreadMessages = new List<Message>();
         }
 
-        public void FriendShipRequest(User theRequester)
+        public void AddFriendRequest(User theRequester)
         {
-            PendingFriendshipRequest.Add(theRequester);
+            pendingFriendshipRequest.Add(theRequester);
         }
+       
 
         public void AcceptFriendRequest(User friendRequest)
         {
-            lock (friendRequest)//pendingFriendhipRequest TODO
+            lock (PendingFriendshipRequest)
             {
-                this.pendingFriendshipRequest.Remove(friendRequest);
+                pendingFriendshipRequest.Remove(friendRequest);
             }
             lock (Friends)
             {
-                this.Friends.Add(friendRequest);
+                Friends.Add(friendRequest);
             }
         }
 
@@ -60,7 +61,7 @@ namespace Domain
         {
             lock (friendRequest)
             {
-                this.pendingFriendshipRequest.Remove(friendRequest);
+                pendingFriendshipRequest.Remove(friendRequest);
             }
         }
         public void AddFriend(User friend)

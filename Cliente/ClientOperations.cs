@@ -80,17 +80,36 @@ namespace Sockets
                         }
                         Console.WriteLine("------------------------------" + "\n");
                         FriendRequestSubMenu(clientSocket, classLibrary);
+                        while (!ClassLibrary.CASE2A_FLAG) { }
+                        MainMenu(clientSocket, classLibrary);
                     }
                     else
                     {
                         Console.WriteLine("No tienes solicitudes de amistad pendientes");
+                        MainMenu(clientSocket, classLibrary);
                     }
                     Console.WriteLine("------------------------------" + "\n");
-                    while (!ClassLibrary.CASE2A_FLAG) { }
-                    MainMenu(clientSocket, classLibrary);
+                    
                     break;
 
                 case "3":
+                    ClassLibrary.CASE3_FLAG = false;
+                    Console.WriteLine("Digite el nombre de usuario que desea agregar");
+                    string friendRequestUsername = Console.ReadLine();
+                    if (friendRequest.Contains(new User(friendRequestUsername)))
+                    {
+                        Console.WriteLine("Ya has enviado anteriormente esa solicitud de amistad");
+                    }
+                    else
+                    {
+                        string returnData = "";
+                        returnData = currentUser.Username + ClassLibrary.LIST_SEPARATOR + friendRequestUsername;
+                        classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
+                    }
+                        
+                    Console.WriteLine("------------------------------" + "\n");
+                    while (!ClassLibrary.CASE3_FLAG) { }
+                    MainMenu(clientSocket, classLibrary);
                     break;
 
                 case "4":
@@ -156,6 +175,7 @@ namespace Sockets
                         classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
                         break;
                     case "2":
+                        ClassLibrary.CASE2_FLAG = true;
                         break;
                     default:
                         Console.WriteLine("Opción invalida, por favor intente nuevamente");
@@ -263,6 +283,15 @@ namespace Sockets
                     }
                 }
                 ClassLibrary.CASE2_FLAG = true;
+            }
+        }
+
+        public void Case3(string text)
+        {
+            if (text.Contains("OK"))
+            {
+                Console.WriteLine("Usuario agregado");
+                ClassLibrary.CASE3_FLAG = true;
             }
         }
 

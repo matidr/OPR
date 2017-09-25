@@ -18,6 +18,7 @@ namespace Protocol
         public const string CASE_1 = "CASE 1 ";
         public const string CASE_2 = "CASE 2 ";
         public const string CASE_2A = "CASE 2A ";
+        public const string CASE_3 = "CASE 3 ";
         public const string CASE_4 = "CASE 4 ";
         public const string CASE_5 = "CASE 5 ";
         public const string NEW_MESSAGE = "NewMessage ";
@@ -32,6 +33,7 @@ namespace Protocol
         public static bool CASE1_FLAG = false;
         public static bool CASE2_FLAG = false;
         public static bool CASE2A_FLAG = false;
+        public static bool CASE3_FLAG = false;
         public static bool CASE5_FLAG = false;
 
         public int getFixedSize()

@@ -90,6 +90,14 @@ namespace Sockets
                         User userToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendRequestUsername));
                         operations.SecondaryMenu(clientSocket, classLibrary, loggedInUser, userToAccept, accept);
                         break;
+                    case ClassLibrary.CASE_3:
+                        string[] information = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                        string loggedUser = information[0];
+                        string friendToAdd = information[1];
+                        User uLoggedUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedUser));
+                        User uUserToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendToAdd));
+                        operations.SendFriendRequest(clientSocket, classLibrary, uLoggedUser, uUserToAccept);
+                        break; 
                     case ClassLibrary.CASE_4:
                         string[] case4Info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
                         string fromUsername = case4Info[0];

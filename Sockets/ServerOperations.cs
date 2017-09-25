@@ -83,14 +83,12 @@ namespace Sockets
                         classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + "NULL");
                     }
                     break;
-
                 case "3":
-                    //3. Enviar solicitud de amistad
+                    //no saquemos este case 3 porque se rompe al entrar al default :)
                     break;
-            
+
                 case "4":
-                    //4. Enviar mensaje a un amigo
-                    
+                    //no saquemos este case 4 porque se rompe al entrar al default :) 
                     break;
 
                 case "5":
@@ -113,6 +111,13 @@ namespace Sockets
                     break;
             }
         }
+
+        public void SendFriendRequest(Socket clientSocket, Protocol.ClassLibrary classLibrary, User loggedInUser, User friendRequested)
+        {
+            friendRequested.AddFriendRequest(loggedInUser);
+            classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + "OK");
+        }
+
         public void SecondaryMenu (Socket clientSocket, Protocol.ClassLibrary classLibrary, User loggedInUser, User userToAccept, string accept)
         {
             if (accept.Equals("1"))
@@ -148,8 +153,8 @@ namespace Sockets
                 User user = new User(userID, password);
                 user.AddFriend(new User("Denu"));
                 user.AddFriend(new User("Leslie"));
-                user.FriendShipRequest(new User("Matias"));
-                user.FriendShipRequest(new User("Pedro"));
+                user.AddFriendRequest(new User("Matias"));
+                user.AddFriendRequest(new User("Pedro"));
                 myContext.AddNewUser(user);
                 myContext.ConnectUser(user);
                 myContext.AddUserSocket(user.Username, clientSocket);
