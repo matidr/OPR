@@ -13,7 +13,7 @@ namespace Sockets
     public class ServerOperations
     {
         private Context myContext;
-        
+
 
         public ServerOperations(Context context)
         {
@@ -50,7 +50,7 @@ namespace Sockets
             foreach (Message m in messages)
             {
                 returnData = returnData + "[" + m.TheUser.Username + "] " + m.TheMessage + ClassLibrary.LIST_SEPARATOR;
-                
+
             }
             classLibrary.sendData(clientSocket, theCase + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
         }
@@ -118,7 +118,7 @@ namespace Sockets
             classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + "OK");
         }
 
-        public void SecondaryMenu (Socket clientSocket, Protocol.ClassLibrary classLibrary, User loggedInUser, User userToAccept, string accept)
+        public void SecondaryMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary, User loggedInUser, User userToAccept, string accept)
         {
             if (accept.Equals("1"))
             {
@@ -183,7 +183,8 @@ namespace Sockets
                                 unreadMessages = unreadMessages + m.TheUser.Username + ": " + m.TheMessage + ClassLibrary.LIST_SEPARATOR;
                             }
                             classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "MSJS" + ClassLibrary.LIST_SEPARATOR + unreadMessages);
-                        } else
+                        }
+                        else
                         {
                             classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "OK. Bienvenido");
                         }
@@ -200,17 +201,26 @@ namespace Sockets
             }
         }
 
-        public void Case4(Socket clientSocket, Protocol.ClassLibrary classLibrary,string fromUsername, string toUsername, string message)
+        public void Case4(Socket clientSocket, Protocol.ClassLibrary classLibrary, string fromUsername, string toUsername, string message)
         {
-            if (myContext.UserAlreadyConnected(toUsername))
+            User userFrom = myContext.ExistingUsers.Find(x => x.Username.Equals(fromUsername));
+            User userTo = userFrom.Friends.Find(x => x.Username.Equals(toUsername));
+            if (userTo != null)
             {
-                Socket toSocket = myContext.UsersSockets[toUsername];
-                classLibrary.sendData(toSocket, ClassLibrary.NEW_MESSAGE + ClassLibrary.PROTOCOL_SEPARATOR + fromUsername + ClassLibrary.LIST_SEPARATOR + message);
-                classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + "OK");
+                if (myContext.UserAlreadyConnected(toUsername))
+                {
+                    Socket toSocket = myContext.UsersSockets[toUsername];
+                    classLibrary.sendData(toSocket, ClassLibrary.NEW_MESSAGE + ClassLibrary.PROTOCOL_SEPARATOR + fromUsername + ClassLibrary.LIST_SEPARATOR + message);
+                    classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + "OK");
+                }
+                else
+                {
+                    User user = myContext.ExistingUsers.Find(x => x.Username.Equals(toUsername));
+                    user.UnreadMessages.Add(new Message(fromUsername, message, myContext));
+                }
             } else
             {
-                User user = myContext.ExistingUsers.Find(x => x.Username.Equals(toUsername));
-                user.UnreadMessages.Add(new Message(fromUsername, message, myContext));
+                classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + "ERROR");
             }
         }
 

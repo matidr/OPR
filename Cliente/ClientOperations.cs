@@ -89,7 +89,7 @@ namespace Sockets
                         MainMenu(clientSocket, classLibrary);
                     }
                     Console.WriteLine("------------------------------" + "\n");
-                    
+
                     break;
 
                 case "3":
@@ -106,7 +106,7 @@ namespace Sockets
                         returnData = currentUser.Username + ClassLibrary.LIST_SEPARATOR + friendRequestUsername;
                         classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
                     }
-                        
+
                     Console.WriteLine("------------------------------" + "\n");
                     while (!ClassLibrary.CASE3_FLAG) { }
                     MainMenu(clientSocket, classLibrary);
@@ -169,7 +169,8 @@ namespace Sockets
                 string accept = Console.ReadLine();
                 switch (accept)
                 {
-                    case "1": case "0":
+                    case "1":
+                    case "0":
                         string returnData = "";
                         returnData = currentUser.Username + ClassLibrary.LIST_SEPARATOR + friendRequestUsername + ClassLibrary.LIST_SEPARATOR + accept;
                         classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
@@ -306,6 +307,10 @@ namespace Sockets
             if (text.Contains("OK"))
             {
                 Console.WriteLine("Mensaje enviado");
+            }
+            else if (text.Contains("ERROR"))
+            {
+                Console.WriteLine("Error: debe agregar esta persona como amiga para poder enviarle mensajes");
             }
         }
 
