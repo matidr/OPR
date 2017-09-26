@@ -110,7 +110,7 @@ namespace Cliente
                         }
                         else if (text.Contains("NULL"))
                         {
-                            operations.EmptyList();
+                            operations.EmptyFriendRequestList();
                             ClassLibrary.CASE2A_FLAG = true;
                         }
 

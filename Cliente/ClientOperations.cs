@@ -46,10 +46,11 @@ namespace Sockets
             {
                 case "1":
                     while (!ClassLibrary.CASE1_FLAG) { }
-                    int i = 1;
-                    Console.WriteLine("Tus amigos conectados son: ");
-                    if (connectedFriends.Count != 0)
+                    ClassLibrary.CASE1_FLAG = false;
+                    if (connectedFriends.Count > 0)
                     {
+                        int i = 1;
+                        Console.WriteLine("Tus amigos conectados son: ");
                         foreach (User u in connectedFriends)
                         {
                             Console.WriteLine(i + ") " + u.Username);
@@ -61,7 +62,6 @@ namespace Sockets
                     {
                         Console.WriteLine("No tienes amigos conectados en este momento");
                     }
-                    ClassLibrary.CASE1_FLAG = false;
                     Console.WriteLine("------------------------------" + "\n");
                     MainMenu(clientSocket, classLibrary);
                     break;
@@ -89,7 +89,6 @@ namespace Sockets
                         MainMenu(clientSocket, classLibrary);
                     }
                     Console.WriteLine("------------------------------" + "\n");
-                    
                     break;
 
                 case "3":
@@ -250,15 +249,19 @@ namespace Sockets
 
         public void Case1(string text)
         {
-            lock (connectedFriends)
+            if (!text.Equals(""))
             {
-                string[] conFriendsArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
-                for (int i = 0; i < conFriendsArray.Length - 1; i++)
+                lock (connectedFriends)
                 {
-                    User user = new User(conFriendsArray[i]);
-                    if (!connectedFriends.Contains(user))
+                    connectedFriends.Clear();
+                    string[] conFriendsArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
+                    for (int i = 0; i < conFriendsArray.Length - 1; i++)
                     {
-                        connectedFriends.Add(user);
+                        User user = new User(conFriendsArray[i]);
+                        if (!connectedFriends.Contains(user))
+                        {
+                            connectedFriends.Add(user);
+                        }
                     }
                 }
                 ClassLibrary.CASE1_FLAG = true;
@@ -295,7 +298,7 @@ namespace Sockets
             }
         }
 
-        public void EmptyList()
+        public void EmptyFriendRequestList()
         {
             friendRequest.Clear();
             ClassLibrary.CASE2_FLAG = true;
