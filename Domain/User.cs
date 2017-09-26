@@ -13,7 +13,7 @@ namespace Domain
         private List<User> friends;
         private List<User> pendingFriendshipRequest;
         private List<Message> unreadMessages;
-        
+
 
         public User()
         {
@@ -43,7 +43,7 @@ namespace Domain
         {
             pendingFriendshipRequest.Add(theRequester);
         }
-       
+
 
         public void AcceptFriendRequest(User friendRequest)
         {

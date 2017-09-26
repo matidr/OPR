@@ -218,7 +218,8 @@ namespace Sockets
                     User user = myContext.ExistingUsers.Find(x => x.Username.Equals(toUsername));
                     user.UnreadMessages.Add(new Message(fromUsername, message, myContext));
                 }
-            } else
+            }
+            else
             {
                 classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + "ERROR");
             }

@@ -56,9 +56,10 @@ namespace Cliente
 
             }
             operations.MainMenu(clientSocket, classLibrary);
-            
-            while (clientIsConnected) { 
-           
+
+            while (clientIsConnected)
+            {
+
             }
             clientSocket.Close();
         }

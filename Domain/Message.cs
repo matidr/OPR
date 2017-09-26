@@ -15,7 +15,7 @@ namespace Domain
         {
             Display = "";
             theUser = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
-            theMessage = msg; 
+            theMessage = msg;
         }
         public Message(String disp)
         {

@@ -18,7 +18,7 @@ namespace Sockets
 
         static void Main(string[] args)
         {
-            
+
             StartServer();
             while (serverIsOn)
             {
@@ -53,7 +53,7 @@ namespace Sockets
             Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
             while (serverIsOn)
             {
-              
+
             }
             clientSocket.Close();
         }
@@ -97,7 +97,7 @@ namespace Sockets
                         User uLoggedUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedUser));
                         User uUserToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendToAdd));
                         operations.SendFriendRequest(clientSocket, classLibrary, uLoggedUser, uUserToAccept);
-                        break; 
+                        break;
                     case ClassLibrary.CASE_4:
                         string[] case4Info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
                         string fromUsername = case4Info[0];
@@ -115,6 +115,6 @@ namespace Sockets
             clientSocket.Close();
         }
 
-        
+
     }
 }
