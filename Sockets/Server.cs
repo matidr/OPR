@@ -43,6 +43,8 @@ namespace Sockets
             serverSocket.Listen(100);
             serverIsOn = true;
             Console.WriteLine("Server is on");
+            Thread myThread = new Thread(() => operations.ServerMenu());
+            myThread.Start();
         }
         private static void HandleClient(Socket clientSocket)
         {
