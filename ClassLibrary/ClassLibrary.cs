@@ -11,6 +11,31 @@ namespace Protocol
     {
         private static int FIXED_SIZE = 4;
 
+        //CONSTS
+        public const string PROTOCOL_SEPARATOR = "&";
+        public const string LIST_SEPARATOR = ";";
+        public const string END_OF_MESSAGE = "FINISH";
+        public const string CASE_1 = "CASE 1 ";
+        public const string CASE_2 = "CASE 2 ";
+        public const string CASE_2A = "CASE 2A ";
+        public const string CASE_3 = "CASE 3 ";
+        public const string CASE_4 = "CASE 4 ";
+        public const string CASE_5 = "CASE 5 ";
+        public const string NEW_MESSAGE = "NewMessage ";
+        public const string CLEAR_UNREAD_MESSAGES = "ClearUnreadMessages";
+        public const string LOGIN = "LOGIN";
+        public const string MENU_OPTION = "MENUOPTION";
+        public const string DISCONNECT = "DISCONNECT";
+        public const string SECONDARY_MENU = "SECONDARY MENU";
+
+        //FLAGS
+        public static bool LOGIN_FLAG = false;
+        public static bool CASE1_FLAG = false;
+        public static bool CASE2_FLAG = false;
+        public static bool CASE2A_FLAG = false;
+        public static bool CASE3_FLAG = false;
+        public static bool CASE5_FLAG = false;
+
         public int getFixedSize()
         {
             return FIXED_SIZE;

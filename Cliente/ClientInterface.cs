@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain
+namespace Cliente
 {
-    public class Class1
+    interface clientInterface
     {
+        void update();
     }
 }

@@ -18,14 +18,6 @@ C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\obj\Debug
 C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\obj\Debug\Sockets.pdb
 C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\bin\Debug\ClassLibrary.dll
 C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Sockets\bin\Debug\ClassLibrary.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.exe.config
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.exe
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\ClassLibrary.dll
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\ClassLibrary.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Server.csprojResolveAssemblyReference.cache
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Sockets.exe
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Sockets.pdb
 C:\github\obliredes\Sockets\bin\Debug\Sockets.exe.config
 C:\github\obliredes\Sockets\bin\Debug\Sockets.exe
 C:\github\obliredes\Sockets\bin\Debug\Sockets.pdb
@@ -37,3 +29,13 @@ C:\github\obliredes\Sockets\obj\Debug\Sockets.exe
 C:\github\obliredes\Sockets\obj\Debug\Sockets.pdb
 C:\github\obliredes\Sockets\bin\Debug\Domain.dll
 C:\github\obliredes\Sockets\bin\Debug\Domain.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.exe.config
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.exe
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\ClassLibrary.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Domain.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\ClassLibrary.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Domain.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Server.csprojResolveAssemblyReference.cache
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Sockets.exe
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Sockets.pdb

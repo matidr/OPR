@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Protocol;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -12,12 +13,12 @@ namespace Sockets
     {
         private static Socket serverSocket;
         private static bool serverIsOn = false;
-        private static List<User> onlineUsers;
-
-        public static List<User> OnlineUsers { get => onlineUsers; set => onlineUsers = value; }
+        private static Context myContext;
+        private static ServerOperations operations;
 
         static void Main(string[] args)
         {
+
             StartServer();
             while (serverIsOn)
             {
@@ -28,7 +29,8 @@ namespace Sockets
         }
         private static void StartServer()
         {
-            OnlineUsers = new List<User>();
+            myContext = new Context();
+            operations = new ServerOperations(myContext);
             // EndPoint(IP, Port)
             var serverIpEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000);
 
@@ -44,27 +46,74 @@ namespace Sockets
         }
         private static void HandleClient(Socket clientSocket)
         {
+            Thread myThread = new Thread(() => HandleBackgroundActivity(clientSocket));
+            myThread.Start();
+
             Console.WriteLine("Start waiting for clients");
             Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
             while (serverIsOn)
             {
-                var text = classLibrary.receiveData(clientSocket);
-                Console.WriteLine("El cliente envio:" + text);
 
             }
             clientSocket.Close();
         }
 
-        //private static void acceptConnections() { 
-        //    // Cuando llegan pedidos en paralelo, permite hasta 100 clientes al mismo tiempo(cuantos puedo guardar en la cola de futuras conexiones).
-        //    serverSocket.Listen(100);
+        private static void HandleBackgroundActivity(Socket clientSocket)
+        {
+            Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
+            while (serverIsOn)
+            {
+                var data = classLibrary.receiveData(clientSocket);
+                string[] arrayData = data.Split(ClassLibrary.PROTOCOL_SEPARATOR.ToCharArray());
+                string command = arrayData[0];
+                string text = arrayData[1];
 
-        //    Console.WriteLine("Start waiting for clients");
-        //    // Espera a que se conecte un cliente, una vez que el cliente se conecta pasa a la siguiente linea
-        //    serverSocket.Accept();
-        //    Console.WriteLine("Client connected");
-        //    Console.ReadLine();
-        //}
+                switch (command)
+                {
+                    case ClassLibrary.LOGIN:
+                        operations.login(clientSocket, classLibrary, text);
+                        break;
+
+                    case ClassLibrary.MENU_OPTION:
+                        string[] menuOptionInfo = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                        string menuOption = menuOptionInfo[0];
+                        string username = menuOptionInfo[1];
+                        User theUser = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
+                        operations.MainMenu(clientSocket, classLibrary, theUser, menuOption);
+                        break;
+                    case ClassLibrary.SECONDARY_MENU:
+                        string[] info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                        string loggedInUsername = info[0];
+                        string friendRequestUsername = info[1];
+                        string accept = info[2];
+                        User loggedInUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedInUsername));
+                        User userToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendRequestUsername));
+                        operations.SecondaryMenu(clientSocket, classLibrary, loggedInUser, userToAccept, accept);
+                        break;
+                    case ClassLibrary.CASE_3:
+                        string[] information = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                        string loggedUser = information[0];
+                        string friendToAdd = information[1];
+                        User uLoggedUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedUser));
+                        User uUserToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendToAdd));
+                        operations.SendFriendRequest(clientSocket, classLibrary, uLoggedUser, uUserToAccept);
+                        break;
+                    case ClassLibrary.CASE_4:
+                        string[] case4Info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                        string fromUsername = case4Info[0];
+                        string toUsername = case4Info[1];
+                        string message = case4Info[2];
+
+                        operations.Case4(clientSocket, classLibrary, fromUsername, toUsername, message);
+                        break;
+
+                    case ClassLibrary.CLEAR_UNREAD_MESSAGES:
+                        operations.ClearUnreadMessages(clientSocket, classLibrary, text);
+                        break;
+                }
+            }
+            clientSocket.Close();
+        }
 
 
     }
