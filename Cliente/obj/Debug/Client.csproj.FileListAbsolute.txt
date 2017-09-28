@@ -17,11 +17,24 @@ C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\obj\Debug
 C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\bin\Debug\ClassLibrary.dll
 C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\bin\Debug\ClassLibrary.pdb
 C:\Users\matia\Documents\Visual Studio 2017\Projects\Sockets 3\Cliente\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\github\obliredes\Cliente\bin\Debug\Cliente.exe.config
+C:\github\obliredes\Cliente\bin\Debug\Cliente.exe
+C:\github\obliredes\Cliente\bin\Debug\Cliente.pdb
+C:\github\obliredes\Cliente\bin\Debug\ClassLibrary.dll
+C:\github\obliredes\Cliente\bin\Debug\ClassLibrary.pdb
+C:\github\obliredes\Cliente\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\github\obliredes\Cliente\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\github\obliredes\Cliente\obj\Debug\Cliente.exe
+C:\github\obliredes\Cliente\obj\Debug\Cliente.pdb
+C:\github\obliredes\Cliente\bin\Debug\Domain.dll
+C:\github\obliredes\Cliente\bin\Debug\Domain.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\bin\Debug\Cliente.exe.config
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\bin\Debug\Cliente.exe
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\bin\Debug\Cliente.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\bin\Debug\ClassLibrary.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\bin\Debug\Domain.dll
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\bin\Debug\ClassLibrary.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\bin\Debug\Domain.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\obj\Debug\Client.csprojResolveAssemblyReference.cache
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\obj\Debug\Cliente.exe
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\obj\Debug\Cliente.pdb

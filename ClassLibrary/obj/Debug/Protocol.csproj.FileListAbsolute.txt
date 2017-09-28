@@ -1,5 +1,9 @@
+C:\github\obliredes\ClassLibrary\bin\Debug\ClassLibrary.dll
+C:\github\obliredes\ClassLibrary\bin\Debug\ClassLibrary.pdb
+C:\github\obliredes\ClassLibrary\obj\Debug\Protocol.csproj.CoreCompileInputs.cache
+C:\github\obliredes\ClassLibrary\obj\Debug\ClassLibrary.dll
+C:\github\obliredes\ClassLibrary\obj\Debug\ClassLibrary.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\bin\Debug\ClassLibrary.dll
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\bin\Debug\ClassLibrary.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\obj\Debug\Protocol.csprojResolveAssemblyReference.cache
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\obj\Debug\ClassLibrary.dll
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\obj\Debug\ClassLibrary.pdb
