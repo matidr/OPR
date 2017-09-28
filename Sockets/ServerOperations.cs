@@ -230,5 +230,45 @@ namespace Sockets
             User user = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
             user.UnreadMessages.Clear();
         }
+
+        private void PrintListInConsole(List<User> users, string message)
+        {
+            if (users.Count > 0)
+            {
+                foreach (User user in users)
+                {
+                    Console.WriteLine(user.Username);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No hay " + message + "en el momento");
+            }
+            Console.WriteLine();
+        }
+
+        public void ServerMenu()
+        {
+            Console.WriteLine("1) Mostrar todos los usuarios del sistema");
+            Console.WriteLine("2) Mostrar los usuarios conectados");
+            string option = Console.ReadLine();
+            switch (option)
+            {
+                case "1":
+                    PrintListInConsole(myContext.ExistingUsers, "usuarios registrados ");
+                    ServerMenu();
+                    break;
+
+                case "2":
+                    PrintListInConsole(myContext.ConnectedUsers, "usuarios conectados ");
+                    ServerMenu();
+                    break;
+
+                default:
+                    Console.WriteLine("Opcion incorrecta. Intentelo de nuevo.");
+                    ServerMenu();
+                    break;
+            }
+        }
     }
 }
