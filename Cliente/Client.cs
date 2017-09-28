@@ -9,6 +9,7 @@ using Protocol;
 using Domain;
 using Sockets;
 using System.Threading;
+using System.Configuration;
 
 namespace Cliente
 {
@@ -29,10 +30,14 @@ namespace Cliente
             operations = new ClientOperations(myContext);
 
             // endpoint del servidor al que me voy a conectar
-            var serverIpEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000);
+            string serverIp = ConfigurationManager.AppSettings["ServerIpAdress"];
+            int serverPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);
+            var serverIpEndPoint = new IPEndPoint(IPAddress.Parse(serverIp), serverPort);
 
             // endpoint del cliente (ip para la computadora local 127.0.0.1)
-            var clientEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 0);
+            string clientIp = ConfigurationManager.AppSettings["ClientIpAdress"];
+            int clientPort = Convert.ToInt32(ConfigurationManager.AppSettings["ClientPort"]);
+            var clientEndPoint = new IPEndPoint(IPAddress.Parse(clientIp), clientPort);
 
             // socket del cliente
             var clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
