@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Configuration;
 
 
 namespace Sockets
@@ -32,7 +33,9 @@ namespace Sockets
             myContext = new Context();
             operations = new ServerOperations(myContext);
             // EndPoint(IP, Port)
-            var serverIpEndPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), 6000);
+            string serverIp = ConfigurationManager.AppSettings["ServerIpAdress"];
+            int serverPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);
+            var serverIpEndPoint = new IPEndPoint(IPAddress.Parse(serverIp), serverPort);
 
             // Socket del servidor donde voy a escuchar conexiones
             serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
