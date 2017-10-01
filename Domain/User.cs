@@ -13,8 +13,8 @@ namespace Domain
         private List<User> friends;
         private List<User> pendingFriendshipRequest;
         private List<Message> unreadMessages;
-
-
+        private int connectedTimes;
+        private DateTime connectedTime;
         public User()
         {
             friends = new List<User>();
@@ -75,6 +75,8 @@ namespace Domain
         public List<User> PendingFriendshipRequest { get => pendingFriendshipRequest; set => pendingFriendshipRequest = value; }
         public List<Message> UnreadMessages { get => unreadMessages; set => unreadMessages = value; }
 
+        public int ConnectedTimes { get => connectedTimes; set => connectedTimes = value; }
+        public DateTime ConnectedTime { get => connectedTime; set => connectedTime = value; }
         //we need to redefine equals to be able to use contains from the user list. Equals should equal the username
 
         public override bool Equals(object value)

@@ -165,6 +165,8 @@ namespace Sockets
                 myContext.AddNewUser(user);
                 myContext.ConnectUser(user);
                 myContext.AddUserSocket(user.Username, clientSocket);
+                user.ConnectedTimes++;
+                user.ConnectedTime = DateTime.Now;
                 classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE + ". Bienvenido");
             }
             else
@@ -178,6 +180,8 @@ namespace Sockets
                         myContext.ConnectUser(new User(userID, password));
                         myContext.AddUserSocket(userID, clientSocket);
                         User user = myContext.ExistingUsers.Find(x => x.Username.Equals(userID));
+                        user.ConnectedTimes++;
+                        user.ConnectedTime = DateTime.Now;
                         if (user.UnreadMessages.Count > 0)
                         {
                             string unreadMessages = "";
@@ -240,7 +244,17 @@ namespace Sockets
             {
                 foreach (User user in users)
                 {
-                    Console.WriteLine(user.Username);
+                    if (message.Equals("usuarios conectados "))
+                    {
+                        DateTime nowDate = DateTime.Now;
+                        TimeSpan timespan = nowDate - user.ConnectedTime;
+                        Console.WriteLine(user.Username + " Amigos: " + user.Friends.Count + " Veces conectado: " + user.ConnectedTimes + " Tiempo conectado: " + Math.Round(timespan.TotalMinutes) + " minutos " + Math.Round(timespan.TotalSeconds) + " segundos");
+                    }
+                    else
+                    {
+                        Console.WriteLine(user.Username + " Amigos: " + user.Friends.Count + " Veces conectado: " + user.ConnectedTimes);
+                    }
+                    
                 }
             }
             else
