@@ -12,24 +12,37 @@ namespace Sockets
 {
     public class ClientOperations
     {
+        private const string CASE_0 = "0";
+        private const string CASE_1 = "1";
+        private const string CASE_2 = "2";
+        private const string CASE_3 = "3";
+        private const string CASE_4 = "4";
+        private const string CASE_5 = "5";
+        private const string CASE_6 = "6";
+        private const string EMPTY_STRING = "";
+
         private Context myContext;
         private List<User> connectedFriends;
         private List<User> friendRequest;
         private List<Message> newMessages;
         private User currentUser;
+        private Socket clientSocket;
+        private ClassLibrary classLibrary;
 
 
-        public ClientOperations(Context context)
+        public ClientOperations(Context context, Socket socket, ClassLibrary classLibrary)
         {
             myContext = context;
+            clientSocket = socket;
+            this.classLibrary = classLibrary;
             connectedFriends = new List<User>();
             friendRequest = new List<User>();
             newMessages = new List<Message>();
         }
 
-        public void MainMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary)
+        public void MainMenu()
         {
-            Console.WriteLine("");
+            Console.WriteLine(EMPTY_STRING);
             Console.WriteLine("Menu Principal");
             Console.WriteLine("------------------------------");
             Console.WriteLine("1. Ver contactos conectados");
@@ -44,7 +57,7 @@ namespace Sockets
             classLibrary.sendData(clientSocket, ClassLibrary.MENU_OPTION + ClassLibrary.PROTOCOL_SEPARATOR + menuOption + ClassLibrary.LIST_SEPARATOR + currentUser.Username);
             switch (menuOption)
             {
-                case "1":
+                case CASE_1:
                     while (!ClassLibrary.CASE1_FLAG) { }
                     ClassLibrary.CASE1_FLAG = false;
                     if (connectedFriends.Count > 0)
@@ -63,10 +76,10 @@ namespace Sockets
                         Console.WriteLine("No tienes amigos conectados en este momento");
                     }
                     Console.WriteLine("------------------------------" + "\n");
-                    MainMenu(clientSocket, classLibrary);
+                    MainMenu();
                     break;
 
-                case "2":
+                case CASE_2:
                     while (!ClassLibrary.CASE2_FLAG) { }
                     ClassLibrary.CASE2_FLAG = false;
                     if (friendRequest.Count > 0)
@@ -79,20 +92,20 @@ namespace Sockets
                             j++;
                         }
                         Console.WriteLine("------------------------------" + "\n");
-                        FriendRequestSubMenu(clientSocket, classLibrary);
+                        FriendRequestSubMenu();
                         while (!ClassLibrary.CASE2A_FLAG) { }
-                        MainMenu(clientSocket, classLibrary);
+                        MainMenu();
                     }
                     else
                     {
                         Console.WriteLine("No tienes solicitudes de amistad pendientes");
-                        MainMenu(clientSocket, classLibrary);
+                        MainMenu();
                     }
                     Console.WriteLine("------------------------------" + "\n");
 
                     break;
 
-                case "3":
+                case CASE_3:
                     ClassLibrary.CASE3_FLAG = false;
                     Console.WriteLine("Digite el nombre de usuario que desea agregar");
                     string friendRequestUsername = Console.ReadLine();
@@ -102,26 +115,26 @@ namespace Sockets
                     }
                     else
                     {
-                        string returnData = "";
+                        string returnData = EMPTY_STRING;
                         returnData = currentUser.Username + ClassLibrary.LIST_SEPARATOR + friendRequestUsername;
                         classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
                     }
 
                     Console.WriteLine("------------------------------" + "\n");
                     while (!ClassLibrary.CASE3_FLAG) { }
-                    MainMenu(clientSocket, classLibrary);
+                    MainMenu();
                     break;
 
-                case "4":
+                case CASE_4:
                     Console.WriteLine("Ingrese el nombre de usuario al que quiere mandarle msj: ");
                     string toUsername = Console.ReadLine();
                     Console.WriteLine("Ingrese el mensaje a enviar: ");
                     string message = Console.ReadLine();
                     classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + currentUser.Username + ClassLibrary.LIST_SEPARATOR + toUsername + ClassLibrary.LIST_SEPARATOR + message);
-                    MainMenu(clientSocket, classLibrary);
+                    MainMenu();
                     break;
 
-                case "5":
+                case CASE_5:
                     while (!ClassLibrary.CASE5_FLAG) { }
                     int k = 1;
                     Console.WriteLine("Mensajes sin leer: ");
@@ -140,22 +153,22 @@ namespace Sockets
                     }
                     Console.WriteLine("------------------------------" + "\n");
                     ClassLibrary.CASE5_FLAG = false;
-                    MainMenu(clientSocket, classLibrary);
+                    MainMenu();
                     break;
 
-                case "6":
+                case CASE_6:
 
                     break;
 
                 default:
                     Console.WriteLine("Por favor seleccione una opcion del menú" + "\n");
-                    MainMenu(clientSocket, classLibrary);
+                    MainMenu();
                     break;
             }
 
         }
 
-        public void FriendRequestSubMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary)
+        public void FriendRequestSubMenu()
         {
             Console.WriteLine("Digite el nombre de usuario de la solicitud de amistad que desea gestionar");
             Console.WriteLine("o la opción 2 para volver al menú principal");
@@ -169,29 +182,29 @@ namespace Sockets
                 string accept = Console.ReadLine();
                 switch (accept)
                 {
-                    case "1":
-                    case "0":
-                        string returnData = "";
+                    case CASE_1:
+                    case CASE_0:
+                        string returnData = EMPTY_STRING;
                         returnData = currentUser.Username + ClassLibrary.LIST_SEPARATOR + friendRequestUsername + ClassLibrary.LIST_SEPARATOR + accept;
                         classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
                         break;
-                    case "2":
+                    case CASE_2:
                         ClassLibrary.CASE2_FLAG = true;
                         break;
                     default:
                         Console.WriteLine("Opción invalida, por favor intente nuevamente");
                         Console.WriteLine("------------------------------");
-                        FriendRequestSubMenu(clientSocket, classLibrary);
+                        FriendRequestSubMenu();
                         break;
                 }
             }
             else
             {
-                if (!friendRequestUsername.Equals("2"))
+                if (!friendRequestUsername.Equals(CASE_2))
                 {
                     Console.WriteLine("Usuario inválido, por favor intente nuevamente");
                     Console.WriteLine("------------------------------");
-                    FriendRequestSubMenu(clientSocket, classLibrary);
+                    FriendRequestSubMenu();
                 }
                 else
                 {
@@ -201,20 +214,20 @@ namespace Sockets
             }
         }
 
-        public void validateLogin(Socket clientSocket, Protocol.ClassLibrary classLibrary, string response)
+        public void validateLogin(string response)
         {
-            if (response.Contains("OK"))
+            if (response.Contains(ClassLibrary.PROTOCOL_OK_RESPONSE))
             {
                 Console.WriteLine("BIENVENIDO " + currentUser.Username);
                 ClassLibrary.LOGIN_FLAG = true;
             }
-            else if (response.Contains("ERROR"))
+            else if (response.Contains(ClassLibrary.PROTOCOL_ERROR_RESPONSE))
             {
                 Console.WriteLine(response);
                 Console.WriteLine("Vuelva a ingresar los datos: ");
-                requestLogin(clientSocket, classLibrary);
+                requestLogin();
             }
-            else if (response.Contains("MSJS"))
+            else if (response.Contains(ClassLibrary.PROTOCOL_OK_MSJS_RESPONSE))
             {
                 Console.WriteLine("Bienvenido. Tiene los siguientes mensajes sin leer: ");
                 string[] unreadMessagesArray = response.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
@@ -227,7 +240,7 @@ namespace Sockets
             }
         }
 
-        public void requestLogin(Socket clientSocket, Protocol.ClassLibrary classLibrary)
+        public void requestLogin()
         {
             Console.WriteLine("Enter username:");
             var username = Console.ReadLine();
@@ -251,7 +264,7 @@ namespace Sockets
 
         public void Case1(string text)
         {
-            if (!text.Equals(""))
+            if (!text.Equals(EMPTY_STRING))
             {
                 lock (connectedFriends)
                 {
@@ -272,7 +285,7 @@ namespace Sockets
 
         public void Case2(string text)
         {
-            if (!text.Equals(""))
+            if (!text.Equals(EMPTY_STRING))
             {
                 lock (friendRequest)
                 {
@@ -293,7 +306,7 @@ namespace Sockets
 
         public void Case3(string text)
         {
-            if (text.Contains("OK"))
+            if (text.Contains(ClassLibrary.PROTOCOL_OK_RESPONSE))
             {
                 Console.WriteLine("Usuario agregado");
                 ClassLibrary.CASE3_FLAG = true;
@@ -308,11 +321,11 @@ namespace Sockets
 
         public void Case4(string text)
         {
-            if (text.Contains("OK"))
+            if (text.Contains(ClassLibrary.PROTOCOL_OK_RESPONSE))
             {
                 Console.WriteLine("Mensaje enviado");
             }
-            else if (text.Contains("ERROR"))
+            else if (text.Contains(ClassLibrary.PROTOCOL_ERROR_RESPONSE))
             {
                 Console.WriteLine("Error: debe agregar esta persona como amiga para poder enviarle mensajes");
             }

@@ -13,6 +13,9 @@ namespace Protocol
 
         //CONSTS
         public const string PROTOCOL_SEPARATOR = "&";
+        public const string PROTOCOL_OK_RESPONSE = "OK";
+        public const string PROTOCOL_ERROR_RESPONSE = "ERROR";
+        public const string PROTOCOL_OK_MSJS_RESPONSE = "MSJS";
         public const string LIST_SEPARATOR = ";";
         public const string END_OF_MESSAGE = "FINISH";
         public const string CASE_1 = "CASE 1 ";

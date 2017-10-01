@@ -15,9 +15,13 @@ namespace Cliente
 {
     public class Client
     {
+        private const string NULL = "NULL"; 
         private static Context myContext;
+        private static ClassLibrary classLibrary;
         private static ClientOperations operations;
         private static bool clientIsConnected = false;
+        private static Socket clientSocket;
+
         static void Main(string[] args)
         {
             //ALERT: cuando mandemos integer, no conviertamos en string y mandemos en string, mandemos c/ tipo de dato con el tipo que realmente es. Hay librerias q convierten c/tipo
@@ -27,8 +31,7 @@ namespace Cliente
         private static void ConnectToServer()
         {
             myContext = new Context();
-            operations = new ClientOperations(myContext);
-
+            classLibrary = new ClassLibrary();
             // endpoint del servidor al que me voy a conectar
             string serverIp = ConfigurationManager.AppSettings["ServerIpAdress"];
             int serverPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);
@@ -40,7 +43,7 @@ namespace Cliente
             var clientEndPoint = new IPEndPoint(IPAddress.Parse(clientIp), clientPort);
 
             // socket del cliente
-            var clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             //Stream y TCP van de la mano para transmitir datos por TCP
 
             // Ahora tengo que asociar el endPoint y el socket
@@ -50,17 +53,17 @@ namespace Cliente
             // Me conecto al endPoint del servidor
             clientSocket.Connect(serverIpEndPoint);
             clientIsConnected = true;
-
+            operations = new ClientOperations(myContext, clientSocket, classLibrary);
             Thread myThread = new Thread(() => ReceiveData(clientSocket));
             myThread.Start();
 
-            Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
-            operations.requestLogin(clientSocket, classLibrary);
+
+            operations.requestLogin();
             while (!ClassLibrary.LOGIN_FLAG)
             {
 
             }
-            operations.MainMenu(clientSocket, classLibrary);
+            operations.MainMenu();
 
             while (clientIsConnected)
             {
@@ -82,7 +85,7 @@ namespace Cliente
                 switch (command)
                 {
                     case ClassLibrary.LOGIN:
-                        operations.validateLogin(serverSocket, classLibrary, text);
+                        operations.validateLogin(text);
                         break;
 
                     case ClassLibrary.CASE_1:
@@ -110,11 +113,11 @@ namespace Cliente
                         break;
 
                     case ClassLibrary.SECONDARY_MENU:
-                        if (text.Contains("OK"))
+                        if (text.Contains(ClassLibrary.PROTOCOL_OK_RESPONSE))
                         {
                             ClassLibrary.CASE2A_FLAG = true;
                         }
-                        else if (text.Contains("NULL"))
+                        else if (text.Contains(NULL))
                         {
                             operations.EmptyFriendRequestList();
                             ClassLibrary.CASE2A_FLAG = true;

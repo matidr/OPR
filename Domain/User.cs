@@ -54,6 +54,7 @@ namespace Domain
             lock (Friends)
             {
                 Friends.Add(friendRequest);
+                friendRequest.Friends.Add(this);
             }
         }
 

@@ -12,12 +12,23 @@ namespace Sockets
 {
     public class ServerOperations
     {
+        private const string CASE_0 = "0";
+        private const string CASE_1 = "1";
+        private const string CASE_2 = "2";
+        private const string CASE_3 = "3";
+        private const string CASE_4 = "4";
+        private const string CASE_5 = "5";
+        private const string CASE_6 = "6";
+
         private Context myContext;
+        private Socket clientSocket;
+        private ClassLibrary classLibrary;
 
-
-        public ServerOperations(Context context)
+        public ServerOperations(Context context, Socket socket, ClassLibrary classLibrary)
         {
             myContext = context;
+            clientSocket = socket;
+            this.classLibrary = classLibrary;
         }
 
         public List<User> GetConnectedFriends(User theUser)
@@ -34,7 +45,7 @@ namespace Sockets
             return connectedFriends;
         }
 
-        public void PrintFriends(Socket clientSocket, Protocol.ClassLibrary classLibrary, List<User> friends, String theCase)
+        public void PrintFriends(List<User> friends, String theCase)
         {
             string returnData = "";
             foreach (User u in friends)
@@ -44,7 +55,7 @@ namespace Sockets
             classLibrary.sendData(clientSocket, theCase + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
         }
 
-        public void PrintMessages(Socket clientSocket, Protocol.ClassLibrary classLibrary, List<Message> messages, String theCase)
+        public void PrintMessages(List<Message> messages, String theCase)
         {
             string returnData = "";
             foreach (Message m in messages)
@@ -55,15 +66,15 @@ namespace Sockets
             classLibrary.sendData(clientSocket, theCase + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
         }
 
-        public void MainMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary, User theUser, string menuOption)
+        public void MainMenu(User theUser, string menuOption)
         {
             switch (menuOption)
             {
-                case "1":
+                case CASE_1:
                     List<User> connectedFriends = GetConnectedFriends(theUser);
                     if (connectedFriends.Count > 0)
                     {
-                        PrintFriends(clientSocket, classLibrary, connectedFriends, ClassLibrary.CASE_1);
+                        PrintFriends(connectedFriends, ClassLibrary.CASE_1);
                     }
                     else
                     {
@@ -72,75 +83,75 @@ namespace Sockets
                     //TODO - mandar al cliente un msj cndo no hay usuarios, para que el cliente vacíe su lista
                     break;
 
-                case "2":
+                case CASE_2:
                     List<User> friendshipRequests = theUser.PendingFriendshipRequest;
                     if (friendshipRequests.Count > 0)
                     {
-                        PrintFriends(clientSocket, classLibrary, friendshipRequests, ClassLibrary.CASE_2);
+                        PrintFriends(friendshipRequests, ClassLibrary.CASE_2);
                     }
                     else
                     {
                         classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + "NULL");
                     }
                     break;
-                case "3":
+                case CASE_3:
                     //no saquemos este case 3 porque se rompe al entrar al default :)
                     break;
 
-                case "4":
+                case CASE_4:
                     //no saquemos este case 4 porque se rompe al entrar al default :) 
                     break;
 
-                case "5":
+                case CASE_5:
 
                     List<Message> unreadMessages = theUser.UnreadMessages;
                     if (unreadMessages.Count > 0)
                     {
-                        PrintMessages(clientSocket, classLibrary, unreadMessages, ClassLibrary.CASE_5);
+                        PrintMessages(unreadMessages, ClassLibrary.CASE_5);
                     }
                     //validar cuando no hay datos, mandar algo.
                     break;
 
-                case "6":
+                case CASE_6:
                     classLibrary.sendData(clientSocket, ClassLibrary.DISCONNECT + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.DISCONNECT);
-                    DisconnectClient(clientSocket, classLibrary, theUser);
+                    DisconnectClient(theUser);
                     break;
 
                 default:
-                    classLibrary.sendData(clientSocket, "ERROR. Opcion incorrecta");
+                    classLibrary.sendData(clientSocket, ClassLibrary.PROTOCOL_ERROR_RESPONSE + ". Opcion incorrecta");
                     break;
             }
         }
 
-        public void SendFriendRequest(Socket clientSocket, Protocol.ClassLibrary classLibrary, User loggedInUser, User friendRequested)
+        public void SendFriendRequest(User loggedInUser, User friendRequested)
         {
             friendRequested.AddFriendRequest(loggedInUser);
-            classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + "OK");
+            classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
         }
 
-        public void SecondaryMenu(Socket clientSocket, Protocol.ClassLibrary classLibrary, User loggedInUser, User userToAccept, string accept)
+        public void SecondaryMenu(User loggedInUser, User userToAccept, string accept)
         {
-            if (accept.Equals("1"))
+            if (accept.Equals(CASE_1))
             {
                 loggedInUser.AcceptFriendRequest(userToAccept);
             }
             else
             {
-                if (accept.Equals("0"))
+                if (accept.Equals(CASE_0))
                 {
                     loggedInUser.CancelFriendRequest(userToAccept);
                 }
             }
-            classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + "OK");
+            classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
         }
 
-        private void DisconnectClient(Socket clientSocket, Protocol.ClassLibrary classLibrary, User theUser)
+        private void DisconnectClient(User theUser)
         {
             clientSocket.Disconnect(false);
             myContext.DisconnectUser(theUser);
         }
 
-        public void login(Socket clientSocket, Protocol.ClassLibrary classLibrary, string loginInfo)
+        public void login(string loginInfo)
         {
             string[] loginInfoArray = loginInfo.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
             string userID = loginInfoArray[0];
@@ -151,18 +162,10 @@ namespace Sockets
                 // REGISTER
 
                 User user = new User(userID, password);
-                user.AddFriend(new User("Denu"));
-                user.AddFriend(new User("Leslie"));
-                user.AddFriendRequest(new User("Matias"));
-                user.AddFriendRequest(new User("Pedro"));
                 myContext.AddNewUser(user);
                 myContext.ConnectUser(user);
                 myContext.AddUserSocket(user.Username, clientSocket);
-                myContext.AddNewUser(new User("Matias"));
-                myContext.AddNewUser(new User("Pedro"));
-                user.UnreadMessages.Add(new Message("leslie", "este es un msj sin leer", myContext));
-                user.UnreadMessages.Add(new Message("leslie", "este es un otro msj sin leer", myContext));
-                classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "OK. Bienvenido");
+                classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE + ". Bienvenido");
             }
             else
             {
@@ -182,26 +185,26 @@ namespace Sockets
                             {
                                 unreadMessages = unreadMessages + m.TheUser.Username + ": " + m.TheMessage + ClassLibrary.LIST_SEPARATOR;
                             }
-                            classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "MSJS" + ClassLibrary.LIST_SEPARATOR + unreadMessages);
+                            classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_MSJS_RESPONSE + ClassLibrary.LIST_SEPARATOR + unreadMessages);
                         }
                         else
                         {
-                            classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "OK. Bienvenido");
+                            classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE + ". Bienvenido");
                         }
                     }
                     else
                     {
-                        classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "ERROR: Contrasena incorrecta");
+                        classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_ERROR_RESPONSE + ": Contrasena incorrecta");
                     }
                 }
                 else
                 {
-                    classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + "ERROR: Usuario ya conectado");
+                    classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_ERROR_RESPONSE + ": Usuario ya conectado");
                 }
             }
         }
 
-        public void Case4(Socket clientSocket, Protocol.ClassLibrary classLibrary, string fromUsername, string toUsername, string message)
+        public void Case4(string fromUsername, string toUsername, string message)
         {
             User userFrom = myContext.ExistingUsers.Find(x => x.Username.Equals(fromUsername));
             User userTo = userFrom.Friends.Find(x => x.Username.Equals(toUsername));
@@ -211,7 +214,7 @@ namespace Sockets
                 {
                     Socket toSocket = myContext.UsersSockets[toUsername];
                     classLibrary.sendData(toSocket, ClassLibrary.NEW_MESSAGE + ClassLibrary.PROTOCOL_SEPARATOR + fromUsername + ClassLibrary.LIST_SEPARATOR + message);
-                    classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + "OK");
+                    classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
                 }
                 else
                 {
@@ -221,11 +224,11 @@ namespace Sockets
             }
             else
             {
-                classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + "ERROR");
+                classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_ERROR_RESPONSE);
             }
         }
 
-        public void ClearUnreadMessages(Socket clientSocket, ClassLibrary classLibrary, string username)
+        public void ClearUnreadMessages(string username)
         {
             User user = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
             user.UnreadMessages.Clear();
@@ -254,12 +257,12 @@ namespace Sockets
             string option = Console.ReadLine();
             switch (option)
             {
-                case "1":
+                case CASE_1:
                     PrintListInConsole(myContext.ExistingUsers, "usuarios registrados ");
                     ServerMenu();
                     break;
 
-                case "2":
+                case CASE_2:
                     PrintListInConsole(myContext.ConnectedUsers, "usuarios conectados ");
                     ServerMenu();
                     break;

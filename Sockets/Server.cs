@@ -16,6 +16,7 @@ namespace Sockets
         private static bool serverIsOn = false;
         private static Context myContext;
         private static ServerOperations operations;
+        private static ClassLibrary classLibrary;
 
         static void Main(string[] args)
         {
@@ -24,6 +25,7 @@ namespace Sockets
             while (serverIsOn)
             {
                 var client = serverSocket.Accept();
+                operations = new ServerOperations(myContext, client, classLibrary);
                 Thread myThread = new Thread(() => HandleClient(client));
                 myThread.Start();
             }
@@ -31,7 +33,7 @@ namespace Sockets
         private static void StartServer()
         {
             myContext = new Context();
-            operations = new ServerOperations(myContext);
+            classLibrary = new ClassLibrary();
             // EndPoint(IP, Port)
             string serverIp = ConfigurationManager.AppSettings["ServerIpAdress"];
             int serverPort = Convert.ToInt32(ConfigurationManager.AppSettings["ServerPort"]);
@@ -46,6 +48,7 @@ namespace Sockets
             serverSocket.Listen(100);
             serverIsOn = true;
             Console.WriteLine("Server is on");
+            operations = new ServerOperations(myContext, serverSocket, classLibrary);
             Thread myThread = new Thread(() => operations.ServerMenu());
             myThread.Start();
         }
@@ -55,7 +58,6 @@ namespace Sockets
             myThread.Start();
 
             Console.WriteLine("Start waiting for clients");
-            Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
             while (serverIsOn)
             {
 
@@ -65,7 +67,6 @@ namespace Sockets
 
         private static void HandleBackgroundActivity(Socket clientSocket)
         {
-            Protocol.ClassLibrary classLibrary = new Protocol.ClassLibrary();
             while (serverIsOn)
             {
                 var data = classLibrary.receiveData(clientSocket);
@@ -76,7 +77,7 @@ namespace Sockets
                 switch (command)
                 {
                     case ClassLibrary.LOGIN:
-                        operations.login(clientSocket, classLibrary, text);
+                        operations.login(text);
                         break;
 
                     case ClassLibrary.MENU_OPTION:
@@ -84,7 +85,7 @@ namespace Sockets
                         string menuOption = menuOptionInfo[0];
                         string username = menuOptionInfo[1];
                         User theUser = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
-                        operations.MainMenu(clientSocket, classLibrary, theUser, menuOption);
+                        operations.MainMenu(theUser, menuOption);
                         break;
                     case ClassLibrary.SECONDARY_MENU:
                         string[] info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
@@ -93,7 +94,7 @@ namespace Sockets
                         string accept = info[2];
                         User loggedInUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedInUsername));
                         User userToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendRequestUsername));
-                        operations.SecondaryMenu(clientSocket, classLibrary, loggedInUser, userToAccept, accept);
+                        operations.SecondaryMenu(loggedInUser, userToAccept, accept);
                         break;
                     case ClassLibrary.CASE_3:
                         string[] information = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
@@ -101,7 +102,7 @@ namespace Sockets
                         string friendToAdd = information[1];
                         User uLoggedUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedUser));
                         User uUserToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendToAdd));
-                        operations.SendFriendRequest(clientSocket, classLibrary, uLoggedUser, uUserToAccept);
+                        operations.SendFriendRequest(uLoggedUser, uUserToAccept);
                         break;
                     case ClassLibrary.CASE_4:
                         string[] case4Info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
@@ -109,11 +110,11 @@ namespace Sockets
                         string toUsername = case4Info[1];
                         string message = case4Info[2];
 
-                        operations.Case4(clientSocket, classLibrary, fromUsername, toUsername, message);
+                        operations.Case4(fromUsername, toUsername, message);
                         break;
 
                     case ClassLibrary.CLEAR_UNREAD_MESSAGES:
-                        operations.ClearUnreadMessages(clientSocket, classLibrary, text);
+                        operations.ClearUnreadMessages(text);
                         break;
                 }
             }
