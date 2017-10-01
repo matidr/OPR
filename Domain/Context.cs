@@ -18,8 +18,6 @@ namespace Domain
             existingUsers = new List<User>();
             connectedUsers = new List<User>();
             usersSockets = new Dictionary<string, Socket>();
-            connectedUsers.Add(new User("Denu"));
-            connectedUsers.Add(new User("Leslie"));
         }
         public List<User> ExistingUsers { get => existingUsers; set => existingUsers = value; }
         public List<User> ConnectedUsers { get => connectedUsers; set => connectedUsers = value; }
@@ -61,9 +59,6 @@ namespace Domain
             ConnectedUsers.RemoveAll(u => u.Username.Equals(user.Username));
             usersSockets.Remove(user.Username);
         }
-
-        //agregar usuario
-
 
     }
 }
