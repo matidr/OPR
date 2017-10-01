@@ -70,52 +70,55 @@ namespace Sockets
             while (serverIsOn)
             {
                 var data = classLibrary.receiveData(clientSocket);
-                string[] arrayData = data.Split(ClassLibrary.PROTOCOL_SEPARATOR.ToCharArray());
-                string command = arrayData[0];
-                string text = arrayData[1];
-
-                switch (command)
+                if (!data.Equals(ClassLibrary.EMPTY_STRING))
                 {
-                    case ClassLibrary.LOGIN:
-                        operations.login(text);
-                        break;
+                    string[] arrayData = data.Split(ClassLibrary.PROTOCOL_SEPARATOR.ToCharArray());
+                    string command = arrayData[0];
+                    string text = arrayData[1];
 
-                    case ClassLibrary.MENU_OPTION:
-                        string[] menuOptionInfo = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
-                        string menuOption = menuOptionInfo[0];
-                        string username = menuOptionInfo[1];
-                        User theUser = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
-                        operations.MainMenu(theUser, menuOption);
-                        break;
-                    case ClassLibrary.SECONDARY_MENU:
-                        string[] info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
-                        string loggedInUsername = info[0];
-                        string friendRequestUsername = info[1];
-                        string accept = info[2];
-                        User loggedInUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedInUsername));
-                        User userToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendRequestUsername));
-                        operations.SecondaryMenu(loggedInUser, userToAccept, accept);
-                        break;
-                    case ClassLibrary.CASE_3:
-                        string[] information = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
-                        string loggedUser = information[0];
-                        string friendToAdd = information[1];
-                        User uLoggedUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedUser));
-                        User uUserToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendToAdd));
-                        operations.SendFriendRequest(uLoggedUser, uUserToAccept);
-                        break;
-                    case ClassLibrary.CASE_4:
-                        string[] case4Info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
-                        string fromUsername = case4Info[0];
-                        string toUsername = case4Info[1];
-                        string message = case4Info[2];
+                    switch (command)
+                    {
+                        case ClassLibrary.LOGIN:
+                            operations.login(text);
+                            break;
 
-                        operations.Case4(fromUsername, toUsername, message);
-                        break;
+                        case ClassLibrary.MENU_OPTION:
+                            string[] menuOptionInfo = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                            string menuOption = menuOptionInfo[0];
+                            string username = menuOptionInfo[1];
+                            User theUser = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
+                            operations.MainMenu(theUser, menuOption);
+                            break;
+                        case ClassLibrary.SECONDARY_MENU:
+                            string[] info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                            string loggedInUsername = info[0];
+                            string friendRequestUsername = info[1];
+                            string accept = info[2];
+                            User loggedInUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedInUsername));
+                            User userToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendRequestUsername));
+                            operations.SecondaryMenu(loggedInUser, userToAccept, accept);
+                            break;
+                        case ClassLibrary.CASE_3:
+                            string[] information = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                            string loggedUser = information[0];
+                            string friendToAdd = information[1];
+                            User uLoggedUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedUser));
+                            User uUserToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendToAdd));
+                            operations.SendFriendRequest(uLoggedUser, uUserToAccept);
+                            break;
+                        case ClassLibrary.CASE_4:
+                            string[] case4Info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                            string fromUsername = case4Info[0];
+                            string toUsername = case4Info[1];
+                            string message = case4Info[2];
 
-                    case ClassLibrary.CLEAR_UNREAD_MESSAGES:
-                        operations.ClearUnreadMessages(text);
-                        break;
+                            operations.Case4(fromUsername, toUsername, message);
+                            break;
+
+                        case ClassLibrary.CLEAR_UNREAD_MESSAGES:
+                            operations.ClearUnreadMessages(text);
+                            break;
+                    }
                 }
             }
             clientSocket.Close();

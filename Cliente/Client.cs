@@ -15,7 +15,7 @@ namespace Cliente
 {
     public class Client
     {
-        private const string NULL = "NULL"; 
+        private const string NULL = "NULL";
         private static Context myContext;
         private static ClassLibrary classLibrary;
         private static ClientOperations operations;
@@ -78,56 +78,59 @@ namespace Cliente
             while (clientIsConnected)
             {
                 var data = classLibrary.receiveData(serverSocket);
-                string[] arrayData = data.Split(ClassLibrary.PROTOCOL_SEPARATOR.ToArray());
-                string command = arrayData[0];
-                string text = arrayData[1];
-
-                switch (command)
+                if (!data.Equals(ClassLibrary.EMPTY_STRING))
                 {
-                    case ClassLibrary.LOGIN:
-                        operations.validateLogin(text);
-                        break;
+                    string[] arrayData = data.Split(ClassLibrary.PROTOCOL_SEPARATOR.ToArray());
+                    string command = arrayData[0];
+                    string text = arrayData[1];
 
-                    case ClassLibrary.CASE_1:
-                        operations.Case1(text);
-                        break;
+                    switch (command)
+                    {
+                        case ClassLibrary.LOGIN:
+                            operations.validateLogin(text);
+                            break;
 
-                    case ClassLibrary.CASE_2:
-                        operations.Case2(text);
-                        break;
+                        case ClassLibrary.CASE_1:
+                            operations.Case1(text);
+                            break;
 
-                    case ClassLibrary.CASE_3:
-                        operations.Case3(text);
-                        break;
+                        case ClassLibrary.CASE_2:
+                            operations.Case2(text);
+                            break;
 
-                    case ClassLibrary.CASE_4:
-                        operations.Case4(text);
-                        break;
+                        case ClassLibrary.CASE_3:
+                            operations.Case3(text);
+                            break;
 
-                    case ClassLibrary.NEW_MESSAGE:
-                        operations.NewMessage(text);
-                        break;
+                        case ClassLibrary.CASE_4:
+                            operations.Case4(text);
+                            break;
 
-                    case ClassLibrary.CASE_5:
-                        operations.Case5(text);
-                        break;
+                        case ClassLibrary.NEW_MESSAGE:
+                            operations.NewMessage(text);
+                            break;
 
-                    case ClassLibrary.SECONDARY_MENU:
-                        if (text.Contains(ClassLibrary.PROTOCOL_OK_RESPONSE))
-                        {
-                            ClassLibrary.CASE2A_FLAG = true;
-                        }
-                        else if (text.Contains(NULL))
-                        {
-                            operations.EmptyFriendRequestList();
-                            ClassLibrary.CASE2A_FLAG = true;
-                        }
+                        case ClassLibrary.CASE_5:
+                            operations.Case5(text);
+                            break;
 
-                        break;
+                        case ClassLibrary.SECONDARY_MENU:
+                            if (text.Contains(ClassLibrary.PROTOCOL_OK_RESPONSE))
+                            {
+                                ClassLibrary.CASE2A_FLAG = true;
+                            }
+                            else if (text.Contains(NULL))
+                            {
+                                operations.EmptyFriendRequestList();
+                                ClassLibrary.CASE2A_FLAG = true;
+                            }
 
-                    case ClassLibrary.DISCONNECT:
-                        clientIsConnected = false;
-                        break;
+                            break;
+
+                        case ClassLibrary.DISCONNECT:
+                            clientIsConnected = false;
+                            break;
+                    }
                 }
             }
         }
