@@ -279,8 +279,8 @@ namespace Sockets
                         }
                     }
                 }
-                ClassLibrary.CASE1_FLAG = true;
             }
+            ClassLibrary.CASE1_FLAG = true;
         }
 
         public void Case2(string text)
