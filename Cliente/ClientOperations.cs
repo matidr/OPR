@@ -159,6 +159,9 @@ namespace Sockets
                 case CASE_6:
 
                     break;
+                case "":
+
+                    break; 
 
                 default:
                     Console.WriteLine("Por favor seleccione una opcion del menú" + "\n");
