@@ -130,7 +130,6 @@ namespace Cliente
                             {
                                 operations.EmptyFriendRequestList();
                                 ClassLibrary.CASE2A_FLAG = true;
-                                ClassLibrary.CASE1_FLAG = true;
                                 ClassLibrary.CASE5_FLAG = true; 
                             }
 

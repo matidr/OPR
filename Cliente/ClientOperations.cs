@@ -305,9 +305,6 @@ namespace Sockets
                 }
                 ClassLibrary.CASE2_FLAG = true;
             }
-            else
-            { }
-
         }
 
         public void Case3(string text)
