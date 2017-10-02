@@ -78,7 +78,7 @@ namespace Sockets
                     }
                     else
                     {
-                        classLibrary.sendData(clientSocket, ClassLibrary.CASE_1 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.EMPTY_STRING);
+                        classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.EMPTY_STRING);
                     }
                     //TODO - mandar al cliente un msj cndo no hay usuarios, para que el cliente vacíe su lista
                     break;

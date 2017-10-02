@@ -15,7 +15,6 @@ namespace Sockets
         private static Socket serverSocket;
         private static bool serverIsOn = false;
         private static Context myContext;
-        private static ServerOperations operations;
         private static ClassLibrary classLibrary;
 
         static void Main(string[] args)
@@ -25,7 +24,6 @@ namespace Sockets
             while (serverIsOn)
             {
                 var client = serverSocket.Accept();
-                operations = new ServerOperations(myContext, client, classLibrary);
                 Thread myThread = new Thread(() => HandleClient(client));
                 myThread.Start();
             }
@@ -48,12 +46,13 @@ namespace Sockets
             serverSocket.Listen(100);
             serverIsOn = true;
             Console.WriteLine("Server is on");
-            operations = new ServerOperations(myContext, serverSocket, classLibrary);
+            var operations = new ServerOperations(myContext, serverSocket, classLibrary);
             Thread myThread = new Thread(() => operations.ServerMenu());
             myThread.Start();
         }
         private static void HandleClient(Socket clientSocket)
         {
+            var operations = new ServerOperations(myContext, clientSocket, classLibrary);
             Thread myThread = new Thread(() => HandleBackgroundActivity(clientSocket));
             myThread.Start();
 
@@ -67,6 +66,7 @@ namespace Sockets
 
         private static void HandleBackgroundActivity(Socket clientSocket)
         {
+            var operations = new ServerOperations(myContext, clientSocket, classLibrary);
             while (serverIsOn)
             {
                 var data = classLibrary.receiveData(clientSocket);
