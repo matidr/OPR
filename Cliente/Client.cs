@@ -82,7 +82,11 @@ namespace Cliente
                 {
                     string[] arrayData = data.Split(ClassLibrary.PROTOCOL_SEPARATOR.ToArray());
                     string command = arrayData[0];
-                    string text = arrayData[1];
+                    string text = "";
+                    if (arrayData.Length > 1)
+                    {
+                        text = arrayData[1];
+                    }
 
                     switch (command)
                     {
