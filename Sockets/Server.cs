@@ -104,7 +104,10 @@ namespace Sockets
                             string friendToAdd = information[1];
                             User uLoggedUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedUser));
                             User uUserToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendToAdd));
-                            operations.SendFriendRequest(uLoggedUser, uUserToAccept);
+                            if ((!(uLoggedUser == null)) && (!(uUserToAccept == null)))
+                            {
+                                operations.SendFriendRequest(uLoggedUser, uUserToAccept);
+                            }
                             break;
                         case ClassLibrary.CASE_4:
                             string[] case4Info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());

@@ -47,11 +47,18 @@ namespace Cliente
             //Stream y TCP van de la mano para transmitir datos por TCP
 
             // Ahora tengo que asociar el endPoint y el socket
-            clientSocket.Bind(clientEndPoint);
+            try
+            {
+                clientSocket.Bind(clientEndPoint);
 
-            Console.WriteLine("Connecting to server...");
-            // Me conecto al endPoint del servidor
-            clientSocket.Connect(serverIpEndPoint);
+                Console.WriteLine("Connecting to server...");
+                // Me conecto al endPoint del servidor
+                clientSocket.Connect(serverIpEndPoint);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Revisa el IP o puerto de conexión");
+            }
             clientIsConnected = true;
             operations = new ClientOperations(myContext, clientSocket, classLibrary);
             Thread myThread = new Thread(() => ReceiveData(clientSocket));
@@ -123,6 +130,8 @@ namespace Cliente
                             {
                                 operations.EmptyFriendRequestList();
                                 ClassLibrary.CASE2A_FLAG = true;
+                                ClassLibrary.CASE1_FLAG = true;
+                                ClassLibrary.CASE5_FLAG = true; 
                             }
 
                             break;

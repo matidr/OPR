@@ -159,6 +159,9 @@ namespace Sockets
                 case CASE_6:
 
                     break;
+                case "":
+
+                    break; 
 
                 default:
                     Console.WriteLine("Por favor seleccione una opcion del menú" + "\n");
@@ -302,6 +305,9 @@ namespace Sockets
                 }
                 ClassLibrary.CASE2_FLAG = true;
             }
+            else
+            { }
+
         }
 
         public void Case3(string text)

@@ -78,9 +78,8 @@ namespace Sockets
                     }
                     else
                     {
-                        classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.EMPTY_STRING);
+                        classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + "NULL");
                     }
-                    //TODO - mandar al cliente un msj cndo no hay usuarios, para que el cliente vacíe su lista
                     break;
 
                 case CASE_2:
@@ -109,7 +108,10 @@ namespace Sockets
                     {
                         PrintMessages(unreadMessages, ClassLibrary.CASE_5);
                     }
-                    //validar cuando no hay datos, mandar algo.
+                    else
+                    {
+                        classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + "NULL");
+                    }
                     break;
 
                 case CASE_6:
