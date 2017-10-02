@@ -125,8 +125,14 @@ namespace Sockets
 
         public void SendFriendRequest(User loggedInUser, User friendRequested)
         {
-            friendRequested.AddFriendRequest(loggedInUser);
-            classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
+            if (loggedInUser != null && friendRequested != null)
+            {
+                friendRequested.AddFriendRequest(loggedInUser);
+                classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
+            } else
+            {
+                classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_ERROR_RESPONSE);
+            }
         }
 
         public void SecondaryMenu(User loggedInUser, User userToAccept, string accept)

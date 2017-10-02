@@ -312,8 +312,11 @@ namespace Sockets
             if (text.Contains(ClassLibrary.PROTOCOL_OK_RESPONSE))
             {
                 Console.WriteLine("Usuario agregado");
-                ClassLibrary.CASE3_FLAG = true;
+            } else if(text.Contains(ClassLibrary.PROTOCOL_ERROR_RESPONSE))
+            {
+                Console.WriteLine("No se pudo enviar la solicitud porque el usuario a enviar no existe");
             }
+            ClassLibrary.CASE3_FLAG = true;
         }
 
         public void EmptyFriendRequestList()
