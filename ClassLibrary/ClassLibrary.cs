@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using System.IO;
 
 namespace Protocol
 {
@@ -98,5 +99,135 @@ namespace Protocol
                 return EMPTY_STRING;
             }
         }
+
+        public void sendMedia(Socket clientSocket, string name)
+        {
+            sendData(clientSocket, name);
+
+            string path = "C:\\ejemplo\\" + name;
+            var fileInfo = new FileInfo(path);
+            int fileLength = (int)fileInfo.Length;
+            // ENVIO EL FILE LENGTH
+            sendData(clientSocket, "" + fileLength);
+
+            int numberOfBlocks = fileLength / 1024;
+            int rest = fileLength % 1024;
+            byte[] byteArray = new byte[1024];
+            FileStream fileStream = new FileStream(path, FileMode.Open, FileAccess.Read);
+            int sent = 0;
+            var length = byteArray.Length;
+            var dataLength = BitConverter.GetBytes(length);
+            for (int i = 0; i < numberOfBlocks; i++)
+            {
+                sent = 0;
+                fileStream.Seek(1024 * i, SeekOrigin.Begin);
+                int read = 0;
+                while (read < 1024)
+                {
+                    read += fileStream.Read(byteArray, 0, 1024);
+                }
+                length = byteArray.Length;
+                dataLength = BitConverter.GetBytes(length);
+
+                //aca mando el largo
+                sent = 0;
+                while (sent < FIXED_SIZE)
+                {
+                    sent += clientSocket.Send(dataLength, sent, FIXED_SIZE - sent, SocketFlags.None);
+                }
+                //aca manda la data
+                sent = 0;
+                while (sent < byteArray.Length)
+                {
+                    sent += clientSocket.Send(byteArray, sent, byteArray.Length - sent, SocketFlags.None);
+                }
+            }
+
+            sent = 0;
+            fileStream.Seek(fileLength - rest, SeekOrigin.Begin);
+            int read = 0;
+            while (read < rest)
+            {
+                read += fileStream.Read(byteArray, 0, rest);
+            }
+            length = byteArray.Length;
+            dataLength = BitConverter.GetBytes(length);
+
+            //aca mando el largo
+            sent = 0;
+            while (sent < FIXED_SIZE)
+            {
+                sent += clientSocket.Send(dataLength, sent, FIXED_SIZE - sent, SocketFlags.None);
+            }
+            //aca manda la data
+            sent = 0;
+            while (sent < byteArray.Length)
+            {
+                sent += clientSocket.Send(byteArray, sent, byteArray.Length - sent, SocketFlags.None);
+            }
+            fileStream.Close();
+        }
+
+        public void ReadMedia(Socket clientSocket)
+        {
+            string name = receiveData(clientSocket);
+
+            string path = "C:\\ejemplo\\" + name;
+            int fileLength = Int32.Parse(receiveData(clientSocket));
+
+            int numberOfBlocks = fileLength / 1024;
+            int rest = fileLength % 1024;
+            byte[] byteArray = new byte[1024];
+            FileStream fileStream = new FileStream(path, FileMode.Create, FileAccess.Write);
+            int received = 0;
+            var length = byteArray.Length;
+            var dataLength = BitConverter.GetBytes(length);
+            for (int i = 0; i < numberOfBlocks; i++)
+            {
+                received = 0;
+                fileStream.Seek(1024 * i, SeekOrigin.Begin);
+                length = byteArray.Length;
+                dataLength = BitConverter.GetBytes(length);
+
+                //aca mando el largo
+                received = 0;
+                while (received < FIXED_SIZE)
+                {
+                    received += clientSocket.Receive(dataLength, received, FIXED_SIZE - received, SocketFlags.None);
+                }
+                //aca manda la data
+                received = 0;
+                while (received < byteArray.Length)
+                {
+                    received += clientSocket.Receive(byteArray, received, byteArray.Length - received, SocketFlags.None);
+                }
+
+                fileStream.Write(byteArray, 0, 1024);
+            }
+
+            received = 0;
+            fileStream.Seek(fileLength - rest, SeekOrigin.Begin);
+            length = byteArray.Length;
+            dataLength = BitConverter.GetBytes(length);
+
+            //aca mando el largo
+            received = 0;
+            while (received < FIXED_SIZE)
+            {
+                received += clientSocket.Send(dataLength, received, FIXED_SIZE - received, SocketFlags.None);
+            }
+            //aca manda la data
+            received = 0;
+            while (received < byteArray.Length)
+            {
+                received += clientSocket.Send(byteArray, received, byteArray.Length - received, SocketFlags.None);
+            }
+
+            fileStream.Write(byteArray, 0, rest);
+
+            fileStream.Close();
+        }
+
+
     }
 }
