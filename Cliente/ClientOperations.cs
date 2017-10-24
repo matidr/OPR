@@ -24,7 +24,7 @@ namespace Sockets
         private Context myContext;
         private List<User> connectedFriends;
         private List<User> friendRequest;
-        private List<Message> newMessages;
+        private List<ChatMessage> newMessages;
         private User currentUser;
         private Socket clientSocket;
         private ClassLibrary classLibrary;
@@ -37,7 +37,7 @@ namespace Sockets
             this.classLibrary = classLibrary;
             connectedFriends = new List<User>();
             friendRequest = new List<User>();
-            newMessages = new List<Message>();
+            newMessages = new List<ChatMessage>();
         }
 
         public void MainMenu()
@@ -140,7 +140,7 @@ namespace Sockets
                     Console.WriteLine("Mensajes sin leer: ");
                     if (newMessages.Count != 0)
                     {
-                        foreach (Message m in newMessages)
+                        foreach (ChatMessage m in newMessages)
                         {
                             Console.WriteLine(k + ") " + m.Display);
                             k++;
@@ -355,7 +355,7 @@ namespace Sockets
                 string[] conMessagesArray = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
                 for (int i = 0; i < conMessagesArray.Length - 1; i++)
                 {
-                    Message msg = new Message(conMessagesArray[i]);
+                    ChatMessage msg = new ChatMessage(conMessagesArray[i]);
                     if (!newMessages.Contains(msg))
                     {
                         newMessages.Add(msg);

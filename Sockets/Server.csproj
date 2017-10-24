@@ -60,6 +60,10 @@
       <Project>{6D5B56FD-0CCC-43CE-AFA6-CC2314D6FD70}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Log\Log.csproj">
+      <Project>{0e42b7e2-7235-4088-b897-fa66a0dd9c2f}</Project>
+      <Name>Log</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

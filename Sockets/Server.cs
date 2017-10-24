@@ -6,6 +6,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Configuration;
+using Log;
+
 
 
 namespace Sockets
@@ -15,8 +17,9 @@ namespace Sockets
         private static Socket serverSocket;
         private static bool serverIsOn = false;
         private static Context myContext;
+        private static MessageLog mySystemLog; 
         private static ClassLibrary classLibrary;
-
+        
         static void Main(string[] args)
         {
 
@@ -31,6 +34,7 @@ namespace Sockets
         private static void StartServer()
         {
             myContext = new Context();
+            mySystemLog = new MessageLog();
             classLibrary = new ClassLibrary();
             // EndPoint(IP, Port)
             string serverIp = ConfigurationManager.AppSettings["ServerIpAdress"];
@@ -46,17 +50,17 @@ namespace Sockets
             serverSocket.Listen(100);
             serverIsOn = true;
             Console.WriteLine("Server is on");
-            var operations = new ServerOperations(myContext, serverSocket, classLibrary);
+            var operations = new ServerOperations(myContext, serverSocket, classLibrary, mySystemLog);
             Thread myThread = new Thread(() => operations.ServerMenu());
             myThread.Start();
         }
         private static void HandleClient(Socket clientSocket)
         {
-            var operations = new ServerOperations(myContext, clientSocket, classLibrary);
+            var operations = new ServerOperations(myContext, clientSocket, classLibrary, mySystemLog);
             Thread myThread = new Thread(() => HandleBackgroundActivity(clientSocket));
+            
             myThread.Start();
 
-            Console.WriteLine("Start waiting for clients");
             while (serverIsOn)
             {
 
@@ -66,7 +70,7 @@ namespace Sockets
 
         private static void HandleBackgroundActivity(Socket clientSocket)
         {
-            var operations = new ServerOperations(myContext, clientSocket, classLibrary);
+            var operations = new ServerOperations(myContext, clientSocket, classLibrary, mySystemLog);
             while (serverIsOn)
             {
                 var data = classLibrary.receiveData(clientSocket);
@@ -81,7 +85,6 @@ namespace Sockets
                         case ClassLibrary.LOGIN:
                             operations.login(text);
                             break;
-
                         case ClassLibrary.MENU_OPTION:
                             string[] menuOptionInfo = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
                             string menuOption = menuOptionInfo[0];
@@ -105,17 +108,14 @@ namespace Sockets
                             User uLoggedUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedUser));
                             User uUserToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendToAdd));
                             operations.SendFriendRequest(uLoggedUser, uUserToAccept);
-
                             break;
                         case ClassLibrary.CASE_4:
                             string[] case4Info = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
                             string fromUsername = case4Info[0];
                             string toUsername = case4Info[1];
                             string message = case4Info[2];
-
                             operations.Case4(fromUsername, toUsername, message);
                             break;
-
                         case ClassLibrary.CLEAR_UNREAD_MESSAGES:
                             operations.ClearUnreadMessages(text);
                             break;

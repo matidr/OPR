@@ -25,7 +25,7 @@ namespace Protocol
         public const string CASE_3 = "CASE 3 ";
         public const string CASE_4 = "CASE 4 ";
         public const string CASE_5 = "CASE 5 ";
-        public const string NEW_MESSAGE = "NewMessage ";
+        public const string NEW_MESSAGE = "New Message";
         public const string CLEAR_UNREAD_MESSAGES = "ClearUnreadMessages";
         public const string LOGIN = "LOGIN";
         public const string MENU_OPTION = "MENUOPTION";
@@ -121,10 +121,10 @@ namespace Protocol
             {
                 sent = 0;
                 fileStream.Seek(1024 * i, SeekOrigin.Begin);
-                int read = 0;
-                while (read < 1024)
+                int read2 = 0;
+                while (read2 < 1024)
                 {
-                    read += fileStream.Read(byteArray, 0, 1024);
+                    read2 += fileStream.Read(byteArray, 0, 1024);
                 }
                 length = byteArray.Length;
                 dataLength = BitConverter.GetBytes(length);

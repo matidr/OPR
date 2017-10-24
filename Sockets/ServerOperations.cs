@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using Domain;
 using Protocol;
+using Log;
 
 namespace Sockets
 {
@@ -23,9 +24,13 @@ namespace Sockets
         private Context myContext;
         private Socket clientSocket;
         private ClassLibrary classLibrary;
+        private MessageLog theMessageLog;
+        
+        
 
-        public ServerOperations(Context context, Socket socket, ClassLibrary classLibrary)
+        public ServerOperations(Context context, Socket socket, ClassLibrary classLibrary, MessageLog mySystemLog)
         {
+            theMessageLog = mySystemLog;
             myContext = context;
             clientSocket = socket;
             this.classLibrary = classLibrary;
@@ -55,10 +60,10 @@ namespace Sockets
             classLibrary.sendData(clientSocket, theCase + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
         }
 
-        public void PrintMessages(List<Message> messages, String theCase)
+        public void PrintMessages(List<ChatMessage> messages, String theCase)
         {
             string returnData = "";
-            foreach (Message m in messages)
+            foreach (ChatMessage m in messages)
             {
                 returnData = returnData + "[" + m.TheUser.Username + "] " + m.TheMessage + ClassLibrary.LIST_SEPARATOR;
 
@@ -80,7 +85,7 @@ namespace Sockets
                     {
                         classLibrary.sendData(clientSocket, ClassLibrary.CASE_1 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.EMPTY_STRING);
                     }
-                    //TODO - mandar al cliente un msj cndo no hay usuarios, para que el cliente vacíe su lista
+                    theMessageLog.SendMessageLog("El usuario " + theUser.Username + " ha solicitado ver sus amigos conectados.");
                     break;
 
                 case CASE_2:
@@ -93,27 +98,26 @@ namespace Sockets
                     {
                         classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + "NULL");
                     }
+                    theMessageLog.SendMessageLog("El usuario " + theUser.Username + " ha solicitado ver sus solicitudes de amistad pendientes.");
                     break;
                 case CASE_3:
-                    //no saquemos este case 3 porque se rompe al entrar al default :)
                     break;
 
                 case CASE_4:
-                    //no saquemos este case 4 porque se rompe al entrar al default :) 
                     break;
 
                 case CASE_5:
-
-                    List<Message> unreadMessages = theUser.UnreadMessages;
+                    List<ChatMessage> unreadMessages = theUser.UnreadMessages;
                     if (unreadMessages.Count > 0)
                     {
                         PrintMessages(unreadMessages, ClassLibrary.CASE_5);
                     }
-                    //validar cuando no hay datos, mandar algo.
+                    theMessageLog.SendMessageLog("El usuario " + theUser.Username + " ha solicitado ver sus mensajes sin leer.");
                     break;
 
-                case CASE_6:
+                case CASE_6:  
                     classLibrary.sendData(clientSocket, ClassLibrary.DISCONNECT + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.DISCONNECT);
+                    theMessageLog.SendMessageLog("El usuario " + theUser.Username + " se ha desconectado.");
                     DisconnectClient(theUser);
                     break;
 
@@ -129,9 +133,11 @@ namespace Sockets
             {
                 friendRequested.AddFriendRequest(loggedInUser);
                 classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
+                theMessageLog.SendMessageLog("El usuario " + loggedInUser.Username + " ha enviado una solicitud de amistad al usuario " + friendRequested.Username);
             } else
             {
                 classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_ERROR_RESPONSE);
+                theMessageLog.SendMessageLog("El usuario " + loggedInUser.Username + " ha enviado una solicitud de amistad a un usuario erroneo o inexistente.");
             }
         }
 
@@ -140,12 +146,14 @@ namespace Sockets
             if (accept.Equals(CASE_1))
             {
                 loggedInUser.AcceptFriendRequest(userToAccept);
+                theMessageLog.SendMessageLog("El usuario " + loggedInUser.Username + " ha aceptado la solicitud de amistad de " + userToAccept.Username);
             }
             else
             {
                 if (accept.Equals(CASE_0))
                 {
                     loggedInUser.CancelFriendRequest(userToAccept);
+                    theMessageLog.SendMessageLog("El usuario " + loggedInUser.Username + " ha rechazado la solicitud de amistad de " + userToAccept.Username);
                 }
             }
             classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
@@ -171,6 +179,7 @@ namespace Sockets
                 myContext.AddNewUser(user);
                 myContext.ConnectUser(user);
                 myContext.AddUserSocket(user.Username, clientSocket);
+                theMessageLog.SendMessageLog("Nuevo Cliente Conectado: "+ user.Username); 
                 user.ConnectedTimes++;
                 user.ConnectedTime = DateTime.Now;
                 classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE + ". Bienvenido");
@@ -191,7 +200,7 @@ namespace Sockets
                         if (user.UnreadMessages.Count > 0)
                         {
                             string unreadMessages = "";
-                            foreach (Message m in user.UnreadMessages)
+                            foreach (ChatMessage m in user.UnreadMessages)
                             {
                                 unreadMessages = unreadMessages + m.TheUser.Username + ": " + m.TheMessage + ClassLibrary.LIST_SEPARATOR;
                             }
@@ -229,8 +238,9 @@ namespace Sockets
                 else
                 {
                     User user = myContext.ExistingUsers.Find(x => x.Username.Equals(toUsername));
-                    user.UnreadMessages.Add(new Message(fromUsername, message, myContext));
+                    user.UnreadMessages.Add(new ChatMessage(fromUsername, message, myContext));
                 }
+                theMessageLog.SendMessageLog("El usuario " + fromUsername + " ha enviado un mensaje al usuario " + toUsername);
             }
             else
             {
@@ -270,10 +280,28 @@ namespace Sockets
             Console.WriteLine();
         }
 
+        private void PrintLogInConsole()
+        {
+            List<String> logs = theMessageLog.ReceiveMessages();
+            if (logs.Count > 0)
+            {
+                foreach (String log in logs)
+                {
+                    Console.WriteLine(log);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No hay logs en el momento");
+            }
+            Console.WriteLine();
+        }
+
         public void ServerMenu()
         {
             Console.WriteLine("1) Mostrar todos los usuarios del sistema");
             Console.WriteLine("2) Mostrar los usuarios conectados");
+            Console.WriteLine("3) Ver log del sistema");
             string option = Console.ReadLine();
             switch (option)
             {
@@ -284,6 +312,11 @@ namespace Sockets
 
                 case CASE_2:
                     PrintListInConsole(myContext.ConnectedUsers, "usuarios conectados ");
+                    ServerMenu();
+                    break;
+
+                case CASE_3:
+                    PrintLogInConsole();
                     ServerMenu();
                     break;
 
