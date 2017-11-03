@@ -32,6 +32,7 @@ namespace Protocol
         public const string DISCONNECT = "DISCONNECT";
         public const string SECONDARY_MENU = "SECONDARY MENU";
         public const string EMPTY_STRING = "";
+        public const string MEDIA = "MEDIA";
 
         //FLAGS
         public static bool LOGIN_FLAG = false;
@@ -100,9 +101,9 @@ namespace Protocol
             }
         }
 
-        public void sendMedia(Socket clientSocket, string name)
+        public void SendMedia(Socket clientSocket, string name)
         {
-            sendData(clientSocket, name);
+            sendData(clientSocket, ClassLibrary.MEDIA + ClassLibrary.PROTOCOL_SEPARATOR + name);
 
             string path = "C:\\ejemplo\\" + name;
             var fileInfo = new FileInfo(path);
@@ -168,9 +169,8 @@ namespace Protocol
             fileStream.Close();
         }
 
-        public void ReadMedia(Socket clientSocket)
+        public void ReadMedia(Socket clientSocket, string name)
         {
-            string name = receiveData(clientSocket);
 
             string path = "C:\\ejemplo\\" + name;
             int fileLength = Int32.Parse(receiveData(clientSocket));

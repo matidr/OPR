@@ -49,7 +49,7 @@ namespace Sockets
             Console.WriteLine("2. Ver solicitudes de amistad");
             Console.WriteLine("3. Enviar solicitud de amistad");
             Console.WriteLine("4. Enviar mensaje a un amigo");
-            Console.WriteLine("5. Ver mensajes nuevos");
+            Console.WriteLine("5. Enviar archivo a un amigo");
             Console.WriteLine("6. Logout");
             Console.WriteLine("------------------------------");
             Console.WriteLine("Elija una opcion y aprete enter: ");
@@ -135,27 +135,11 @@ namespace Sockets
                     break;
 
                 case CASE_5:
-                    while (!ClassLibrary.CASE5_FLAG) { }
-                    int k = 1;
-                    Console.WriteLine("Mensajes sin leer: ");
-                    if (newMessages.Count != 0)
-                    {
-                        foreach (ChatMessage m in newMessages)
-                        {
-                            Console.WriteLine(k + ") " + m.Display);
-                            k++;
-                        }
-                        Console.WriteLine("------------------------------" + "\n");
-                    }
-                    else
-                    {
-                        Console.WriteLine("No tienes mensajes sin leer");
-                    }
-                    Console.WriteLine("------------------------------" + "\n");
-                    ClassLibrary.CASE5_FLAG = false;
+                    Console.WriteLine("Ingrese el nombre del archivo a enviar: ");
+                    string fileName = Console.ReadLine();
+                    classLibrary.SendMedia(clientSocket, ClassLibrary.MEDIA + ClassLibrary.PROTOCOL_SEPARATOR + fileName);
                     MainMenu();
                     break;
-
                 case CASE_6:
 
                     break;

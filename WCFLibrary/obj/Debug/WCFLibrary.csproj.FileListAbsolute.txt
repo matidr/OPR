@@ -1,0 +1,8 @@
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\WCFLibrary.dll.config
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\WCFLibrary.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\WCFLibrary.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\Domain.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\Domain.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\obj\Debug\WCFLibrary.csprojResolveAssemblyReference.cache
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\obj\Debug\WCFLibrary.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\obj\Debug\WCFLibrary.pdb

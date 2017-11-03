@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Domain
 {
+    [DataContract]
     public class User
     {
         private string username;
@@ -69,13 +71,19 @@ namespace Domain
         {
             friends.Add(friend);
         }
+        [DataMember]
         public string Username { get => username; set => username = value; }
+        [DataMember]
         public string Password { get => password; set => password = value; }
+        [DataMember]
         public List<User> Friends { get => friends; set => friends = value; }
+        [DataMember]
         public List<User> PendingFriendshipRequest { get => pendingFriendshipRequest; set => pendingFriendshipRequest = value; }
+        [DataMember]
         public List<ChatMessage> UnreadMessages { get => unreadMessages; set => unreadMessages = value; }
-
+        [DataMember]
         public int ConnectedTimes { get => connectedTimes; set => connectedTimes = value; }
+        [DataMember]
         public DateTime ConnectedTime { get => connectedTime; set => connectedTime = value; }
         //we need to redefine equals to be able to use contains from the user list. Equals should equal the username
 

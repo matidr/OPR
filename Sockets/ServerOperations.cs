@@ -280,28 +280,10 @@ namespace Sockets
             Console.WriteLine();
         }
 
-        private void PrintLogInConsole()
-        {
-            List<String> logs = theMessageLog.ReceiveMessages();
-            if (logs.Count > 0)
-            {
-                foreach (String log in logs)
-                {
-                    Console.WriteLine(log);
-                }
-            }
-            else
-            {
-                Console.WriteLine("No hay logs en el momento");
-            }
-            Console.WriteLine();
-        }
-
         public void ServerMenu()
         {
             Console.WriteLine("1) Mostrar todos los usuarios del sistema");
             Console.WriteLine("2) Mostrar los usuarios conectados");
-            Console.WriteLine("3) Ver log del sistema");
             string option = Console.ReadLine();
             switch (option)
             {
@@ -312,11 +294,6 @@ namespace Sockets
 
                 case CASE_2:
                     PrintListInConsole(myContext.ConnectedUsers, "usuarios conectados ");
-                    ServerMenu();
-                    break;
-
-                case CASE_3:
-                    PrintLogInConsole();
                     ServerMenu();
                     break;
 

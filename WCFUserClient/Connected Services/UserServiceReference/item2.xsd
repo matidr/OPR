@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Domain" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Domain" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="User">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ConnectedTime" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="ConnectedTimes" type="xs:int" />
+      <xs:element minOccurs="0" name="Friends" nillable="true" type="tns:ArrayOfUser" />
+      <xs:element minOccurs="0" name="Password" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PendingFriendshipRequest" nillable="true" type="tns:ArrayOfUser" />
+      <xs:element minOccurs="0" name="UnreadMessages" nillable="true" type="tns:ArrayOfChatMessage" />
+      <xs:element minOccurs="0" name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="User" nillable="true" type="tns:User" />
+  <xs:complexType name="ArrayOfUser">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="User" nillable="true" type="tns:User" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfUser" nillable="true" type="tns:ArrayOfUser" />
+  <xs:complexType name="ArrayOfChatMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ChatMessage" nillable="true" type="tns:ChatMessage" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfChatMessage" nillable="true" type="tns:ArrayOfChatMessage" />
+  <xs:complexType name="ChatMessage">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Display" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TheMessage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TheUser" nillable="true" type="tns:User" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ChatMessage" nillable="true" type="tns:ChatMessage" />
+</xs:schema>

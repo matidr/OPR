@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain
 {
+    [DataContract]
     public class ChatMessage
     {
         User theUser;
@@ -23,9 +25,13 @@ namespace Domain
             theMessage = "";
             Display = disp;
         }
+        [DataMember]
         public User TheUser { get => theUser; set => theUser = value; }
+        [DataMember]
         public string TheMessage { get => theMessage; set => theMessage = value; }
+        [DataMember]
         public string Display { get => display; set => display = value; }
+
         public override bool Equals(object value)
         {
             ChatMessage msg = value as ChatMessage;

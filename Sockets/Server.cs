@@ -17,9 +17,9 @@ namespace Sockets
         private static Socket serverSocket;
         private static bool serverIsOn = false;
         private static Context myContext;
-        private static MessageLog mySystemLog; 
+        private static MessageLog mySystemLog;
         private static ClassLibrary classLibrary;
-        
+
         static void Main(string[] args)
         {
 
@@ -58,7 +58,7 @@ namespace Sockets
         {
             var operations = new ServerOperations(myContext, clientSocket, classLibrary, mySystemLog);
             Thread myThread = new Thread(() => HandleBackgroundActivity(clientSocket));
-            
+
             myThread.Start();
 
             while (serverIsOn)
@@ -118,6 +118,9 @@ namespace Sockets
                             break;
                         case ClassLibrary.CLEAR_UNREAD_MESSAGES:
                             operations.ClearUnreadMessages(text);
+                            break;
+                        case ClassLibrary.MEDIA:
+                            classLibrary.ReadMedia(clientSocket, text);
                             break;
                     }
                 }
