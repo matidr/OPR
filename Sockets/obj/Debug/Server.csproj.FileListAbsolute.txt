@@ -34,11 +34,11 @@ C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Soc
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\ClassLibrary.dll
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Domain.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Log.exe
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\ClassLibrary.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Domain.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Log.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Log.exe.config
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Server.csprojResolveAssemblyReference.cache
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Sockets.exe
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Sockets.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Log.exe
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Log.exe.config

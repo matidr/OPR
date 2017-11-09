@@ -8,4 +8,3 @@ C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Domain\bin\Debug\Doma
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Domain\bin\Debug\Domain.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Domain\obj\Debug\Domain.dll
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Domain\obj\Debug\Domain.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Domain\obj\Debug\Domain.csprojResolveAssemblyReference.cache
