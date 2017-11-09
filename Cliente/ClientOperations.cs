@@ -137,7 +137,7 @@ namespace Sockets
                 case CASE_5:
                     Console.WriteLine("Ingrese el nombre del archivo a enviar: ");
                     string fileName = Console.ReadLine();
-                    classLibrary.SendMedia(clientSocket, ClassLibrary.MEDIA + ClassLibrary.PROTOCOL_SEPARATOR + fileName);
+                    classLibrary.SendMedia(clientSocket, fileName);
                     MainMenu();
                     break;
                 case CASE_6:
