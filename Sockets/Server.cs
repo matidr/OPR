@@ -77,9 +77,18 @@ namespace Sockets
                 if (!data.Equals(ClassLibrary.EMPTY_STRING))
                 {
                     string[] arrayData = data.Split(ClassLibrary.PROTOCOL_SEPARATOR.ToCharArray());
-                    string command = arrayData[0];
-                    string text = arrayData[1];
-
+                    string command = "";
+                    string text = "";
+                    if (arrayData.Length == 1)
+                    {
+                        command = ClassLibrary.MEDIA;
+                        text = arrayData[0];
+                    }
+                    else
+                    {
+                        command = arrayData[0];
+                        text = arrayData[1];
+                    }
                     switch (command)
                     {
                         case ClassLibrary.LOGIN:

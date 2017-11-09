@@ -10,7 +10,7 @@ namespace WCFUserClient
     {
         static void Main(string[] args)
         {
-            var service = UserServiceReference;
+            
         }
     }
 }

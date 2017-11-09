@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="44b98250-ff0f-4195-a887-ab08f3e9c73c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:6200/WCFLibrary/UserLibrary/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="12df677f-0826-4557-ba30-d25cec0e7254" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?disco" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="9e1160b7-9950-45a5-a198-73e8d41261f4" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?xsd=xsd0" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="6ff20092-3087-4d09-893a-7486097380f3" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?xsd=xsd1" />
+    <MetadataFile FileName="UserService.wsdl" MetadataType="Wsdl" ID="71eac741-20bd-49a6-bc44-4ff7e24aac54" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?wsdl" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="88f737cb-56c4-4176-862b-004d862de86d" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
