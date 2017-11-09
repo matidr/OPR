@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="44b98250-ff0f-4195-a887-ab08f3e9c73c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="639b9891-06bf-4a0a-8351-c7cad2c398d6" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,11 +22,11 @@
     <MetadataSource Address="http://localhost:6200/WCFLibrary/UserLibrary/" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="12df677f-0826-4557-ba30-d25cec0e7254" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?disco" />
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="9e1160b7-9950-45a5-a198-73e8d41261f4" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?xsd=xsd0" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="6ff20092-3087-4d09-893a-7486097380f3" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?xsd=xsd1" />
-    <MetadataFile FileName="UserService.wsdl" MetadataType="Wsdl" ID="71eac741-20bd-49a6-bc44-4ff7e24aac54" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?wsdl" />
-    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="88f737cb-56c4-4176-862b-004d862de86d" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?xsd=xsd2" />
+    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="c2d2c99e-46e7-48bc-942f-7dbc146762e7" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?disco" />
+    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="f1f8e1ad-1064-43a7-af5a-fe3d67448472" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?xsd=xsd0" />
+    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="fce651b0-5c59-4d78-8a69-ea1ce29dc53c" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?xsd=xsd1" />
+    <MetadataFile FileName="UserService.wsdl" MetadataType="Wsdl" ID="130b6127-69ec-43b3-847b-d8b2254f30d4" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?wsdl" />
+    <MetadataFile FileName="item2.xsd" MetadataType="Schema" ID="1c7e8e61-4644-4109-a10f-7d5e65738896" SourceId="1" SourceUrl="http://localhost:6200/WCFLibrary/UserLibrary/?xsd=xsd2" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

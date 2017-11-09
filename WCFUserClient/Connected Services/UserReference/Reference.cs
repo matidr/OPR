@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WCFUserClient.ServiceReference1 {
+namespace WCFUserClient.UserReference {
     using System.Runtime.Serialization;
     using System;
     
@@ -29,16 +29,16 @@ namespace WCFUserClient.ServiceReference1 {
         private int ConnectedTimesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WCFUserClient.ServiceReference1.User[] FriendsField;
+        private WCFUserClient.UserReference.User[] FriendsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PasswordField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WCFUserClient.ServiceReference1.User[] PendingFriendshipRequestField;
+        private WCFUserClient.UserReference.User[] PendingFriendshipRequestField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WCFUserClient.ServiceReference1.ChatMessage[] UnreadMessagesField;
+        private WCFUserClient.UserReference.ChatMessage[] UnreadMessagesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string UsernameField;
@@ -80,7 +80,7 @@ namespace WCFUserClient.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public WCFUserClient.ServiceReference1.User[] Friends {
+        public WCFUserClient.UserReference.User[] Friends {
             get {
                 return this.FriendsField;
             }
@@ -106,7 +106,7 @@ namespace WCFUserClient.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public WCFUserClient.ServiceReference1.User[] PendingFriendshipRequest {
+        public WCFUserClient.UserReference.User[] PendingFriendshipRequest {
             get {
                 return this.PendingFriendshipRequestField;
             }
@@ -119,7 +119,7 @@ namespace WCFUserClient.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public WCFUserClient.ServiceReference1.ChatMessage[] UnreadMessages {
+        public WCFUserClient.UserReference.ChatMessage[] UnreadMessages {
             get {
                 return this.UnreadMessagesField;
             }
@@ -170,7 +170,7 @@ namespace WCFUserClient.ServiceReference1 {
         private string TheMessageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private WCFUserClient.ServiceReference1.User TheUserField;
+        private WCFUserClient.UserReference.User TheUserField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
@@ -209,7 +209,7 @@ namespace WCFUserClient.ServiceReference1 {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public WCFUserClient.ServiceReference1.User TheUser {
+        public WCFUserClient.UserReference.User TheUser {
             get {
                 return this.TheUserField;
             }
@@ -232,29 +232,29 @@ namespace WCFUserClient.ServiceReference1 {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference1.IUser")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="UserReference.IUser")]
     public interface IUser {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/SaveUser", ReplyAction="http://tempuri.org/IUser/SaveUserResponse")]
-        void SaveUser(WCFUserClient.ServiceReference1.User user);
+        void SaveUser(WCFUserClient.UserReference.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/SaveUser", ReplyAction="http://tempuri.org/IUser/SaveUserResponse")]
-        System.Threading.Tasks.Task SaveUserAsync(WCFUserClient.ServiceReference1.User user);
+        System.Threading.Tasks.Task SaveUserAsync(WCFUserClient.UserReference.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/GetUsers", ReplyAction="http://tempuri.org/IUser/GetUsersResponse")]
-        WCFUserClient.ServiceReference1.User[] GetUsers();
+        WCFUserClient.UserReference.User[] GetUsers();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/GetUsers", ReplyAction="http://tempuri.org/IUser/GetUsersResponse")]
-        System.Threading.Tasks.Task<WCFUserClient.ServiceReference1.User[]> GetUsersAsync();
+        System.Threading.Tasks.Task<WCFUserClient.UserReference.User[]> GetUsersAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IUserChannel : WCFUserClient.ServiceReference1.IUser, System.ServiceModel.IClientChannel {
+    public interface IUserChannel : WCFUserClient.UserReference.IUser, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class UserClient : System.ServiceModel.ClientBase<WCFUserClient.ServiceReference1.IUser>, WCFUserClient.ServiceReference1.IUser {
+    public partial class UserClient : System.ServiceModel.ClientBase<WCFUserClient.UserReference.IUser>, WCFUserClient.UserReference.IUser {
         
         public UserClient() {
         }
@@ -275,19 +275,19 @@ namespace WCFUserClient.ServiceReference1 {
                 base(binding, remoteAddress) {
         }
         
-        public void SaveUser(WCFUserClient.ServiceReference1.User user) {
+        public void SaveUser(WCFUserClient.UserReference.User user) {
             base.Channel.SaveUser(user);
         }
         
-        public System.Threading.Tasks.Task SaveUserAsync(WCFUserClient.ServiceReference1.User user) {
+        public System.Threading.Tasks.Task SaveUserAsync(WCFUserClient.UserReference.User user) {
             return base.Channel.SaveUserAsync(user);
         }
         
-        public WCFUserClient.ServiceReference1.User[] GetUsers() {
+        public WCFUserClient.UserReference.User[] GetUsers() {
             return base.Channel.GetUsers();
         }
         
-        public System.Threading.Tasks.Task<WCFUserClient.ServiceReference1.User[]> GetUsersAsync() {
+        public System.Threading.Tasks.Task<WCFUserClient.UserReference.User[]> GetUsersAsync() {
             return base.Channel.GetUsersAsync();
         }
     }

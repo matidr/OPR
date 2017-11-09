@@ -24,7 +24,6 @@ namespace Log
                 using (myQ = new MessageQueue(queueName))
                 {
                     Message msg = new Message(messageToSend);
-                    //myQ.Send(msg);
                     myQ.Send(msg, "Logged Action");
                 }
             }
@@ -33,7 +32,6 @@ namespace Log
                 using (myQ = MessageQueue.Create(queueName))
                 {
                     Message msg = new Message(messageToSend);
-                    //myQ.Send(msg);
                     myQ.Send(msg, "Logged Action");
                 }
             }
@@ -53,6 +51,7 @@ namespace Log
                     string msg = message.Body.ToString();
                     lstMessages.Add(msg);
                 }
+                messageQueue.Purge();
             }
             return lstMessages;
         }
