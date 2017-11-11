@@ -24,6 +24,7 @@ namespace WCFUserClient
             Console.WriteLine("2) Baja de usuario al sistema");
             Console.WriteLine("3) Modificacion de usuario del sistema");
             Console.WriteLine("4) Consulta de todos los usuarios del sistema");
+            Console.WriteLine("Ingrese una opcion:");
             string option = Console.ReadLine();
             switch (option)
             {
