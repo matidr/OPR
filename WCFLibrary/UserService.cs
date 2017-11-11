@@ -40,10 +40,5 @@ namespace WCFLibrary
             }
             return false;
         }
-
-        bool IUser.SaveUser(User user)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
