@@ -236,16 +236,28 @@ namespace WCFUserClient.UserReference {
     public interface IUser {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/SaveUser", ReplyAction="http://tempuri.org/IUser/SaveUserResponse")]
-        void SaveUser(WCFUserClient.UserReference.User user);
+        bool SaveUser(WCFUserClient.UserReference.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/SaveUser", ReplyAction="http://tempuri.org/IUser/SaveUserResponse")]
-        System.Threading.Tasks.Task SaveUserAsync(WCFUserClient.UserReference.User user);
+        System.Threading.Tasks.Task<bool> SaveUserAsync(WCFUserClient.UserReference.User user);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/GetUsers", ReplyAction="http://tempuri.org/IUser/GetUsersResponse")]
         WCFUserClient.UserReference.User[] GetUsers();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/GetUsers", ReplyAction="http://tempuri.org/IUser/GetUsersResponse")]
         System.Threading.Tasks.Task<WCFUserClient.UserReference.User[]> GetUsersAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/ModifyUser", ReplyAction="http://tempuri.org/IUser/ModifyUserResponse")]
+        bool ModifyUser(WCFUserClient.UserReference.User user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/ModifyUser", ReplyAction="http://tempuri.org/IUser/ModifyUserResponse")]
+        System.Threading.Tasks.Task<bool> ModifyUserAsync(WCFUserClient.UserReference.User user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/DeleteUser", ReplyAction="http://tempuri.org/IUser/DeleteUserResponse")]
+        bool DeleteUser(WCFUserClient.UserReference.User user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUser/DeleteUser", ReplyAction="http://tempuri.org/IUser/DeleteUserResponse")]
+        System.Threading.Tasks.Task<bool> DeleteUserAsync(WCFUserClient.UserReference.User user);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -275,11 +287,11 @@ namespace WCFUserClient.UserReference {
                 base(binding, remoteAddress) {
         }
         
-        public void SaveUser(WCFUserClient.UserReference.User user) {
-            base.Channel.SaveUser(user);
+        public bool SaveUser(WCFUserClient.UserReference.User user) {
+            return base.Channel.SaveUser(user);
         }
         
-        public System.Threading.Tasks.Task SaveUserAsync(WCFUserClient.UserReference.User user) {
+        public System.Threading.Tasks.Task<bool> SaveUserAsync(WCFUserClient.UserReference.User user) {
             return base.Channel.SaveUserAsync(user);
         }
         
@@ -289,6 +301,22 @@ namespace WCFUserClient.UserReference {
         
         public System.Threading.Tasks.Task<WCFUserClient.UserReference.User[]> GetUsersAsync() {
             return base.Channel.GetUsersAsync();
+        }
+        
+        public bool ModifyUser(WCFUserClient.UserReference.User user) {
+            return base.Channel.ModifyUser(user);
+        }
+        
+        public System.Threading.Tasks.Task<bool> ModifyUserAsync(WCFUserClient.UserReference.User user) {
+            return base.Channel.ModifyUserAsync(user);
+        }
+        
+        public bool DeleteUser(WCFUserClient.UserReference.User user) {
+            return base.Channel.DeleteUser(user);
+        }
+        
+        public System.Threading.Tasks.Task<bool> DeleteUserAsync(WCFUserClient.UserReference.User user) {
+            return base.Channel.DeleteUserAsync(user);
         }
     }
 }

@@ -13,17 +13,37 @@ namespace WCFLibrary
     {
         private static List<User> users = new List<User>();
 
+        public bool DeleteUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<User> GetUsers()
         {
             return users;
         }
 
-        public void SaveUser(User user)
+        public bool ModifyUser(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool SaveUser(User user)
         {
             if (users != null)
             {
-                users.Add(user);
+                if (!users.Contains(user))
+                {
+                    users.Add(user);
+                    return true;
+                }
             }
+            return false;
+        }
+
+        bool IUser.SaveUser(User user)
+        {
+            throw new NotImplementedException();
         }
     }
 }

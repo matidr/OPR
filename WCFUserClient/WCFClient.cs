@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace WCFUserClient
 {
-    class Program
+    class WCFClient
     {
         static void Main(string[] args)
         {
-            var service = new UserReference.UserClient();
+            WCFClientOperations wcfClientOperations = new WCFClientOperations();
+            wcfClientOperations.MainMenu();
         }
     }
 }

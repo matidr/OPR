@@ -13,10 +13,16 @@ namespace WCFLibrary
     public interface IUser
     {
         [OperationContract]
-        void SaveUser(User user);
+        bool SaveUser(User user);
 
         [OperationContract]
         IEnumerable<User> GetUsers();
+
+        [OperationContract]
+        bool ModifyUser(User user);
+
+        [OperationContract]
+        bool DeleteUser(User user);
 
         // TODO: Add your service operations here
     }
