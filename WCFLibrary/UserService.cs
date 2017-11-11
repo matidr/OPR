@@ -15,21 +15,25 @@ namespace WCFLibrary
 
         public bool DeleteUser(User user)
         {
+            //TODO change this method to call the delete on the old server through remoting
             throw new NotImplementedException();
         }
 
         public IEnumerable<User> GetUsers()
         {
+            //TODO change this method to call the getusers on the old server through remoting
             return users;
         }
 
         public bool ModifyUser(User user)
         {
+            //TODO change this method to call the modify on the old server through remoting
             throw new NotImplementedException();
         }
 
         public bool SaveUser(User user)
         {
+            //TODO change this method to call the add on the old server through remoting
             if (users != null)
             {
                 if (!users.Contains(user))
