@@ -1,0 +1,7 @@
+C:\github\IUserService\bin\Debug\netstandard1.4\IUserService.deps.json
+C:\github\IUserService\bin\Debug\netstandard1.4\IUserService.dll
+C:\github\IUserService\bin\Debug\netstandard1.4\IUserService.pdb
+C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.csproj.CoreCompileInputs.cache
+C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.AssemblyInfo.cs
+C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.dll
+C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.pdb

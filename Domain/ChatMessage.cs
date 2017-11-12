@@ -13,8 +13,9 @@ namespace Domain
         User theUser;
         String theMessage;
         String display;
-        public ChatMessage(String username, String msg, Context myContext)
+        public ChatMessage(String username, String msg)
         {
+            Context myContext = Context.Instance;
             Display = "";
             theUser = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
             theMessage = msg;

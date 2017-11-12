@@ -30,7 +30,7 @@ namespace Cliente
 
         private static void ConnectToServer()
         {
-            myContext = new Context();
+            myContext = Context.Instance;
             classLibrary = new ClassLibrary();
             // endpoint del servidor al que me voy a conectar
             string serverIp = ConfigurationManager.AppSettings["ServerIpAdress"];
@@ -60,7 +60,7 @@ namespace Cliente
                 Console.WriteLine("Revisa el IP o puerto de conexión");
             }
             clientIsConnected = true;
-            operations = new ClientOperations(myContext, clientSocket, classLibrary);
+            operations = new ClientOperations(clientSocket, classLibrary);
             Thread myThread = new Thread(() => ReceiveData(clientSocket));
             myThread.Start();
 

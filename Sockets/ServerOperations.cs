@@ -8,10 +8,11 @@ using System.Net.Sockets;
 using Domain;
 using Protocol;
 using Log;
+using IUserService;
 
 namespace Sockets
 {
-    public class ServerOperations
+    public class ServerOperations : MarshalByRefObject, IUserService.IUserService
     {
         private const string CASE_0 = "0";
         private const string CASE_1 = "1";
@@ -28,12 +29,17 @@ namespace Sockets
         
         
 
-        public ServerOperations(Context context, Socket socket, ClassLibrary classLibrary, MessageLog mySystemLog)
+        public ServerOperations(Socket socket, ClassLibrary classLibrary, MessageLog mySystemLog)
         {
             theMessageLog = mySystemLog;
-            myContext = context;
+            myContext = Context.Instance;
             clientSocket = socket;
             this.classLibrary = classLibrary;
+        }
+
+        public ServerOperations()
+        {
+            myContext = Context.Instance; 
         }
 
         public List<User> GetConnectedFriends(User theUser)
@@ -238,7 +244,7 @@ namespace Sockets
                 else
                 {
                     User user = myContext.ExistingUsers.Find(x => x.Username.Equals(toUsername));
-                    user.UnreadMessages.Add(new ChatMessage(fromUsername, message, myContext));
+                    user.UnreadMessages.Add(new ChatMessage(fromUsername, message));
                 }
                 theMessageLog.SendMessageLog("El usuario " + fromUsername + " ha enviado un mensaje al usuario " + toUsername);
             }
@@ -303,5 +309,26 @@ namespace Sockets
                     break;
             }
         }
+
+        public void AddUser(string name, string password)
+        {
+            myContext.AddNewUser(name, password);
+        }
+
+        public void EditUser(string name, string password)
+        {
+            myContext.EditPassword(name, password);
+        }
+
+        public void DeleteUser(string username)
+        {
+            myContext.DeleteUser(username);
+        }
+
+        public string ListUsers()
+        {
+            return myContext.ListUsersInCSV();
+        }
+
     }
 }

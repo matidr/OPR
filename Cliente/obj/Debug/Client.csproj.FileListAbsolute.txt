@@ -8,3 +8,14 @@ C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\bin\Debug\Dom
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\obj\Debug\Client.csprojResolveAssemblyReference.cache
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\obj\Debug\Cliente.exe
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Cliente\obj\Debug\Cliente.pdb
+C:\github\Cliente\bin\Debug\Cliente.exe.config
+C:\github\Cliente\bin\Debug\Cliente.exe
+C:\github\Cliente\bin\Debug\Cliente.pdb
+C:\github\Cliente\bin\Debug\ClassLibrary.dll
+C:\github\Cliente\bin\Debug\Domain.dll
+C:\github\Cliente\bin\Debug\ClassLibrary.pdb
+C:\github\Cliente\bin\Debug\Domain.pdb
+C:\github\Cliente\obj\Debug\Client.csprojResolveAssemblyReference.cache
+C:\github\Cliente\obj\Debug\Client.csproj.CoreCompileInputs.cache
+C:\github\Cliente\obj\Debug\Cliente.exe
+C:\github\Cliente\obj\Debug\Cliente.pdb

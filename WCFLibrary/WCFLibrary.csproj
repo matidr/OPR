@@ -56,6 +56,10 @@
       <Project>{6d5b56fd-0ccc-43ce-afa6-cc2314d6fd70}</Project>
       <Name>Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IUserService\IUserService.csproj">
+      <Project>{339da798-9931-4f90-bcf2-164e75f8ebb1}</Project>
+      <Name>IUserService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

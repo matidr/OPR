@@ -30,9 +30,9 @@ namespace Sockets
         private ClassLibrary classLibrary;
 
 
-        public ClientOperations(Context context, Socket socket, ClassLibrary classLibrary)
+        public ClientOperations(Socket socket, ClassLibrary classLibrary)
         {
-            myContext = context;
+            myContext = Context.Instance;
             clientSocket = socket;
             this.classLibrary = classLibrary;
             connectedFriends = new List<User>();

@@ -33,7 +33,7 @@ namespace Sockets
         }
         private static void StartServer()
         {
-            myContext = new Context();
+            myContext = Context.Instance;
             mySystemLog = new MessageLog();
             classLibrary = new ClassLibrary();
             // EndPoint(IP, Port)
@@ -50,13 +50,13 @@ namespace Sockets
             serverSocket.Listen(100);
             serverIsOn = true;
             Console.WriteLine("Server is on");
-            var operations = new ServerOperations(myContext, serverSocket, classLibrary, mySystemLog);
+            var operations = new ServerOperations(serverSocket, classLibrary, mySystemLog);
             Thread myThread = new Thread(() => operations.ServerMenu());
             myThread.Start();
         }
         private static void HandleClient(Socket clientSocket)
         {
-            var operations = new ServerOperations(myContext, clientSocket, classLibrary, mySystemLog);
+            var operations = new ServerOperations(clientSocket, classLibrary, mySystemLog);
             Thread myThread = new Thread(() => HandleBackgroundActivity(clientSocket));
 
             myThread.Start();
@@ -70,7 +70,7 @@ namespace Sockets
 
         private static void HandleBackgroundActivity(Socket clientSocket)
         {
-            var operations = new ServerOperations(myContext, clientSocket, classLibrary, mySystemLog);
+            var operations = new ServerOperations(clientSocket, classLibrary, mySystemLog);
             while (serverIsOn)
             {
                 var data = classLibrary.receiveData(clientSocket);

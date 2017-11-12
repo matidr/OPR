@@ -7,3 +7,8 @@ C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\bin\Debu
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\bin\Debug\ClassLibrary.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\obj\Debug\ClassLibrary.dll
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\ClassLibrary\obj\Debug\ClassLibrary.pdb
+C:\github\ClassLibrary\bin\Debug\ClassLibrary.dll
+C:\github\ClassLibrary\bin\Debug\ClassLibrary.pdb
+C:\github\ClassLibrary\obj\Debug\Protocol.csproj.CoreCompileInputs.cache
+C:\github\ClassLibrary\obj\Debug\ClassLibrary.dll
+C:\github\ClassLibrary\obj\Debug\ClassLibrary.pdb
