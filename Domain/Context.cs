@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public sealed class Context 
+    public sealed class Context
     {
         private static Context instance = null;
         private static readonly object padlock = new object();
 
         private static List<User> existingUsers;
         private static List<User> connectedUsers;
+        private static List<string> files;
         private static Dictionary<string, Socket> usersSockets;
 
         Context() { }
@@ -29,6 +30,7 @@ namespace Domain
                         instance = new Context();
                         existingUsers = new List<User>();
                         connectedUsers = new List<User>();
+                        files = new List<string>();
                         usersSockets = new Dictionary<string, Socket>();
                     }
                     return instance;
@@ -37,14 +39,15 @@ namespace Domain
 
         }
 
-       /* public Context()
-        {
-            existingUsers = new List<User>();
-            connectedUsers = new List<User>();
-            usersSockets = new Dictionary<string, Socket>();
-        } */
+        /* public Context()
+         {
+             existingUsers = new List<User>();
+             connectedUsers = new List<User>();
+             usersSockets = new Dictionary<string, Socket>();
+         } */
         public List<User> ExistingUsers { get => existingUsers; set => existingUsers = value; }
         public List<User> ConnectedUsers { get => connectedUsers; set => connectedUsers = value; }
+        public List<string> Files { get => files; set => files = value; }
         public Dictionary<string, Socket> UsersSockets { get => usersSockets; set => usersSockets = value; }
 
         public bool UserExist(string userId)
@@ -116,6 +119,16 @@ namespace Domain
             usersSockets.Remove(user.Username);
         }
 
-        
+        public void addFile(string file)
+        {
+            files.Add(file);
+        }
+
+        public bool fileExists(string file)
+        {
+            string selectFile = files.Find(x => x.Equals(file));
+            return selectFile != null && !selectFile.Equals("");
+        }
+
     }
 }

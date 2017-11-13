@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using Domain;
 using Protocol;
+using System.IO;
 
 namespace Sockets
 {
@@ -19,12 +20,14 @@ namespace Sockets
         private const string CASE_4 = "4";
         private const string CASE_5 = "5";
         private const string CASE_6 = "6";
+        private const string CASE_7 = "7";
         private const string EMPTY_STRING = "";
 
         private Context myContext;
         private List<User> connectedFriends;
         private List<User> friendRequest;
         private List<ChatMessage> newMessages;
+        private List<string> files;
         private User currentUser;
         private Socket clientSocket;
         private ClassLibrary classLibrary;
@@ -37,6 +40,7 @@ namespace Sockets
             this.classLibrary = classLibrary;
             connectedFriends = new List<User>();
             friendRequest = new List<User>();
+            files = new List<string>();
             newMessages = new List<ChatMessage>();
         }
 
@@ -49,8 +53,9 @@ namespace Sockets
             Console.WriteLine("2. Ver solicitudes de amistad");
             Console.WriteLine("3. Enviar solicitud de amistad");
             Console.WriteLine("4. Enviar mensaje a un amigo");
-            Console.WriteLine("5. Enviar archivo a un amigo");
-            Console.WriteLine("6. Logout");
+            Console.WriteLine("5. Enviar archivo");
+            Console.WriteLine("6. Descargar archivo");
+            Console.WriteLine("7. Logout");
             Console.WriteLine("------------------------------");
             Console.WriteLine("Elija una opcion y aprete enter: ");
             string menuOption = Console.ReadLine();
@@ -135,17 +140,51 @@ namespace Sockets
                     break;
 
                 case CASE_5:
-                    Console.WriteLine("Ingrese el nombre del archivo a enviar: ");
-                    string fileName = Console.ReadLine();
-                    classLibrary.SendMedia(clientSocket, fileName);
+                    string targetDirectory = "C:\\ejemplo\\";
+                    string[] fileEntries = Directory.GetFiles(targetDirectory);
+                    if (fileEntries.Length != 0)
+                    {
+                        foreach (string file in fileEntries)
+                        {
+                            Console.WriteLine("file");
+                        }
+                        Console.WriteLine("Ingrese el nombre del archivo a enviar: ");
+                        string fileName = Console.ReadLine();
+                        classLibrary.SendMedia(clientSocket, fileName);
+                    }
+                    else
+                    {
+                        Console.WriteLine("No hay archivos en el directorio");
+                    }
                     MainMenu();
                     break;
                 case CASE_6:
+                    classLibrary.sendData(clientSocket, ClassLibrary.REQUEST_MEDIA);
+                    while (!ClassLibrary.REQUEST_DOWNLOAD_FLAG) { }
+                    if (files.Count > 0)
+                    {
+                        Console.WriteLine("Digite el nombre de uno de los archivos de la siguiente lista:");
+                        foreach (string file in files)
+                        {
+                            Console.WriteLine(file);
+                        }
+                        string fileToDownload = Console.ReadLine();
+                        while (!this.files.Contains(fileToDownload))
+                        {
+                            Console.WriteLine("El nombre de archivo no esta en la lista. Por favor digite un nombre de archivo de la lista");
+                            fileToDownload = Console.ReadLine();
+                        }
+                        classLibrary.sendData(clientSocket, ClassLibrary.DOWNLOAD_MEDIA + ClassLibrary.PROTOCOL_SEPARATOR + currentUser.Username + ClassLibrary.LIST_SEPARATOR + fileToDownload);
+                    }
+                    else
+                    {
+                        Console.WriteLine("No hay archivos para descargar");
+                    }
+                    MainMenu();
+                    break;
+                case CASE_7:
 
                     break;
-                case "":
-
-                    break; 
 
                 default:
                     Console.WriteLine("Por favor seleccione una opcion del menú" + "\n");
@@ -296,7 +335,8 @@ namespace Sockets
             if (text.Contains(ClassLibrary.PROTOCOL_OK_RESPONSE))
             {
                 Console.WriteLine("Usuario agregado");
-            } else if(text.Contains(ClassLibrary.PROTOCOL_ERROR_RESPONSE))
+            }
+            else if (text.Contains(ClassLibrary.PROTOCOL_ERROR_RESPONSE))
             {
                 Console.WriteLine("No se pudo enviar la solicitud porque el usuario a enviar no existe");
             }
@@ -347,6 +387,17 @@ namespace Sockets
                 }
                 ClassLibrary.CASE5_FLAG = true;
             }
+        }
+
+        public void RequestMediaDownload(string text)
+        {
+            string[] files = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
+            Console.WriteLine("Escriba el nombre del archivo a descargar. Debe estar contendio en la siguiente lista:");
+            foreach (string file in files)
+            {
+                this.files.Add(file);
+            }
+            ClassLibrary.REQUEST_DOWNLOAD_FLAG = true;
         }
     }
 }

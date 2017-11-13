@@ -9,6 +9,7 @@ using Domain;
 using Protocol;
 using Log;
 using IUserService;
+using System.IO;
 
 namespace Sockets
 {
@@ -21,13 +22,14 @@ namespace Sockets
         private const string CASE_4 = "4";
         private const string CASE_5 = "5";
         private const string CASE_6 = "6";
+        private const string CASE_7 = "7";
 
         private Context myContext;
         private Socket clientSocket;
         private ClassLibrary classLibrary;
         private MessageLog theMessageLog;
-        
-        
+
+
 
         public ServerOperations(Socket socket, ClassLibrary classLibrary, MessageLog mySystemLog)
         {
@@ -39,7 +41,7 @@ namespace Sockets
 
         public ServerOperations()
         {
-            myContext = Context.Instance; 
+            myContext = Context.Instance;
         }
 
         public List<User> GetConnectedFriends(User theUser)
@@ -113,15 +115,22 @@ namespace Sockets
                     break;
 
                 case CASE_5:
-                    List<ChatMessage> unreadMessages = theUser.UnreadMessages;
-                    if (unreadMessages.Count > 0)
-                    {
-                        PrintMessages(unreadMessages, ClassLibrary.CASE_5);
-                    }
-                    theMessageLog.SendMessageLog("El usuario " + theUser.Username + " ha solicitado ver sus mensajes sin leer.");
                     break;
 
-                case CASE_6:  
+                case CASE_6:
+                    myContext.Files.Clear();
+                    string targetDirectory = "C:\\ejemplo\\";
+                    string[] fileEntries = Directory.GetFiles(targetDirectory);
+                    string returnString = "";
+                    foreach (string fileName in fileEntries)
+                    {
+                        myContext.addFile(fileName);
+                        returnString = returnString + fileName + ClassLibrary.LIST_SEPARATOR;
+                    }
+                    classLibrary.sendData(clientSocket, ClassLibrary.REQUEST_MEDIA + ClassLibrary.PROTOCOL_SEPARATOR + returnString);
+                    break;
+
+                case CASE_7:
                     classLibrary.sendData(clientSocket, ClassLibrary.DISCONNECT + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.DISCONNECT);
                     theMessageLog.SendMessageLog("El usuario " + theUser.Username + " se ha desconectado.");
                     DisconnectClient(theUser);
@@ -140,7 +149,8 @@ namespace Sockets
                 friendRequested.AddFriendRequest(loggedInUser);
                 classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
                 theMessageLog.SendMessageLog("El usuario " + loggedInUser.Username + " ha enviado una solicitud de amistad al usuario " + friendRequested.Username);
-            } else
+            }
+            else
             {
                 classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_ERROR_RESPONSE);
                 theMessageLog.SendMessageLog("El usuario " + loggedInUser.Username + " ha enviado una solicitud de amistad a un usuario erroneo o inexistente.");
@@ -185,7 +195,7 @@ namespace Sockets
                 myContext.AddNewUser(user);
                 myContext.ConnectUser(user);
                 myContext.AddUserSocket(user.Username, clientSocket);
-                theMessageLog.SendMessageLog("Nuevo Cliente Conectado: "+ user.Username); 
+                theMessageLog.SendMessageLog("Nuevo Cliente Conectado: " + user.Username);
                 user.ConnectedTimes++;
                 user.ConnectedTime = DateTime.Now;
                 classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE + ". Bienvenido");
@@ -276,7 +286,7 @@ namespace Sockets
                     {
                         Console.WriteLine(user.Username + " Amigos: " + user.Friends.Count + " Veces conectado: " + user.ConnectedTimes);
                     }
-                    
+
                 }
             }
             else
@@ -328,6 +338,17 @@ namespace Sockets
         public string ListUsers()
         {
             return myContext.ListUsersInCSV();
+        }
+
+        public void SaveFile(string file)
+        {
+            myContext.addFile(file);
+        }
+
+        public void SendMedia(string username, string fileToDownload)
+        {
+            Socket socket = myContext.UsersSockets[username];
+            classLibrary.SendMedia(socket, fileToDownload);
         }
 
     }

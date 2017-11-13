@@ -1,11 +1,3 @@
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\WCFLibrary.dll.config
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\WCFLibrary.dll
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\WCFLibrary.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\Domain.dll
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\Domain.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\obj\Debug\WCFLibrary.csprojResolveAssemblyReference.cache
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\obj\Debug\WCFLibrary.dll
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\obj\Debug\WCFLibrary.pdb
 C:\github\WCFLibrary\bin\Debug\WCFLibrary.dll.config
 C:\github\WCFLibrary\bin\Debug\WCFLibrary.dll
 C:\github\WCFLibrary\bin\Debug\WCFLibrary.pdb
@@ -17,3 +9,13 @@ C:\github\WCFLibrary\obj\Debug\WCFLibrary.csprojResolveAssemblyReference.cache
 C:\github\WCFLibrary\obj\Debug\WCFLibrary.csproj.CoreCompileInputs.cache
 C:\github\WCFLibrary\obj\Debug\WCFLibrary.dll
 C:\github\WCFLibrary\obj\Debug\WCFLibrary.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\WCFLibrary.dll.config
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\WCFLibrary.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\WCFLibrary.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\Domain.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\IUserService.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\Domain.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\bin\Debug\IUserService.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\obj\Debug\WCFLibrary.csprojResolveAssemblyReference.cache
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\obj\Debug\WCFLibrary.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFLibrary\obj\Debug\WCFLibrary.pdb

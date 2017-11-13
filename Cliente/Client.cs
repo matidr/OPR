@@ -139,6 +139,10 @@ namespace Cliente
 
                             break;
 
+                        case ClassLibrary.REQUEST_MEDIA:
+                            operations.RequestMediaDownload(text);
+                            break;
+
                         case ClassLibrary.DISCONNECT:
                             clientIsConnected = false;
                             break;

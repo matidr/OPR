@@ -33,6 +33,8 @@ namespace Protocol
         public const string SECONDARY_MENU = "SECONDARY MENU";
         public const string EMPTY_STRING = "";
         public const string MEDIA = "MEDIA";
+        public const string DOWNLOAD_MEDIA = "DOWNLOAD_MEDIA";
+        public const string REQUEST_MEDIA = "REQUEST_MEDIA";
 
         //FLAGS
         public static bool LOGIN_FLAG = false;
@@ -41,6 +43,7 @@ namespace Protocol
         public static bool CASE2A_FLAG = false;
         public static bool CASE3_FLAG = false;
         public static bool CASE5_FLAG = false;
+        public static bool REQUEST_DOWNLOAD_FLAG = false;
 
         public int getFixedSize()
         {

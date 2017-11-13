@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFConsoleHost", "WCFConsol
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WCFUserClient", "WCFUserClient\WCFUserClient.csproj", "{B8CA5CCD-A788-4F38-A2B5-99D76946A8D0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemotingUsersHost", "RemotingUsersHost\RemotingUsersHost.csproj", "{0716801C-3558-4A74-819C-B5AC1328CD3C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IUserService", "IUserService\IUserService.csproj", "{A5CDB04E-F69E-4DD9-95E2-C4CA0983455A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +61,14 @@ Global
 		{B8CA5CCD-A788-4F38-A2B5-99D76946A8D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8CA5CCD-A788-4F38-A2B5-99D76946A8D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8CA5CCD-A788-4F38-A2B5-99D76946A8D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0716801C-3558-4A74-819C-B5AC1328CD3C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0716801C-3558-4A74-819C-B5AC1328CD3C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0716801C-3558-4A74-819C-B5AC1328CD3C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0716801C-3558-4A74-819C-B5AC1328CD3C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5CDB04E-F69E-4DD9-95E2-C4CA0983455A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5CDB04E-F69E-4DD9-95E2-C4CA0983455A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5CDB04E-F69E-4DD9-95E2-C4CA0983455A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5CDB04E-F69E-4DD9-95E2-C4CA0983455A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

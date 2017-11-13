@@ -130,7 +130,14 @@ namespace Sockets
                             break;
                         case ClassLibrary.MEDIA:
                             classLibrary.ReadMedia(clientSocket, text);
+                            operations.SaveFile(text);
                             break;
+
+                        case ClassLibrary.DOWNLOAD_MEDIA:
+                            string[] downloadMediaInfo = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
+                            string usernameToSend = downloadMediaInfo[0];
+                            string filename = downloadMediaInfo[1];
+                            operations.
                     }
                 }
             }

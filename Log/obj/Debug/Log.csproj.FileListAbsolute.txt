@@ -1,11 +1,12 @@
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Log\bin\Debug\Log.exe.config
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Log\bin\Debug\Log.exe
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Log\bin\Debug\Log.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Log\obj\Debug\Log.exe
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Log\obj\Debug\Log.pdb
 C:\github\Log\bin\Debug\Log.exe.config
 C:\github\Log\bin\Debug\Log.exe
 C:\github\Log\bin\Debug\Log.pdb
 C:\github\Log\obj\Debug\Log.csproj.CoreCompileInputs.cache
 C:\github\Log\obj\Debug\Log.exe
 C:\github\Log\obj\Debug\Log.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Log\bin\Debug\Log.exe.config
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Log\bin\Debug\Log.exe
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Log\bin\Debug\Log.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Log\obj\Debug\Log.csprojResolveAssemblyReference.cache
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Log\obj\Debug\Log.exe
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Log\obj\Debug\Log.pdb
