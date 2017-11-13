@@ -137,7 +137,8 @@ namespace Sockets
                             string[] downloadMediaInfo = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
                             string usernameToSend = downloadMediaInfo[0];
                             string filename = downloadMediaInfo[1];
-                            operations.
+                            operations.SendMedia(usernameToSend, filename);
+                            break;
                     }
                 }
             }

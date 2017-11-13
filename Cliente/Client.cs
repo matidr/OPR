@@ -87,11 +87,17 @@ namespace Cliente
                 var data = classLibrary.receiveData(serverSocket);
                 if (!data.Equals(ClassLibrary.EMPTY_STRING))
                 {
-                    string[] arrayData = data.Split(ClassLibrary.PROTOCOL_SEPARATOR.ToArray());
-                    string command = arrayData[0];
+                    string[] arrayData = data.Split(ClassLibrary.PROTOCOL_SEPARATOR.ToCharArray());
+                    string command = "";
                     string text = "";
-                    if (arrayData.Length > 1)
+                    if (arrayData.Length == 1)
                     {
+                        command = ClassLibrary.MEDIA;
+                        text = arrayData[0];
+                    }
+                    else
+                    {
+                        command = arrayData[0];
                         text = arrayData[1];
                     }
 
@@ -134,7 +140,7 @@ namespace Cliente
                             {
                                 operations.EmptyFriendRequestList();
                                 ClassLibrary.CASE2A_FLAG = true;
-                                ClassLibrary.CASE5_FLAG = true; 
+                                ClassLibrary.CASE5_FLAG = true;
                             }
 
                             break;
@@ -145,6 +151,11 @@ namespace Cliente
 
                         case ClassLibrary.DISCONNECT:
                             clientIsConnected = false;
+                            break;
+
+                        case ClassLibrary.MEDIA:
+                            classLibrary.ReadMedia(clientSocket, text);
+                            Console.WriteLine("Archivo descargado");
                             break;
                     }
                 }
