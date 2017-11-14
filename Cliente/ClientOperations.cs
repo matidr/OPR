@@ -146,7 +146,8 @@ namespace Sockets
                     {
                         foreach (string file in fileEntries)
                         {
-                            Console.WriteLine("file");
+                            string shortFileName = Path.GetFileName(file);
+                            Console.WriteLine(shortFileName);
                         }
                         Console.WriteLine("Ingrese el nombre del archivo a enviar: ");
                         string fileName = Console.ReadLine();
@@ -159,7 +160,6 @@ namespace Sockets
                     MainMenu();
                     break;
                 case CASE_6:
-                    classLibrary.sendData(clientSocket, ClassLibrary.REQUEST_MEDIA);
                     while (!ClassLibrary.REQUEST_DOWNLOAD_FLAG) { }
                     if (files.Count > 0)
                     {
@@ -391,11 +391,13 @@ namespace Sockets
 
         public void RequestMediaDownload(string text)
         {
+            this.files.Clear();
             string[] files = text.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
             Console.WriteLine("Escriba el nombre del archivo a descargar. Debe estar contendio en la siguiente lista:");
             foreach (string file in files)
             {
-                this.files.Add(file);
+                if (!file.Equals(""))
+                    this.files.Add(file);
             }
             ClassLibrary.REQUEST_DOWNLOAD_FLAG = true;
         }

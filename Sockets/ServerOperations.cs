@@ -124,8 +124,9 @@ namespace Sockets
                     string returnString = "";
                     foreach (string fileName in fileEntries)
                     {
-                        myContext.addFile(fileName);
-                        returnString = returnString + fileName + ClassLibrary.LIST_SEPARATOR;
+                        string shortFileName = Path.GetFileName(fileName);
+                        myContext.addFile(shortFileName);
+                        returnString = returnString + shortFileName + ClassLibrary.LIST_SEPARATOR;
                     }
                     classLibrary.sendData(clientSocket, ClassLibrary.REQUEST_MEDIA + ClassLibrary.PROTOCOL_SEPARATOR + returnString);
                     break;

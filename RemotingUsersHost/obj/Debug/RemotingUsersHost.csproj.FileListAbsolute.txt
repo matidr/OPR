@@ -17,9 +17,6 @@ C:\github\RemotingUsersHost\obj\Debug\RemotingUsersHost.csprojResolveAssemblyRef
 C:\github\RemotingUsersHost\obj\Debug\RemotingUsersHost.csproj.CoreCompileInputs.cache
 C:\github\RemotingUsersHost\obj\Debug\RemotingUsersHost.exe
 C:\github\RemotingUsersHost\obj\Debug\RemotingUsersHost.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\obj\Debug\RemotingUsersHost.csprojResolveAssemblyReference.cache
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\obj\Debug\RemotingUsersHost.exe
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\obj\Debug\RemotingUsersHost.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\bin\Debug\RemotingUsersHost.exe.config
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\bin\Debug\RemotingUsersHost.exe
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\bin\Debug\RemotingUsersHost.pdb
@@ -35,3 +32,6 @@ C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\bin
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\bin\Debug\ClassLibrary.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\bin\Debug\Log.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\bin\Debug\Log.exe.config
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\obj\Debug\RemotingUsersHost.csprojResolveAssemblyReference.cache
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\obj\Debug\RemotingUsersHost.exe
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\RemotingUsersHost\obj\Debug\RemotingUsersHost.pdb

@@ -142,7 +142,6 @@ namespace Cliente
                                 ClassLibrary.CASE2A_FLAG = true;
                                 ClassLibrary.CASE5_FLAG = true;
                             }
-
                             break;
 
                         case ClassLibrary.REQUEST_MEDIA:

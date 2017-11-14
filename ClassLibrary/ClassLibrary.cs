@@ -217,13 +217,13 @@ namespace Protocol
             received = 0;
             while (received < FIXED_SIZE)
             {
-                received += clientSocket.Send(dataLength, received, FIXED_SIZE - received, SocketFlags.None);
+                received += clientSocket.Receive(dataLength, received, FIXED_SIZE - received, SocketFlags.None);
             }
             //aca manda la data
             received = 0;
             while (received < byteArray.Length)
             {
-                received += clientSocket.Send(byteArray, received, byteArray.Length - received, SocketFlags.None);
+                received += clientSocket.Receive(byteArray, received, byteArray.Length - received, SocketFlags.None);
             }
 
             fileStream.Write(byteArray, 0, rest);
