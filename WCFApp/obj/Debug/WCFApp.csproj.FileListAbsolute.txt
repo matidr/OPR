@@ -1,0 +1,5 @@
+C:\github\WCFApp\bin\WCFApp.dll.config
+C:\github\WCFApp\bin\WCFApp.dll
+C:\github\WCFApp\bin\WCFApp.pdb
+C:\github\WCFApp\obj\Debug\WCFApp.dll
+C:\github\WCFApp\obj\Debug\WCFApp.pdb

@@ -16,7 +16,6 @@ namespace Cliente
     public class Client
     {
         private const string NULL = "NULL";
-        private static Context myContext;
         private static ClassLibrary classLibrary;
         private static ClientOperations operations;
         private static bool clientIsConnected = false;
@@ -30,7 +29,6 @@ namespace Cliente
 
         private static void ConnectToServer()
         {
-            myContext = Context.Instance;
             classLibrary = new ClassLibrary();
             // endpoint del servidor al que me voy a conectar
             string serverIp = ConfigurationManager.AppSettings["ServerIpAdress"];

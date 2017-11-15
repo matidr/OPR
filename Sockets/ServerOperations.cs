@@ -24,7 +24,6 @@ namespace Sockets
         private const string CASE_6 = "6";
         private const string CASE_7 = "7";
 
-        private Context myContext;
         private Socket clientSocket;
         private ClassLibrary classLibrary;
         private MessageLog theMessageLog;
@@ -34,23 +33,19 @@ namespace Sockets
         public ServerOperations(Socket socket, ClassLibrary classLibrary, MessageLog mySystemLog)
         {
             theMessageLog = mySystemLog;
-            myContext = Context.Instance;
             clientSocket = socket;
             this.classLibrary = classLibrary;
         }
 
-        public ServerOperations()
-        {
-            myContext = Context.Instance;
-        }
+        public ServerOperations() { }
 
         public List<User> GetConnectedFriends(User theUser)
         {
-            User user = myContext.ExistingUsers.Find(x => x.Username.Equals(theUser.Username));
+            User user = Context.ExistingUsers.Find(x => x.Username.Equals(theUser.Username));
             List<User> connectedFriends = new List<User>();
             foreach (User u in user.Friends)
             {
-                if (myContext.ConnectedUsers.Contains(u))
+                if (Context.ConnectedUsers.Contains(u))
                 {
                     connectedFriends.Add(u);
                 }
@@ -118,14 +113,14 @@ namespace Sockets
                     break;
 
                 case CASE_6:
-                    myContext.Files.Clear();
+                    Context.Files.Clear();
                     string targetDirectory = "C:\\ejemplo\\";
                     string[] fileEntries = Directory.GetFiles(targetDirectory);
                     string returnString = "";
                     foreach (string fileName in fileEntries)
                     {
                         string shortFileName = Path.GetFileName(fileName);
-                        myContext.addFile(shortFileName);
+                        Context.addFile(shortFileName);
                         returnString = returnString + shortFileName + ClassLibrary.LIST_SEPARATOR;
                     }
                     classLibrary.sendData(clientSocket, ClassLibrary.REQUEST_MEDIA + ClassLibrary.PROTOCOL_SEPARATOR + returnString);
@@ -179,7 +174,7 @@ namespace Sockets
         private void DisconnectClient(User theUser)
         {
             clientSocket.Disconnect(false);
-            myContext.DisconnectUser(theUser);
+            Context.DisconnectUser(theUser);
         }
 
         public void login(string loginInfo)
@@ -188,14 +183,14 @@ namespace Sockets
             string userID = loginInfoArray[0];
             string password = loginInfoArray[1];
 
-            if (!myContext.UserExist(userID))
+            if (!Context.UserExist(userID))
             {
                 // REGISTER
 
                 User user = new User(userID, password);
-                myContext.AddNewUser(user);
-                myContext.ConnectUser(user);
-                myContext.AddUserSocket(user.Username, clientSocket);
+                Context.AddNewUser(user);
+                Context.ConnectUser(user);
+                Context.AddUserSocket(user.Username, clientSocket);
                 theMessageLog.SendMessageLog("Nuevo Cliente Conectado: " + user.Username);
                 user.ConnectedTimes++;
                 user.ConnectedTime = DateTime.Now;
@@ -205,13 +200,13 @@ namespace Sockets
             {
                 // LOGIN
 
-                if (!myContext.UserAlreadyConnected(userID))
+                if (!Context.UserAlreadyConnected(userID))
                 {
-                    if (myContext.CorrectPassword(userID, password))
+                    if (Context.CorrectPassword(userID, password))
                     {
-                        myContext.ConnectUser(new User(userID, password));
-                        myContext.AddUserSocket(userID, clientSocket);
-                        User user = myContext.ExistingUsers.Find(x => x.Username.Equals(userID));
+                        Context.ConnectUser(new User(userID, password));
+                        Context.AddUserSocket(userID, clientSocket);
+                        User user = Context.ExistingUsers.Find(x => x.Username.Equals(userID));
                         user.ConnectedTimes++;
                         user.ConnectedTime = DateTime.Now;
                         if (user.UnreadMessages.Count > 0)
@@ -242,19 +237,19 @@ namespace Sockets
 
         public void Case4(string fromUsername, string toUsername, string message)
         {
-            User userFrom = myContext.ExistingUsers.Find(x => x.Username.Equals(fromUsername));
+            User userFrom = Context.ExistingUsers.Find(x => x.Username.Equals(fromUsername));
             User userTo = userFrom.Friends.Find(x => x.Username.Equals(toUsername));
             if (userTo != null)
             {
-                if (myContext.UserAlreadyConnected(toUsername))
+                if (Context.UserAlreadyConnected(toUsername))
                 {
-                    Socket toSocket = myContext.UsersSockets[toUsername];
+                    Socket toSocket = Context.UsersSockets[toUsername];
                     classLibrary.sendData(toSocket, ClassLibrary.NEW_MESSAGE + ClassLibrary.PROTOCOL_SEPARATOR + fromUsername + ClassLibrary.LIST_SEPARATOR + message);
                     classLibrary.sendData(clientSocket, ClassLibrary.CASE_4 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
                 }
                 else
                 {
-                    User user = myContext.ExistingUsers.Find(x => x.Username.Equals(toUsername));
+                    User user = Context.ExistingUsers.Find(x => x.Username.Equals(toUsername));
                     user.UnreadMessages.Add(new ChatMessage(fromUsername, message));
                 }
                 theMessageLog.SendMessageLog("El usuario " + fromUsername + " ha enviado un mensaje al usuario " + toUsername);
@@ -267,7 +262,7 @@ namespace Sockets
 
         public void ClearUnreadMessages(string username)
         {
-            User user = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
+            User user = Context.ExistingUsers.Find(x => x.Username.Equals(username));
             user.UnreadMessages.Clear();
         }
 
@@ -305,12 +300,12 @@ namespace Sockets
             switch (option)
             {
                 case CASE_1:
-                    PrintListInConsole(myContext.ExistingUsers, "usuarios registrados ");
+                    PrintListInConsole(Context.ExistingUsers, "usuarios registrados ");
                     ServerMenu();
                     break;
 
                 case CASE_2:
-                    PrintListInConsole(myContext.ConnectedUsers, "usuarios conectados ");
+                    PrintListInConsole(Context.ConnectedUsers, "usuarios conectados ");
                     ServerMenu();
                     break;
 
@@ -323,32 +318,32 @@ namespace Sockets
 
         public void AddUser(string name, string password)
         {
-            myContext.AddNewUser(name, password);
+            Context.AddNewUser(name, password);
         }
 
         public void EditUser(string name, string password)
         {
-            myContext.EditPassword(name, password);
+            Context.EditPassword(name, password);
         }
 
         public void DeleteUser(string username)
         {
-            myContext.DeleteUser(username);
+            Context.DeleteUser(username);
         }
 
         public string ListUsers()
         {
-            return myContext.ListUsersInCSV();
+            return Context.ListUsersInCSV();
         }
 
         public void SaveFile(string file)
         {
-            myContext.addFile(file);
+            Context.addFile(file);
         }
 
         public void SendMedia(string username, string fileToDownload)
         {
-            Socket socket = myContext.UsersSockets[username];
+            Socket socket = Context.UsersSockets[username];
             classLibrary.SendMedia(socket, fileToDownload);
         }
 

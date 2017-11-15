@@ -16,7 +16,6 @@ namespace Sockets
     {
         private static Socket serverSocket;
         private static bool serverIsOn = false;
-        private static Context myContext;
         private static MessageLog mySystemLog;
         private static ClassLibrary classLibrary;
 
@@ -24,6 +23,7 @@ namespace Sockets
         {
 
             StartServer();
+            Context.Initialize();
             while (serverIsOn)
             {
                 var client = serverSocket.Accept();
@@ -33,7 +33,6 @@ namespace Sockets
         }
         private static void StartServer()
         {
-            myContext = Context.Instance;
             mySystemLog = new MessageLog();
             classLibrary = new ClassLibrary();
             // EndPoint(IP, Port)
@@ -98,7 +97,7 @@ namespace Sockets
                             string[] menuOptionInfo = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
                             string menuOption = menuOptionInfo[0];
                             string username = menuOptionInfo[1];
-                            User theUser = myContext.ExistingUsers.Find(x => x.Username.Equals(username));
+                            User theUser = Context.ExistingUsers.Find(x => x.Username.Equals(username));
                             operations.MainMenu(theUser, menuOption);
                             break;
                         case ClassLibrary.SECONDARY_MENU:
@@ -106,16 +105,16 @@ namespace Sockets
                             string loggedInUsername = info[0];
                             string friendRequestUsername = info[1];
                             string accept = info[2];
-                            User loggedInUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedInUsername));
-                            User userToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendRequestUsername));
+                            User loggedInUser = Context.ExistingUsers.Find(x => x.Username.Equals(loggedInUsername));
+                            User userToAccept = Context.ExistingUsers.Find(x => x.Username.Equals(friendRequestUsername));
                             operations.SecondaryMenu(loggedInUser, userToAccept, accept);
                             break;
                         case ClassLibrary.CASE_3:
                             string[] information = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
                             string loggedUser = information[0];
                             string friendToAdd = information[1];
-                            User uLoggedUser = myContext.ExistingUsers.Find(x => x.Username.Equals(loggedUser));
-                            User uUserToAccept = myContext.ExistingUsers.Find(x => x.Username.Equals(friendToAdd));
+                            User uLoggedUser = Context.ExistingUsers.Find(x => x.Username.Equals(loggedUser));
+                            User uUserToAccept = Context.ExistingUsers.Find(x => x.Username.Equals(friendToAdd));
                             operations.SendFriendRequest(uLoggedUser, uUserToAccept);
                             break;
                         case ClassLibrary.CASE_4:

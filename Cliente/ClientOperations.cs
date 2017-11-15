@@ -23,7 +23,6 @@ namespace Sockets
         private const string CASE_7 = "7";
         private const string EMPTY_STRING = "";
 
-        private Context myContext;
         private List<User> connectedFriends;
         private List<User> friendRequest;
         private List<ChatMessage> newMessages;
@@ -35,7 +34,6 @@ namespace Sockets
 
         public ClientOperations(Socket socket, ClassLibrary classLibrary)
         {
-            myContext = Context.Instance;
             clientSocket = socket;
             this.classLibrary = classLibrary;
             connectedFriends = new List<User>();

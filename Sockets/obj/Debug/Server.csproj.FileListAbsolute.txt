@@ -29,22 +29,6 @@ C:\github\obliredes\Sockets\obj\Debug\Sockets.exe
 C:\github\obliredes\Sockets\obj\Debug\Sockets.pdb
 C:\github\obliredes\Sockets\bin\Debug\Domain.dll
 C:\github\obliredes\Sockets\bin\Debug\Domain.pdb
-C:\github\Sockets\bin\Debug\Sockets.exe.config
-C:\github\Sockets\bin\Debug\Sockets.exe
-C:\github\Sockets\bin\Debug\Sockets.pdb
-C:\github\Sockets\bin\Debug\ClassLibrary.dll
-C:\github\Sockets\bin\Debug\Domain.dll
-C:\github\Sockets\bin\Debug\IUserService.dll
-C:\github\Sockets\bin\Debug\Log.exe
-C:\github\Sockets\bin\Debug\ClassLibrary.pdb
-C:\github\Sockets\bin\Debug\Domain.pdb
-C:\github\Sockets\bin\Debug\IUserService.pdb
-C:\github\Sockets\bin\Debug\Log.pdb
-C:\github\Sockets\bin\Debug\Log.exe.config
-C:\github\Sockets\obj\Debug\Server.csprojResolveAssemblyReference.cache
-C:\github\Sockets\obj\Debug\Server.csproj.CoreCompileInputs.cache
-C:\github\Sockets\obj\Debug\Sockets.exe
-C:\github\Sockets\obj\Debug\Sockets.pdb
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.exe.config
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.exe
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.pdb
@@ -60,3 +44,19 @@ C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Log
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Server.csprojResolveAssemblyReference.cache
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Sockets.exe
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\obj\Debug\Sockets.pdb
+C:\github\Sockets\obj\Debug\Server.csprojResolveAssemblyReference.cache
+C:\github\Sockets\obj\Debug\Server.csproj.CoreCompileInputs.cache
+C:\github\Sockets\bin\Debug\Sockets.exe.config
+C:\github\Sockets\bin\Debug\Sockets.exe
+C:\github\Sockets\bin\Debug\Sockets.pdb
+C:\github\Sockets\bin\Debug\ClassLibrary.dll
+C:\github\Sockets\bin\Debug\Domain.dll
+C:\github\Sockets\bin\Debug\IUserService.dll
+C:\github\Sockets\bin\Debug\Log.exe
+C:\github\Sockets\bin\Debug\ClassLibrary.pdb
+C:\github\Sockets\bin\Debug\Domain.pdb
+C:\github\Sockets\bin\Debug\IUserService.pdb
+C:\github\Sockets\bin\Debug\Log.pdb
+C:\github\Sockets\bin\Debug\Log.exe.config
+C:\github\Sockets\obj\Debug\Sockets.exe
+C:\github\Sockets\obj\Debug\Sockets.pdb

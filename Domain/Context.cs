@@ -7,76 +7,55 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public sealed class Context
+    public static class Context
     {
-        private static Context instance = null;
+        // private static Context instance = null;
         private static readonly object padlock = new object();
+        private static List<User> existingUsers; //= new List<User>();
+        private static List<User> connectedUsers; // = new List<User>();
+        private static List<string> files; // = new List<string>();
+        private static Dictionary<string, Socket> usersSockets; // = new Dictionary<string, Socket>();
 
-        private static List<User> existingUsers;
-        private static List<User> connectedUsers;
-        private static List<string> files;
-        private static Dictionary<string, Socket> usersSockets;
+        public static void Initialize() {
+            existingUsers = new List<User>();
+        connectedUsers = new List<User>();
+        files = new List<string>();
+        usersSockets = new Dictionary<string, Socket>();
+    }
 
-        Context() { }
 
-        public static Context Instance
-        {
-            get
-            {
-                lock (padlock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new Context();
-                        existingUsers = new List<User>();
-                        connectedUsers = new List<User>();
-                        files = new List<string>();
-                        usersSockets = new Dictionary<string, Socket>();
-                    }
-                    return instance;
-                }
-            }
+        public static List<User> ExistingUsers { get => existingUsers; set => existingUsers = value; }
+        public static List<User> ConnectedUsers { get => connectedUsers; set => connectedUsers = value; }
+        public static List<string> Files { get => files; set => files = value; }
+        public static Dictionary<string, Socket> UsersSockets { get => usersSockets; set => usersSockets = value; }
 
-        }
-
-        /* public Context()
-         {
-             existingUsers = new List<User>();
-             connectedUsers = new List<User>();
-             usersSockets = new Dictionary<string, Socket>();
-         } */
-        public List<User> ExistingUsers { get => existingUsers; set => existingUsers = value; }
-        public List<User> ConnectedUsers { get => connectedUsers; set => connectedUsers = value; }
-        public List<string> Files { get => files; set => files = value; }
-        public Dictionary<string, Socket> UsersSockets { get => usersSockets; set => usersSockets = value; }
-
-        public bool UserExist(string userId)
+        public static bool UserExist(string userId)
         {
             return existingUsers.Contains(new User(userId));
         }
 
-        public bool UserAlreadyConnected(string userID)
+        public static bool UserAlreadyConnected(string userID)
         {
             return ConnectedUsers.Contains(new User(userID));
         }
 
-        public bool CorrectPassword(string user, string password)
+        public static bool CorrectPassword(string user, string password)
         {
             User result = existingUsers.Find(x => x.Username == user);
             return result.Password.Equals(password);
         }
 
-        public void AddNewUser(User user)
+        public static void AddNewUser(User user)
         {
             existingUsers.Add(user);
         }
-        public void EditPassword(string username, string password)
+        public static void EditPassword(string username, string password)
         {
             User result = existingUsers.Find(x => x.Username == username);
             result.Password = password;
         }
 
-        public void AddNewUser(string name, string password)
+        public static void AddNewUser(string name, string password)
         {
             User userToAdd = new User();
             userToAdd.Username = name;
@@ -84,7 +63,7 @@ namespace Domain
             existingUsers.Add(userToAdd);
         }
 
-        public string ListUsersInCSV()
+        public static string ListUsersInCSV()
         {
             string CSVlist = "";
             if (existingUsers.Count > 0)
@@ -97,34 +76,34 @@ namespace Domain
             return CSVlist;
         }
 
-        public void DeleteUser(string username)
+        public static void DeleteUser(string username)
         {
             User result = existingUsers.Find(x => x.Username == username);
             existingUsers.Remove(result);
         }
 
-        public void ConnectUser(User user)
+        public static void ConnectUser(User user)
         {
             ConnectedUsers.Add(user);
         }
 
-        public void AddUserSocket(string username, Socket socket)
+        public static void AddUserSocket(string username, Socket socket)
         {
             usersSockets.Add(username, socket);
         }
 
-        public void DisconnectUser(User user)
+        public static void DisconnectUser(User user)
         {
             ConnectedUsers.RemoveAll(u => u.Username.Equals(user.Username));
             usersSockets.Remove(user.Username);
         }
 
-        public void addFile(string file)
+        public static void addFile(string file)
         {
             files.Add(file);
         }
 
-        public bool fileExists(string file)
+        public static bool fileExists(string file)
         {
             string selectFile = files.Find(x => x.Equals(file));
             return selectFile != null && !selectFile.Equals("");
