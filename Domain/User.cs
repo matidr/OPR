@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 
-namespace Domain
+namespace Domain 
 {
     [DataContract]
-    public class User
-    {
+    public class User 
+{
         private string username;
         private string password;
         private List<User> friends;

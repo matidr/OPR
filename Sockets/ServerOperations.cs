@@ -35,7 +35,6 @@ namespace Sockets
             userClient = (IUserService.IUserService)Activator.GetObject
                 (typeof(IUserService.IUserService),
                 "tcp://localhost:5000/UserOperations");
-
         }
 
         public ServerOperations(Socket socket, ClassLibrary classLibrary, MessageLog mySystemLog)
@@ -51,7 +50,6 @@ namespace Sockets
         [STAThread]
         public List<User> GetConnectedFriends(User theUser)
         {
-
             User user = getUsersRemoting().Find(x => x.Username.Equals(theUser.Username));
             List<User> connectedFriends = new List<User>();
             foreach (User u in user.Friends)
@@ -87,10 +85,11 @@ namespace Sockets
 
         public void MainMenu(User theUser, string menuOption)
         {
+            User userByReflection = getUsersRemoting().Find(x => x.Username.Equals(theUser.Username));
             switch (menuOption)
             {
                 case CASE_1:
-                    List<User> connectedFriends = GetConnectedFriends(theUser);
+                    List<User> connectedFriends = GetConnectedFriends(userByReflection);
                     if (connectedFriends.Count > 0)
                     {
                         PrintFriends(connectedFriends, ClassLibrary.CASE_1);
@@ -99,11 +98,11 @@ namespace Sockets
                     {
                         classLibrary.sendData(clientSocket, ClassLibrary.CASE_1 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.EMPTY_STRING);
                     }
-                    theMessageLog.SendMessageLog("El usuario " + theUser.Username + " ha solicitado ver sus amigos conectados.");
+                    theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha solicitado ver sus amigos conectados.");
                     break;
 
                 case CASE_2:
-                    List<User> friendshipRequests = theUser.PendingFriendshipRequest;
+                    List<User> friendshipRequests = userByReflection.PendingFriendshipRequest;
                     if (friendshipRequests.Count > 0)
                     {
                         PrintFriends(friendshipRequests, ClassLibrary.CASE_2);
@@ -112,7 +111,7 @@ namespace Sockets
                     {
                         classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + "NULL");
                     }
-                    theMessageLog.SendMessageLog("El usuario " + theUser.Username + " ha solicitado ver sus solicitudes de amistad pendientes.");
+                    theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha solicitado ver sus solicitudes de amistad pendientes.");
                     break;
                 case CASE_3:
                     break;
@@ -139,8 +138,8 @@ namespace Sockets
 
                 case CASE_7:
                     classLibrary.sendData(clientSocket, ClassLibrary.DISCONNECT + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.DISCONNECT);
-                    theMessageLog.SendMessageLog("El usuario " + theUser.Username + " se ha desconectado.");
-                    DisconnectClient(theUser);
+                    theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " se ha desconectado.");
+                    DisconnectClient(userByReflection);
                     break;
 
                 default:
@@ -151,32 +150,34 @@ namespace Sockets
 
         public void SendFriendRequest(User loggedInUser, User friendRequested)
         {
-            if (loggedInUser != null && friendRequested != null)
+            User userByReflection = getUsersRemoting().Find(x => x.Username.Equals(loggedInUser.Username));
+            if (userByReflection != null && friendRequested != null)
             {
-                friendRequested.AddFriendRequest(loggedInUser);
+                friendRequested.AddFriendRequest(userByReflection);
                 classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
-                theMessageLog.SendMessageLog("El usuario " + loggedInUser.Username + " ha enviado una solicitud de amistad al usuario " + friendRequested.Username);
+                theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha enviado una solicitud de amistad al usuario " + friendRequested.Username);
             }
             else
             {
                 classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_ERROR_RESPONSE);
-                theMessageLog.SendMessageLog("El usuario " + loggedInUser.Username + " ha enviado una solicitud de amistad a un usuario erroneo o inexistente.");
+                theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha enviado una solicitud de amistad a un usuario erroneo o inexistente.");
             }
         }
 
         public void SecondaryMenu(User loggedInUser, User userToAccept, string accept)
         {
+            User userByReflection = getUsersRemoting().Find(x => x.Username.Equals(loggedInUser.Username));
             if (accept.Equals(CASE_1))
             {
-                loggedInUser.AcceptFriendRequest(userToAccept);
-                theMessageLog.SendMessageLog("El usuario " + loggedInUser.Username + " ha aceptado la solicitud de amistad de " + userToAccept.Username);
+                userByReflection.AcceptFriendRequest(userToAccept);
+                theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha aceptado la solicitud de amistad de " + userToAccept.Username);
             }
             else
             {
                 if (accept.Equals(CASE_0))
                 {
-                    loggedInUser.CancelFriendRequest(userToAccept);
-                    theMessageLog.SendMessageLog("El usuario " + loggedInUser.Username + " ha rechazado la solicitud de amistad de " + userToAccept.Username);
+                    userByReflection.CancelFriendRequest(userToAccept);
+                    theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha rechazado la solicitud de amistad de " + userToAccept.Username);
                 }
             }
             classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
@@ -184,8 +185,9 @@ namespace Sockets
 
         private void DisconnectClient(User theUser)
         {
+            User userByReflection = getUsersRemoting().Find(x => x.Username.Equals(theUser.Username));
             clientSocket.Disconnect(false);
-            Context.DisconnectUser(theUser);
+            Context.DisconnectUser(userByReflection);
         }
 
         [STAThread]
@@ -204,6 +206,7 @@ namespace Sockets
             }
         }
 
+        [STAThread]
         public void login(string loginInfo)
         {
             string[] loginInfoArray = loginInfo.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
@@ -213,9 +216,9 @@ namespace Sockets
             if (!UserExists(userID))
             {
                 // REGISTER
-                /// REMOTING
+                
                 User user = new User(userID, password);
-                Context.AddNewUser(user);
+                userClient.AddUser(userID, password);
                 Context.ConnectUser(user);
                 Context.AddUserSocket(user.Username, clientSocket);
                 theMessageLog.SendMessageLog("Nuevo Cliente Conectado: " + user.Username);
@@ -229,7 +232,9 @@ namespace Sockets
 
                 if (!Context.UserAlreadyConnected(userID))
                 {
-                    if (Context.CorrectPassword(userID, password))
+                    //User result = getUsersRemoting().Find(x => x.Username == userID);
+                    //if (Context.CorrectPassword(result, password))
+                    if(true)
                     {
                         Context.ConnectUser(new User(userID, password));
                         Context.AddUserSocket(userID, clientSocket);
@@ -264,8 +269,8 @@ namespace Sockets
 
         public void Case4(string fromUsername, string toUsername, string message)
         {
-            User userFrom = getUsersRemoting().Find(x => x.Username.Equals(fromUsername));
-            User userTo = userFrom.Friends.Find(x => x.Username.Equals(toUsername));
+            User userFromRemoting = getUsersRemoting().Find(x => x.Username.Equals(fromUsername));
+            User userTo = userFromRemoting.Friends.Find(x => x.Username.Equals(toUsername));
             if (userTo != null)
             {
                 if (Context.UserAlreadyConnected(toUsername))
@@ -294,7 +299,7 @@ namespace Sockets
         }
 
         [STAThread]
-        private List<User> getUsersRemoting()
+        public List<User> getUsersRemoting()
         {
             List<User> listOfUsers = new List<User>();
             string usersCSV = userClient.ListUsers();

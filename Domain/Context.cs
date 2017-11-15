@@ -24,21 +24,15 @@ namespace Domain
         public static List<string> Files { get => files; set => files = value; }
         public static Dictionary<string, Socket> UsersSockets { get => usersSockets; set => usersSockets = value; }
 
-        public static bool UserExist(string userId)
-        {
-            return existingUsers.Contains(new User(userId));
-        }
-
         public static bool UserAlreadyConnected(string userID)
         {
             return ConnectedUsers.Contains(new User(userID));
         }
 
-        public static bool CorrectPassword(string user, string password)
+       /* public static bool CorrectPassword(User user, string password)
         {
-            User result = existingUsers.Find(x => x.Username == user);
-            return result.Password.Equals(password);
-        }
+            return user.Password.Equals(password);
+        }*/
 
         public static void AddNewUser(User user)
         {

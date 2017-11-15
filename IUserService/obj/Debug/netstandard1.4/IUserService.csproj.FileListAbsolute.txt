@@ -12,3 +12,6 @@ C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.csproj.CoreCompileI
 C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.AssemblyInfo.cs
 C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.dll
 C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.pdb
+C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.csprojResolveAssemblyReference.cache
+C:\github\IUserService\bin\Debug\netstandard1.4\Domain.dll
+C:\github\IUserService\bin\Debug\netstandard1.4\Domain.pdb

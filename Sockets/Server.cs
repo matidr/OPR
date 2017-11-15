@@ -18,6 +18,15 @@ namespace Sockets
         private static bool serverIsOn = false;
         private static MessageLog mySystemLog;
         private static ClassLibrary classLibrary;
+        static IUserService.IUserService userClient;
+
+        public static void Inicialization()
+        {
+            userClient = (IUserService.IUserService)Activator.GetObject
+                (typeof(IUserService.IUserService),
+                "tcp://localhost:5000/UserOperations");
+
+        }
 
         static void Main(string[] args)
         {
@@ -32,6 +41,7 @@ namespace Sockets
         }
         private static void StartServer()
         {
+            Inicialization();
             mySystemLog = new MessageLog();
             classLibrary = new ClassLibrary();
             // EndPoint(IP, Port)
@@ -96,7 +106,7 @@ namespace Sockets
                             string[] menuOptionInfo = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
                             string menuOption = menuOptionInfo[0];
                             string username = menuOptionInfo[1];
-                            User theUser = Context.ExistingUsers.Find(x => x.Username.Equals(username));
+                            User theUser = operations.getUsersRemoting().Find(x => x.Username.Equals(username));
                             operations.MainMenu(theUser, menuOption);
                             break;
                         case ClassLibrary.SECONDARY_MENU:
@@ -104,16 +114,16 @@ namespace Sockets
                             string loggedInUsername = info[0];
                             string friendRequestUsername = info[1];
                             string accept = info[2];
-                            User loggedInUser = Context.ExistingUsers.Find(x => x.Username.Equals(loggedInUsername));
-                            User userToAccept = Context.ExistingUsers.Find(x => x.Username.Equals(friendRequestUsername));
+                            User loggedInUser = operations.getUsersRemoting().Find(x => x.Username.Equals(loggedInUsername));
+                            User userToAccept = operations.getUsersRemoting().Find(x => x.Username.Equals(friendRequestUsername));
                             operations.SecondaryMenu(loggedInUser, userToAccept, accept);
                             break;
                         case ClassLibrary.CASE_3:
                             string[] information = text.Split(ClassLibrary.LIST_SEPARATOR.ToCharArray());
                             string loggedUser = information[0];
                             string friendToAdd = information[1];
-                            User uLoggedUser = Context.ExistingUsers.Find(x => x.Username.Equals(loggedUser));
-                            User uUserToAccept = Context.ExistingUsers.Find(x => x.Username.Equals(friendToAdd));
+                            User uLoggedUser = operations.getUsersRemoting().Find(x => x.Username.Equals(loggedUser));
+                            User uUserToAccept = operations.getUsersRemoting().Find(x => x.Username.Equals(friendToAdd));
                             operations.SendFriendRequest(uLoggedUser, uUserToAccept);
                             break;
                         case ClassLibrary.CASE_4:
