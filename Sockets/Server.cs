@@ -23,7 +23,6 @@ namespace Sockets
         {
 
             StartServer();
-            Context.Initialize();
             while (serverIsOn)
             {
                 var client = serverSocket.Accept();
@@ -143,7 +142,5 @@ namespace Sockets
             }
             clientSocket.Close();
         }
-
-
     }
 }

@@ -11,17 +11,12 @@ namespace Domain
     {
         // private static Context instance = null;
         private static readonly object padlock = new object();
-        private static List<User> existingUsers; //= new List<User>();
-        private static List<User> connectedUsers; // = new List<User>();
-        private static List<string> files; // = new List<string>();
-        private static Dictionary<string, Socket> usersSockets; // = new Dictionary<string, Socket>();
+        private static List<User> existingUsers = new List<User>();
+        private static List<User> connectedUsers = new List<User>();
+        private static List<string> files = new List<string>();
+        private static Dictionary<string, Socket> usersSockets = new Dictionary<string, Socket>();
 
-        public static void Initialize() {
-            existingUsers = new List<User>();
-        connectedUsers = new List<User>();
-        files = new List<string>();
-        usersSockets = new Dictionary<string, Socket>();
-    }
+     
 
 
         public static List<User> ExistingUsers { get => existingUsers; set => existingUsers = value; }

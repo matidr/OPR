@@ -9,7 +9,7 @@ using Domain;
 namespace WCFLibrary
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
-    
+
     public class UserService : IUser
     {
         private static List<User> users = new List<User>();
@@ -19,7 +19,8 @@ namespace WCFLibrary
         {
             userClient = (IUserService.IUserService)Activator.GetObject
                 (typeof(IUserService.IUserService),
-                "tcp://localhost:5000/ServerOperations");
+                "tcp://localhost:5000/UserOperations");
+
         }
 
         [STAThread]
@@ -28,7 +29,7 @@ namespace WCFLibrary
             Inicialization();
             if (user != null)
             {
-                string username = user.Username;                
+                string username = user.Username;
                 userClient.DeleteUser(username);
                 return true;
             }
@@ -46,7 +47,7 @@ namespace WCFLibrary
             string usersCSV = userClient.ListUsers();
             string commaSeparator = ",";
             string[] usersArray = usersCSV.Split(commaSeparator.ToArray());
-            for (int i = 0; i < usersArray.Length-1; i++)
+            for (int i = 0; i < usersArray.Length - 1; i++)
             {
                 string username = usersArray[i];
                 User theUser = new User();
@@ -56,7 +57,7 @@ namespace WCFLibrary
             return listOfUsers;
         }
 
-        
+
         public bool ModifyUser(User user)
         {
             Inicialization();

@@ -8,12 +8,12 @@ using System.Net.Sockets;
 using Domain;
 using Protocol;
 using Log;
-using IUserService;
 using System.IO;
+using IUserService;
 
 namespace Sockets
 {
-    public class ServerOperations : MarshalByRefObject, IUserService.IUserService
+    public class ServerOperations
     {
         private const string CASE_0 = "0";
         private const string CASE_1 = "1";
@@ -27,21 +27,32 @@ namespace Sockets
         private Socket clientSocket;
         private ClassLibrary classLibrary;
         private MessageLog theMessageLog;
+        private static List<User> users = new List<User>();
+        IUserService.IUserService userClient;
 
+        public void Inicialization()
+        {
+            userClient = (IUserService.IUserService)Activator.GetObject
+                (typeof(IUserService.IUserService),
+                "tcp://localhost:5000/UserOperations");
 
+        }
 
         public ServerOperations(Socket socket, ClassLibrary classLibrary, MessageLog mySystemLog)
         {
             theMessageLog = mySystemLog;
             clientSocket = socket;
             this.classLibrary = classLibrary;
+            Inicialization();
         }
 
         public ServerOperations() { }
 
+        [STAThread]
         public List<User> GetConnectedFriends(User theUser)
         {
-            User user = Context.ExistingUsers.Find(x => x.Username.Equals(theUser.Username));
+
+            User user = getUsersRemoting().Find(x => x.Username.Equals(theUser.Username));
             List<User> connectedFriends = new List<User>();
             foreach (User u in user.Friends)
             {
@@ -177,16 +188,32 @@ namespace Sockets
             Context.DisconnectUser(theUser);
         }
 
+        [STAThread]
+        public bool UserExists(string userId)
+        {
+            User theUser = new User();
+            theUser.Username = userId;
+
+            if (getUsersRemoting().Contains(theUser))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public void login(string loginInfo)
         {
             string[] loginInfoArray = loginInfo.Split(ClassLibrary.LIST_SEPARATOR.ToArray());
             string userID = loginInfoArray[0];
             string password = loginInfoArray[1];
 
-            if (!Context.UserExist(userID))
+            if (!UserExists(userID))
             {
                 // REGISTER
-
+                /// REMOTING
                 User user = new User(userID, password);
                 Context.AddNewUser(user);
                 Context.ConnectUser(user);
@@ -206,7 +233,7 @@ namespace Sockets
                     {
                         Context.ConnectUser(new User(userID, password));
                         Context.AddUserSocket(userID, clientSocket);
-                        User user = Context.ExistingUsers.Find(x => x.Username.Equals(userID));
+                        User user = getUsersRemoting().Find(x => x.Username.Equals(userID));
                         user.ConnectedTimes++;
                         user.ConnectedTime = DateTime.Now;
                         if (user.UnreadMessages.Count > 0)
@@ -237,7 +264,7 @@ namespace Sockets
 
         public void Case4(string fromUsername, string toUsername, string message)
         {
-            User userFrom = Context.ExistingUsers.Find(x => x.Username.Equals(fromUsername));
+            User userFrom = getUsersRemoting().Find(x => x.Username.Equals(fromUsername));
             User userTo = userFrom.Friends.Find(x => x.Username.Equals(toUsername));
             if (userTo != null)
             {
@@ -249,7 +276,7 @@ namespace Sockets
                 }
                 else
                 {
-                    User user = Context.ExistingUsers.Find(x => x.Username.Equals(toUsername));
+                    User user = getUsersRemoting().Find(x => x.Username.Equals(toUsername));
                     user.UnreadMessages.Add(new ChatMessage(fromUsername, message));
                 }
                 theMessageLog.SendMessageLog("El usuario " + fromUsername + " ha enviado un mensaje al usuario " + toUsername);
@@ -262,15 +289,33 @@ namespace Sockets
 
         public void ClearUnreadMessages(string username)
         {
-            User user = Context.ExistingUsers.Find(x => x.Username.Equals(username));
+            User user = getUsersRemoting().Find(x => x.Username.Equals(username));
             user.UnreadMessages.Clear();
         }
 
-        private void PrintListInConsole(List<User> users, string message)
+        [STAThread]
+        private List<User> getUsersRemoting()
         {
-            if (users.Count > 0)
+            List<User> listOfUsers = new List<User>();
+            string usersCSV = userClient.ListUsers();
+            string commaSeparator = ",";
+            string[] usersArray = usersCSV.Split(commaSeparator.ToArray());
+            for (int i = 0; i < usersArray.Length - 1; i++)
             {
-                foreach (User user in users)
+                string username = usersArray[i];
+                User theUser = new User();
+                theUser.Username = username;
+                listOfUsers.Add(theUser);
+            }
+            return listOfUsers;
+        }
+
+
+        private void PrintListInConsole(List<User> listOfUsers, string message)
+        {
+            if (listOfUsers != null)
+            {
+                foreach (User user in listOfUsers)
                 {
                     if (message.Equals("usuarios conectados "))
                     {
@@ -282,7 +327,6 @@ namespace Sockets
                     {
                         Console.WriteLine(user.Username + " Amigos: " + user.Friends.Count + " Veces conectado: " + user.ConnectedTimes);
                     }
-
                 }
             }
             else
@@ -292,6 +336,7 @@ namespace Sockets
             Console.WriteLine();
         }
 
+        [STAThread]
         public void ServerMenu()
         {
             Console.WriteLine("1) Mostrar todos los usuarios del sistema");
@@ -300,7 +345,7 @@ namespace Sockets
             switch (option)
             {
                 case CASE_1:
-                    PrintListInConsole(Context.ExistingUsers, "usuarios registrados ");
+                    PrintListInConsole(getUsersRemoting(), "usuarios registrados ");
                     ServerMenu();
                     break;
 
@@ -316,25 +361,6 @@ namespace Sockets
             }
         }
 
-        public void AddUser(string name, string password)
-        {
-            Context.AddNewUser(name, password);
-        }
-
-        public void EditUser(string name, string password)
-        {
-            Context.EditPassword(name, password);
-        }
-
-        public void DeleteUser(string username)
-        {
-            Context.DeleteUser(username);
-        }
-
-        public string ListUsers()
-        {
-            return Context.ListUsersInCSV();
-        }
 
         public void SaveFile(string file)
         {
