@@ -58,8 +58,8 @@
       <Project>{6d5b56fd-0ccc-43ce-afa6-cc2314d6fd70}</Project>
       <Name>Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\IUserService\IUserService.csproj">
-      <Project>{a5cdb04e-f69e-4dd9-95e2-c4ca0983455a}</Project>
+    <ProjectReference Include="..\IUserServices\IUserService.csproj">
+      <Project>{b780046f-7817-4126-abe4-40b03e67b3d1}</Project>
       <Name>IUserService</Name>
     </ProjectReference>
   </ItemGroup>

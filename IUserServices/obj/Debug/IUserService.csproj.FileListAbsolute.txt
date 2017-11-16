@@ -1,0 +1,8 @@
+C:\github\IUserServices\bin\Debug\IUserService.dll
+C:\github\IUserServices\bin\Debug\IUserService.pdb
+C:\github\IUserServices\bin\Debug\Domain.dll
+C:\github\IUserServices\bin\Debug\Domain.pdb
+C:\github\IUserServices\obj\Debug\IUserService.csprojResolveAssemblyReference.cache
+C:\github\IUserServices\obj\Debug\IUserService.csproj.CoreCompileInputs.cache
+C:\github\IUserServices\obj\Debug\IUserService.dll
+C:\github\IUserServices\obj\Debug\IUserService.pdb
