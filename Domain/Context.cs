@@ -16,7 +16,7 @@ namespace Domain
         private static List<string> files = new List<string>();
         private static Dictionary<string, Socket> usersSockets = new Dictionary<string, Socket>();
 
-     
+
 
 
         public static List<User> ExistingUsers { get => existingUsers; set => existingUsers = value; }
@@ -55,17 +55,19 @@ namespace Domain
         public static void DisconnectUser(User user)
         {
             ConnectedUsers.RemoveAll(u => u.Username.Equals(user.Username));
-            usersSockets.Remove(user.Username);
         }
 
         public static void AddUserSocket(User user, Socket socket)
         {
-            usersSockets.Add(user.Username, socket);
+            if (!usersSockets.ContainsKey(user.Username))
+            {
+                usersSockets.Add(user.Username, socket);
+            }
         }
 
-        
 
-        
+
+
 
     }
 }

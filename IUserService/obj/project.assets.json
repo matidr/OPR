@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 2,
   "targets": {
     ".NETStandard,Version=v1.4": {
       "Microsoft.NETCore.Platforms/1.1.0": {
@@ -888,13 +888,7 @@
         }
       },
       "Domain/1.0.0": {
-        "type": "project",
-        "compile": {
-          "bin/placeholder/Domain.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Domain.dll": {}
-        }
+        "type": "project"
       }
     }
   },
@@ -3718,36 +3712,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Lenovo\\.nuget\\packages\\": {}
+    "C:\\Users\\matia\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
-    "restoreSettings": {
-      "hideWarningsAndErrors": true
-    },
     "restore": {
-      "projectUniqueName": "C:\\github\\IUserService\\IUserService.csproj",
+      "projectUniqueName": "C:\\Users\\matia\\Documents\\ORT\\Programacion de Redes\\OPR.git\\IUserService\\IUserService.csproj",
       "projectName": "IUserService",
-      "projectPath": "C:\\github\\IUserService\\IUserService.csproj",
-      "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-      "outputPath": "C:\\github\\IUserService\\obj\\",
+      "projectPath": "C:\\Users\\matia\\Documents\\ORT\\Programacion de Redes\\OPR.git\\IUserService\\IUserService.csproj",
+      "outputPath": "C:\\Users\\matia\\Documents\\ORT\\Programacion de Redes\\OPR.git\\IUserService\\obj\\",
       "projectStyle": "PackageReference",
-      "configFilePaths": [
-        "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
-      ],
       "originalTargetFrameworks": [
         "netstandard1.4"
       ],
-      "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "https://api.nuget.org/v3/index.json": {}
-      },
       "frameworks": {
         "netstandard1.4": {
           "projectReferences": {
-            "C:\\github\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\github\\Domain\\Domain.csproj"
+            "C:\\Users\\matia\\Documents\\ORT\\Programacion de Redes\\OPR.git\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\matia\\Documents\\ORT\\Programacion de Redes\\OPR.git\\Domain\\Domain.csproj"
             }
           }
         }

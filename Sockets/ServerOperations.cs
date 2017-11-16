@@ -192,7 +192,7 @@ namespace Sockets
         {
             User userByReflection = getUsersRemoting().Find(x => x.Username.Equals(theUser.Username));
             clientSocket.Disconnect(false);
-            Context.DisconnectUser(userByReflection);
+            userClient.RemoveConnectedUser(userByReflection);
         }
 
         [STAThread]

@@ -1,12 +1,12 @@
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\bin\Debug\WCFUserClient.exe.config
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\bin\Debug\WCFUserClient.exe
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\bin\Debug\WCFUserClient.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\obj\Debug\WCFUserClient.csprojResolveAssemblyReference.cache
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\obj\Debug\WCFUserClient.exe
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\obj\Debug\WCFUserClient.pdb
 C:\github\WCFUserClient\bin\Debug\WCFUserClient.exe.config
 C:\github\WCFUserClient\bin\Debug\WCFUserClient.exe
 C:\github\WCFUserClient\bin\Debug\WCFUserClient.pdb
 C:\github\WCFUserClient\obj\Debug\WCFUserClient.csproj.CoreCompileInputs.cache
 C:\github\WCFUserClient\obj\Debug\WCFUserClient.exe
 C:\github\WCFUserClient\obj\Debug\WCFUserClient.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\bin\Debug\WCFUserClient.exe.config
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\bin\Debug\WCFUserClient.exe
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\bin\Debug\WCFUserClient.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\obj\Debug\WCFUserClient.csprojResolveAssemblyReference.cache
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\obj\Debug\WCFUserClient.exe
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFUserClient\obj\Debug\WCFUserClient.pdb
