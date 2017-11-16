@@ -45,6 +45,7 @@ C:\github\Sockets\bin\Debug\Log.pdb
 C:\github\Sockets\bin\Debug\Log.exe.config
 C:\github\Sockets\obj\Debug\Sockets.exe
 C:\github\Sockets\obj\Debug\Sockets.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\App.config
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.exe.config
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.exe
 C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\Sockets\bin\Debug\Sockets.pdb

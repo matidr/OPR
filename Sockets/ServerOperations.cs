@@ -221,7 +221,7 @@ namespace Sockets
             if (!UserExists(userID))
             {
                 // REGISTER
-                
+
                 User user = new User(userID, password);
                 userClient.AddUser(userID, password);
                 userClient.AddConnectedUser(user);
@@ -242,7 +242,7 @@ namespace Sockets
                     {
                         userClient.AddConnectedUser(result);
                         Context.AddUserSocket(result, clientSocket);
-                        
+
 
                         result.ConnectedTimes++;
                         result.ConnectedTime = DateTime.Now;
@@ -275,8 +275,8 @@ namespace Sockets
         [STAThread]
         public void Case4(string fromUsername, string toUsername, string message)
         {
-            User userFromRemoting = getUsersRemoting().Find(x => x.Username.Equals(fromUsername));
-            User userTo = userFromRemoting.Friends.Find(x => x.Username.Equals(toUsername));
+            User userFrom = getUsersRemoting().Find(x => x.Username.Equals(toUsername));
+            User userTo = getUsersRemoting().Find(x => x.Username.Equals(toUsername));
             if (userTo != null)
             {
                 if (userClient.UserAlreadyConnected(toUsername))
@@ -287,8 +287,7 @@ namespace Sockets
                 }
                 else
                 {
-                    User user = getUsersRemoting().Find(x => x.Username.Equals(toUsername));
-                    userClient.AddMessage(user, new ChatMessage(fromUsername, message));
+                    userClient.AddMessage(userTo, new ChatMessage(userFrom, message));
                 }
                 theMessageLog.SendMessageLog("El usuario " + fromUsername + " ha enviado un mensaje al usuario " + toUsername);
             }
@@ -305,7 +304,7 @@ namespace Sockets
             userClient.ClearMessages(user);
         }
 
-  
+
 
         [STAThread]
         public List<User> getUsersRemoting()

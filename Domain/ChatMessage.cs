@@ -14,10 +14,10 @@ namespace Domain
         User theUser;
         String theMessage;
         String display;
-        public ChatMessage(String username, String msg)
+        public ChatMessage(User toUser, String msg)
         {
             Display = "";
-            theUser = Context.ExistingUsers.Find(x => x.Username.Equals(username));
+            theUser = toUser;
             theMessage = msg;
         }
         public ChatMessage(String disp)
