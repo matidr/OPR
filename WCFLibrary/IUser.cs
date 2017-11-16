@@ -16,14 +16,11 @@ namespace WCFLibrary
         bool SaveUser(User user);
 
         [OperationContract]
-        IEnumerable<User> GetUsers();
-
-        [OperationContract]
         bool ModifyUser(User user);
 
         [OperationContract]
         bool DeleteUser(User user);
 
-        // TODO: Add your service operations here
+        
     }
 }

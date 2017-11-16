@@ -59,7 +59,7 @@
       <Name>Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\IUserService\IUserService.csproj">
-      <Project>{339da798-9931-4f90-bcf2-164e75f8ebb1}</Project>
+      <Project>{a5cdb04e-f69e-4dd9-95e2-c4ca0983455a}</Project>
       <Name>IUserService</Name>
     </ProjectReference>
   </ItemGroup>

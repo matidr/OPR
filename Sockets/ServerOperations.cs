@@ -135,6 +135,7 @@ namespace Sockets
                         returnString = returnString + shortFileName + ClassLibrary.LIST_SEPARATOR;
                     }
                     classLibrary.sendData(clientSocket, ClassLibrary.REQUEST_MEDIA + ClassLibrary.PROTOCOL_SEPARATOR + returnString);
+                    theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha descargado el archivo " + returnString);
                     break;
 
                 case CASE_7:
@@ -153,12 +154,15 @@ namespace Sockets
         public void SendFriendRequest(User loggedInUser, User friendRequested)
         {
             User userByReflection = getUsersRemoting().Find(x => x.Username.Equals(loggedInUser.Username));
-            User requestedByReflection = getUsersRemoting().Find(x => x.Username.Equals(friendRequested.Username));
-            if (userByReflection != null && friendRequested != null)
+            if (!friendRequested.Equals(""))
             {
-                userClient.AddFriendRequest(userByReflection, requestedByReflection);
-                classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
-                theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha enviado una solicitud de amistad al usuario " + friendRequested.Username);
+                User requestedByReflection = getUsersRemoting().Find(x => x.Username.Equals(friendRequested.Username));
+                if (userByReflection != null && friendRequested != null)
+                {
+                    userClient.AddFriendRequest(userByReflection, requestedByReflection);
+                    classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
+                    theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha enviado una solicitud de amistad al usuario " + friendRequested.Username);
+                }
             }
             else
             {
@@ -171,21 +175,28 @@ namespace Sockets
         {
             User userByReflection = getUsersRemoting().Find(x => x.Username.Equals(loggedInUser.Username));
             User userByReflection2 = getUsersRemoting().Find(x => x.Username.Equals(userToAccept.Username));
-            if (accept.Equals(CASE_1))
+            if (userByReflection != null && userByReflection2 != null)
             {
-                userClient.AddFriend(userByReflection, userByReflection2);
-                //userByReflection.AcceptFriendRequest(userToAccept);
-                theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha aceptado la solicitud de amistad de " + userToAccept.Username);
+                if (accept.Equals(CASE_1))
+                {
+                    userClient.AddFriend(userByReflection, userByReflection2);
+                    theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha aceptado la solicitud de amistad de " + userToAccept.Username);
+                }
+                else
+                {
+                    if (accept.Equals(CASE_0))
+                    {
+                        userClient.CancelFriendRequest(userByReflection, userByReflection2);
+                        theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha rechazado la solicitud de amistad de " + userToAccept.Username);
+                    }
+                }
+                classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
             }
             else
             {
-                if (accept.Equals(CASE_0))
-                {
-                    userByReflection.CancelFriendRequest(userToAccept);
-                    theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha rechazado la solicitud de amistad de " + userToAccept.Username);
-                }
+                classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_ERROR_RESPONSE);
+                theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha intentado gestionar una solicitud de amistad incorrecta o inexistente");
             }
-            classLibrary.sendData(clientSocket, ClassLibrary.SECONDARY_MENU + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
         }
 
         private void DisconnectClient(User theUser)
@@ -374,6 +385,7 @@ namespace Sockets
         {
             Socket socket = Context.UsersSockets[username];
             classLibrary.SendMedia(socket, fileToDownload);
+            theMessageLog.SendMessageLog("El usuario " + username + " ha enviado el archivo " + fileToDownload + " al servidor");
         }
 
     }

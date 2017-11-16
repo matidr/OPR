@@ -10,7 +10,6 @@ namespace IUserService
         void EditUser(string name, string password);
         void DeleteUser(string username);
         List<User> ListUsers();
-
         void AddConnectedUser(User user);
         void RemoveConnectedUser(User user);
         List<User> ListConnectedUsers();
@@ -20,6 +19,7 @@ namespace IUserService
         void AddFriendRequest(User userfrom, User userTo);
         List<User> getPendingRequests(User user);
         void AddFriend(User userfrom, User userTo);
+        void CancelFriendRequest(User userFrom, User userTo);
         List<User> GetFriends(User user);
         void AddMessage(User user, ChatMessage message);
         List<ChatMessage> GetMessages(User user);

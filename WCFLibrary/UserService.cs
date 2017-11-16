@@ -39,33 +39,6 @@ namespace WCFLibrary
             }
         }
 
-        /*[STAThread]
-        public IEnumerable<User> GetUsers()
-        {
-            Inicialization();
-            List<User> listOfUsers = new List<User>();
-            string usersCSV = userClient.ListUsers();
-            string commaSeparator = ",";
-            string[] usersArray = usersCSV.Split(commaSeparator.ToArray());
-            for (int i = 0; i < usersArray.Length - 1; i++)
-            {
-                string username = usersArray[i];
-                User theUser = new User();
-                theUser.Username = username;
-                listOfUsers.Add(theUser);
-            }
-            return listOfUsers;
-        }*/
-
-        [STAThread]
-        public IEnumerable<User> GetUsers()
-        {
-            Inicialization();
-            List<User> listOfUsers = userClient.ListUsers();
-            return listOfUsers;
-        }
-
-
         public bool ModifyUser(User user)
         {
             Inicialization();

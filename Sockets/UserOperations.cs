@@ -26,10 +26,6 @@ namespace Sockets
             Context.DeleteUser(username);
         }
 
-        /*public string ListUsers()
-        {
-            return Context.ListUsersInCSV();
-        }*/
         List<User> IUserService.IUserService.ListUsers()
         {
             return Context.ExistingUsers;
@@ -108,6 +104,11 @@ namespace Sockets
         void IUserService.IUserService.AddConnectedTime(User user, DateTime date)
         {
             Context.ExistingUsers.Find(x => x.Username.Equals(user.Username)).ConnectedTime = date; 
+        }
+
+        void IUserService.IUserService.CancelFriendRequest(User userFrom, User userTo)
+        {
+            Context.ExistingUsers.Find(x => x.Username.Equals(userTo.Username)).PendingFriendshipRequest.Remove(Context.ExistingUsers.Find(x => x.Username.Equals(userFrom.Username)));
         }
     }
 }

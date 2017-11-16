@@ -23,7 +23,6 @@ namespace WCFUserClient
             Console.WriteLine("1) Alta de usuario al sistema");
             Console.WriteLine("2) Baja de usuario al sistema");
             Console.WriteLine("3) Modificacion de usuario del sistema");
-            Console.WriteLine("4) Consulta de todos los usuarios del sistema");
             Console.WriteLine("Ingrese una opcion:");
             string option = Console.ReadLine();
             switch (option)
@@ -49,11 +48,6 @@ namespace WCFUserClient
                     {
                         ModifyUser();
                     }
-                    MainMenu();
-                    break;
-
-                case CASE_4:
-                    GetUsers();
                     MainMenu();
                     break;
 
@@ -126,22 +120,6 @@ namespace WCFUserClient
                 Console.WriteLine("El usuario ingresado no existe. Intentelo nuevamente");
             }
             return isSuccesful;
-        }
-
-        private void GetUsers()
-        {
-            UserReference.User[] listUsers = userClient.GetUsers();
-            if (listUsers.Count() > 0)
-            {
-                foreach (UserReference.User user in listUsers)
-                {
-                    Console.WriteLine(user.Username);
-                }
-            }
-            else
-            {
-                Console.WriteLine("No hay usuarios en el sistema");
-            }
         }
     }
 }
