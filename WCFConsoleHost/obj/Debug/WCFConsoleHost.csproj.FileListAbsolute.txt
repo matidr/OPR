@@ -1,17 +1,3 @@
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\App.config
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFConsoleHost.exe.config
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFConsoleHost.exe
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFConsoleHost.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFLibrary.dll
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\Domain.dll
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\IUserService.dll
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFLibrary.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFLibrary.dll.config
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\Domain.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\IUserService.pdb
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\obj\Debug\WCFConsoleHost.csprojResolveAssemblyReference.cache
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\obj\Debug\WCFConsoleHost.exe
-C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\obj\Debug\WCFConsoleHost.pdb
 C:\github\WCFConsoleHost\obj\Debug\WCFConsoleHost.csproj.CoreCompileInputs.cache
 C:\github\WCFConsoleHost\bin\Debug\App.config
 C:\github\WCFConsoleHost\bin\Debug\WCFConsoleHost.exe.config
@@ -27,3 +13,17 @@ C:\github\WCFConsoleHost\obj\Debug\WCFConsoleHost.exe
 C:\github\WCFConsoleHost\obj\Debug\WCFConsoleHost.pdb
 C:\github\WCFConsoleHost\bin\Debug\IUserService.dll
 C:\github\WCFConsoleHost\bin\Debug\IUserService.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\App.config
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFConsoleHost.exe.config
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFConsoleHost.exe
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFConsoleHost.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFLibrary.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\Domain.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\IUserService.dll
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFLibrary.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\WCFLibrary.dll.config
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\Domain.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\bin\Debug\IUserService.pdb
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\obj\Debug\WCFConsoleHost.csprojResolveAssemblyReference.cache
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\obj\Debug\WCFConsoleHost.exe
+C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\WCFConsoleHost\obj\Debug\WCFConsoleHost.pdb

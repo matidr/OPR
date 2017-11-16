@@ -255,8 +255,8 @@ namespace Sockets
                         Context.AddUserSocket(result, clientSocket);
 
 
-                        result.ConnectedTimes++;
-                        result.ConnectedTime = DateTime.Now;
+                        userClient.AddConectedTimes(result);
+                        userClient.AddConnectedTime(result, DateTime.Now);
                         if (userClient.GetMessages(result).Count > 0)
                         {
                             string unreadMessages = "";
