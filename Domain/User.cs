@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 
-namespace Domain 
+namespace Domain
 {
     [DataContract]
-    public class User 
-{
+    [Serializable]
+
+    public class User
+    {
         private string username;
         private string password;
         private List<User> friends;
@@ -44,20 +46,6 @@ namespace Domain
         public void AddFriendRequest(User theRequester)
         {
             pendingFriendshipRequest.Add(theRequester);
-        }
-
-
-        public void AcceptFriendRequest(User friendRequest)
-        {
-            lock (PendingFriendshipRequest)
-            {
-                pendingFriendshipRequest.Remove(friendRequest);
-            }
-            lock (Friends)
-            {
-                Friends.Add(friendRequest);
-                friendRequest.Friends.Add(this);
-            }
         }
 
         public void CancelFriendRequest(User friendRequest)

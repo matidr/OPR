@@ -8,10 +8,10 @@ C:\Users\matia\Documents\ORT\Programacion de Redes\OPR.git\IUserService\obj\Debu
 C:\github\IUserService\bin\Debug\netstandard1.4\IUserService.deps.json
 C:\github\IUserService\bin\Debug\netstandard1.4\IUserService.dll
 C:\github\IUserService\bin\Debug\netstandard1.4\IUserService.pdb
+C:\github\IUserService\bin\Debug\netstandard1.4\Domain.dll
+C:\github\IUserService\bin\Debug\netstandard1.4\Domain.pdb
+C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.csprojResolveAssemblyReference.cache
 C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.csproj.CoreCompileInputs.cache
 C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.AssemblyInfo.cs
 C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.dll
 C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.pdb
-C:\github\IUserService\obj\Debug\netstandard1.4\IUserService.csprojResolveAssemblyReference.cache
-C:\github\IUserService\bin\Debug\netstandard1.4\Domain.dll
-C:\github\IUserService\bin\Debug\netstandard1.4\Domain.pdb

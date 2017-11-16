@@ -39,7 +39,7 @@ namespace WCFLibrary
             }
         }
 
-        [STAThread]
+        /*[STAThread]
         public IEnumerable<User> GetUsers()
         {
             Inicialization();
@@ -54,6 +54,14 @@ namespace WCFLibrary
                 theUser.Username = username;
                 listOfUsers.Add(theUser);
             }
+            return listOfUsers;
+        }*/
+
+        [STAThread]
+        public IEnumerable<User> GetUsers()
+        {
+            Inicialization();
+            List<User> listOfUsers = userClient.ListUsers();
             return listOfUsers;
         }
 

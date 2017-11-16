@@ -52,9 +52,9 @@ namespace Sockets
         {
             User user = getUsersRemoting().Find(x => x.Username.Equals(theUser.Username));
             List<User> connectedFriends = new List<User>();
-            foreach (User u in user.Friends)
+            foreach (User u in userClient.GetFriends(user))
             {
-                if (Context.ConnectedUsers.Contains(u))
+                if (userClient.ListConnectedUsers().Contains(u))
                 {
                     connectedFriends.Add(u);
                 }
@@ -83,6 +83,7 @@ namespace Sockets
             classLibrary.sendData(clientSocket, theCase + ClassLibrary.PROTOCOL_SEPARATOR + returnData);
         }
 
+        [STAThread]
         public void MainMenu(User theUser, string menuOption)
         {
             User userByReflection = getUsersRemoting().Find(x => x.Username.Equals(theUser.Username));
@@ -102,7 +103,7 @@ namespace Sockets
                     break;
 
                 case CASE_2:
-                    List<User> friendshipRequests = userByReflection.PendingFriendshipRequest;
+                    List<User> friendshipRequests = userClient.getPendingRequests(userByReflection);
                     if (friendshipRequests.Count > 0)
                     {
                         PrintFriends(friendshipRequests, ClassLibrary.CASE_2);
@@ -130,7 +131,7 @@ namespace Sockets
                     foreach (string fileName in fileEntries)
                     {
                         string shortFileName = Path.GetFileName(fileName);
-                        Context.addFile(shortFileName);
+                        userClient.AddFile(shortFileName);
                         returnString = returnString + shortFileName + ClassLibrary.LIST_SEPARATOR;
                     }
                     classLibrary.sendData(clientSocket, ClassLibrary.REQUEST_MEDIA + ClassLibrary.PROTOCOL_SEPARATOR + returnString);
@@ -143,17 +144,19 @@ namespace Sockets
                     break;
 
                 default:
-                    classLibrary.sendData(clientSocket, ClassLibrary.PROTOCOL_ERROR_RESPONSE + ". Opcion incorrecta");
+                    classLibrary.sendData(clientSocket, ClassLibrary.PROTOCOL_ERROR_RESPONSE + ClassLibrary.PROTOCOL_SEPARATOR + "ERROR. Opcion incorrecta");
                     break;
             }
         }
 
+        [STAThread]
         public void SendFriendRequest(User loggedInUser, User friendRequested)
         {
             User userByReflection = getUsersRemoting().Find(x => x.Username.Equals(loggedInUser.Username));
+            User requestedByReflection = getUsersRemoting().Find(x => x.Username.Equals(friendRequested.Username));
             if (userByReflection != null && friendRequested != null)
             {
-                friendRequested.AddFriendRequest(userByReflection);
+                userClient.AddFriendRequest(userByReflection, requestedByReflection);
                 classLibrary.sendData(clientSocket, ClassLibrary.CASE_3 + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE);
                 theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha enviado una solicitud de amistad al usuario " + friendRequested.Username);
             }
@@ -163,13 +166,15 @@ namespace Sockets
                 theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha enviado una solicitud de amistad a un usuario erroneo o inexistente.");
             }
         }
-
+        [STAThread]
         public void SecondaryMenu(User loggedInUser, User userToAccept, string accept)
         {
             User userByReflection = getUsersRemoting().Find(x => x.Username.Equals(loggedInUser.Username));
+            User userByReflection2 = getUsersRemoting().Find(x => x.Username.Equals(userToAccept.Username));
             if (accept.Equals(CASE_1))
             {
-                userByReflection.AcceptFriendRequest(userToAccept);
+                userClient.AddFriend(userByReflection, userByReflection2);
+                //userByReflection.AcceptFriendRequest(userToAccept);
                 theMessageLog.SendMessageLog("El usuario " + userByReflection.Username + " ha aceptado la solicitud de amistad de " + userToAccept.Username);
             }
             else
@@ -219,32 +224,32 @@ namespace Sockets
                 
                 User user = new User(userID, password);
                 userClient.AddUser(userID, password);
-                Context.ConnectUser(user);
-                Context.AddUserSocket(user.Username, clientSocket);
+                userClient.AddConnectedUser(user);
+                Context.AddUserSocket(user, clientSocket);
                 theMessageLog.SendMessageLog("Nuevo Cliente Conectado: " + user.Username);
-                user.ConnectedTimes++;
-                user.ConnectedTime = DateTime.Now;
+                userClient.AddConectedTimes(user);
+                userClient.AddConnectedTime(user, DateTime.Now);
                 classLibrary.sendData(clientSocket, ClassLibrary.LOGIN + ClassLibrary.PROTOCOL_SEPARATOR + ClassLibrary.PROTOCOL_OK_RESPONSE + ". Bienvenido");
             }
             else
             {
                 // LOGIN
 
-                if (!Context.UserAlreadyConnected(userID))
+                if (!userClient.UserAlreadyConnected(userID))
                 {
-                    //User result = getUsersRemoting().Find(x => x.Username == userID);
-                    //if (Context.CorrectPassword(result, password))
-                    if(true)
+                    User result = getUsersRemoting().Find(x => x.Username.Equals(userID));
+                    if (Context.CorrectPassword(result, password))
                     {
-                        Context.ConnectUser(new User(userID, password));
-                        Context.AddUserSocket(userID, clientSocket);
-                        User user = getUsersRemoting().Find(x => x.Username.Equals(userID));
-                        user.ConnectedTimes++;
-                        user.ConnectedTime = DateTime.Now;
-                        if (user.UnreadMessages.Count > 0)
+                        userClient.AddConnectedUser(result);
+                        Context.AddUserSocket(result, clientSocket);
+                        
+
+                        result.ConnectedTimes++;
+                        result.ConnectedTime = DateTime.Now;
+                        if (userClient.GetMessages(result).Count > 0)
                         {
                             string unreadMessages = "";
-                            foreach (ChatMessage m in user.UnreadMessages)
+                            foreach (ChatMessage m in userClient.GetMessages(result))
                             {
                                 unreadMessages = unreadMessages + m.TheUser.Username + ": " + m.TheMessage + ClassLibrary.LIST_SEPARATOR;
                             }
@@ -267,13 +272,14 @@ namespace Sockets
             }
         }
 
+        [STAThread]
         public void Case4(string fromUsername, string toUsername, string message)
         {
             User userFromRemoting = getUsersRemoting().Find(x => x.Username.Equals(fromUsername));
             User userTo = userFromRemoting.Friends.Find(x => x.Username.Equals(toUsername));
             if (userTo != null)
             {
-                if (Context.UserAlreadyConnected(toUsername))
+                if (userClient.UserAlreadyConnected(toUsername))
                 {
                     Socket toSocket = Context.UsersSockets[toUsername];
                     classLibrary.sendData(toSocket, ClassLibrary.NEW_MESSAGE + ClassLibrary.PROTOCOL_SEPARATOR + fromUsername + ClassLibrary.LIST_SEPARATOR + message);
@@ -282,7 +288,7 @@ namespace Sockets
                 else
                 {
                     User user = getUsersRemoting().Find(x => x.Username.Equals(toUsername));
-                    user.UnreadMessages.Add(new ChatMessage(fromUsername, message));
+                    userClient.AddMessage(user, new ChatMessage(fromUsername, message));
                 }
                 theMessageLog.SendMessageLog("El usuario " + fromUsername + " ha enviado un mensaje al usuario " + toUsername);
             }
@@ -292,30 +298,23 @@ namespace Sockets
             }
         }
 
+        [STAThread]
         public void ClearUnreadMessages(string username)
         {
             User user = getUsersRemoting().Find(x => x.Username.Equals(username));
-            user.UnreadMessages.Clear();
+            userClient.ClearMessages(user);
         }
+
+  
 
         [STAThread]
         public List<User> getUsersRemoting()
         {
-            List<User> listOfUsers = new List<User>();
-            string usersCSV = userClient.ListUsers();
-            string commaSeparator = ",";
-            string[] usersArray = usersCSV.Split(commaSeparator.ToArray());
-            for (int i = 0; i < usersArray.Length - 1; i++)
-            {
-                string username = usersArray[i];
-                User theUser = new User();
-                theUser.Username = username;
-                listOfUsers.Add(theUser);
-            }
+            List<User> listOfUsers = userClient.ListUsers();
             return listOfUsers;
         }
 
-
+        [STAThread]
         private void PrintListInConsole(List<User> listOfUsers, string message)
         {
             if (listOfUsers != null)
@@ -326,11 +325,11 @@ namespace Sockets
                     {
                         DateTime nowDate = DateTime.Now;
                         TimeSpan timespan = nowDate - user.ConnectedTime;
-                        Console.WriteLine(user.Username + " Amigos: " + user.Friends.Count + " Veces conectado: " + user.ConnectedTimes + " Tiempo conectado: " + Math.Round(timespan.TotalMinutes) + " minutos " + Math.Round(timespan.TotalSeconds) + " segundos");
+                        Console.WriteLine(user.Username + " Amigos: " + userClient.GetFriends(user).Count + " Veces conectado: " + user.ConnectedTimes + " Tiempo conectado: " + Math.Round(timespan.TotalMinutes) + " minutos " + Math.Round(timespan.TotalSeconds) + " segundos");
                     }
                     else
                     {
-                        Console.WriteLine(user.Username + " Amigos: " + user.Friends.Count + " Veces conectado: " + user.ConnectedTimes);
+                        Console.WriteLine(user.Username + " Amigos: " + userClient.GetFriends(user).Count + " Veces conectado: " + user.ConnectedTimes);
                     }
                 }
             }
@@ -355,7 +354,7 @@ namespace Sockets
                     break;
 
                 case CASE_2:
-                    PrintListInConsole(Context.ConnectedUsers, "usuarios conectados ");
+                    PrintListInConsole(userClient.ListConnectedUsers(), "usuarios conectados ");
                     ServerMenu();
                     break;
 
@@ -366,10 +365,10 @@ namespace Sockets
             }
         }
 
-
+        [STAThread]
         public void SaveFile(string file)
         {
-            Context.addFile(file);
+            userClient.AddFile(file);
         }
 
         public void SendMedia(string username, string fileToDownload)

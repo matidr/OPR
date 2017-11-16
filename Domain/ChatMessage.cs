@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace Domain
 {
     [DataContract]
+    [Serializable]
     public class ChatMessage
     {
         User theUser;

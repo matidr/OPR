@@ -24,26 +24,20 @@ namespace Domain
         public static List<string> Files { get => files; set => files = value; }
         public static Dictionary<string, Socket> UsersSockets { get => usersSockets; set => usersSockets = value; }
 
-        public static bool UserAlreadyConnected(string userID)
-        {
-            return ConnectedUsers.Contains(new User(userID));
-        }
 
-       /* public static bool CorrectPassword(User user, string password)
+        //OK
+        public static bool CorrectPassword(User user, string password)
         {
             return user.Password.Equals(password);
-        }*/
-
-        public static void AddNewUser(User user)
-        {
-            existingUsers.Add(user);
         }
+
+        //OK pero revisar dsp por las dudas
         public static void EditPassword(string username, string password)
         {
             User result = existingUsers.Find(x => x.Username == username);
             result.Password = password;
         }
-
+        //OK
         public static void AddNewUser(string name, string password)
         {
             User userToAdd = new User();
@@ -51,52 +45,27 @@ namespace Domain
             userToAdd.Password = password;
             existingUsers.Add(userToAdd);
         }
-
-        public static string ListUsersInCSV()
-        {
-            string CSVlist = "";
-            if (existingUsers.Count > 0)
-            {
-                foreach (User u in existingUsers)
-                {
-                    CSVlist = CSVlist + u.Username + ",";
-                }
-            }
-            return CSVlist;
-        }
-
+        //OK
         public static void DeleteUser(string username)
         {
             User result = existingUsers.Find(x => x.Username == username);
             existingUsers.Remove(result);
         }
-
-        public static void ConnectUser(User user)
-        {
-            ConnectedUsers.Add(user);
-        }
-
-        public static void AddUserSocket(string username, Socket socket)
-        {
-            usersSockets.Add(username, socket);
-        }
-
+        //OK
         public static void DisconnectUser(User user)
         {
             ConnectedUsers.RemoveAll(u => u.Username.Equals(user.Username));
             usersSockets.Remove(user.Username);
         }
 
-        public static void addFile(string file)
+        public static void AddUserSocket(User user, Socket socket)
         {
-            files.Add(file);
+            usersSockets.Add(user.Username, socket);
         }
 
-        public static bool fileExists(string file)
-        {
-            string selectFile = files.Find(x => x.Equals(file));
-            return selectFile != null && !selectFile.Equals("");
-        }
+        
+
+        
 
     }
 }

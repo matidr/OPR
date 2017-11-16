@@ -23,15 +23,15 @@ C:\github\RemotingUsersHost\bin\Debug\RemotingUsersHost.exe
 C:\github\RemotingUsersHost\bin\Debug\RemotingUsersHost.pdb
 C:\github\RemotingUsersHost\bin\Debug\IUserService.dll
 C:\github\RemotingUsersHost\bin\Debug\Sockets.exe
+C:\github\RemotingUsersHost\bin\Debug\Domain.dll
 C:\github\RemotingUsersHost\bin\Debug\ClassLibrary.dll
 C:\github\RemotingUsersHost\bin\Debug\Log.exe
-C:\github\RemotingUsersHost\bin\Debug\Domain.dll
 C:\github\RemotingUsersHost\bin\Debug\IUserService.pdb
 C:\github\RemotingUsersHost\bin\Debug\Sockets.pdb
 C:\github\RemotingUsersHost\bin\Debug\Sockets.exe.config
+C:\github\RemotingUsersHost\bin\Debug\Domain.pdb
 C:\github\RemotingUsersHost\bin\Debug\ClassLibrary.pdb
 C:\github\RemotingUsersHost\bin\Debug\Log.pdb
 C:\github\RemotingUsersHost\bin\Debug\Log.exe.config
-C:\github\RemotingUsersHost\bin\Debug\Domain.pdb
 C:\github\RemotingUsersHost\obj\Debug\RemotingUsersHost.exe
 C:\github\RemotingUsersHost\obj\Debug\RemotingUsersHost.pdb
